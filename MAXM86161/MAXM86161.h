@@ -1,11 +1,11 @@
 #include "stdint.h"
 #include <stdbool.h>
 
-/// Define this only if you are using MAX30101 IC
+/// TODO to be deleted
 #define MAXM86161
 
 /// Set I2C properly
-#define hi2c_ppg_max hi2c3 //TODO
+#define hi2c_ppg_max hi2c3 //TODO to be implemented
 
 /// MAX30310x I2C ADDRESS
 #define	MAXM86161_I2C_ADDRESS					0xC4
@@ -45,6 +45,8 @@
  * Bits 0: Reset control
  *########################## */
 
+ //TODO  READYENABLE ??
+
 typedef enum {
 	MAXM86161_SHDNMODE_SHUTDOWN = 0x02, MAXM86161_SHDNMODE_ON = 0x00
 } MAXM86161_ShutdownMode;
@@ -54,11 +56,16 @@ typedef enum {
 } MAXM86161_ResetMode;
 
 /*##########################
- * PPG CONFIGURATION [0x11]
+ * PPG CONFIGURATION 1 [0x11]
  * Bits 7: ALC Disable
  * Bits 2:3: ADC Range Control
  * Bits 0:1: Integration time of ADC
  *########################## */
+
+typedef enum {
+	MAXM86161_ALC_DISABLE_ON =  0X80,
+	MAXM86161_ALC_DISABLE_OFF = 0X00
+} MAXM86161_ALCDisable;
 
 typedef enum {
 	MAXM86161_FS_4096 = 0x00,
@@ -75,8 +82,81 @@ typedef enum {
 	MAXM86161_FS_37628 = 0x0C
 } MAXM86161_IntegrationTime;
 
-/// Interrupts
-#define MAXM86161_DATA_RDY		0x40
+/*##########################
+ * PPG CONFIGURATION 2 [0x12]
+ * Bits 7:3: ADC Range Control
+ * Bits 0:2: Integration time of ADC
+ *########################## */
+
+ // SS = samples per second
+typedef enum {
+	MAXM86161_SR_100HZ = 0x18 //NB 0x03 shiftato
+} MAXM86161_SampleRate;
+
+typedef enum {
+	MAXM86161_NO_AVG = 0x00 //NB
+} MAXM86161_SampleAvarage;
+
+/*##########################
+ * PPG CONFIGURATION 3 [0x12]
+ * Bits 6:7: Led Lenght
+ *########################## */
+typedef enum {
+	MAXM86161_LED_SETLNG = 0x40 //NB
+} MAXM86161_LedLenght;
+
+//TODO LED SEQUENCE ???
+
+///////////////////////////////////////////////
+//????
+/*##########################
+ * PPG LED1 PA [0x23]
+ *########################## */
+typedef enum {
+	MAXM86161_LED1_PA = 0xF0 
+} MAXM86161_Led1PA;
+/*##########################
+ * PPG LED2 PA [0x24]
+ *########################## */
+typedef enum {
+	MAXM86161_LED2_PA = 0xF0
+} MAXM86161_Led2PA;
+/*##########################
+ * PPG LED3 PA [0x25]
+ *########################## */
+typedef enum {
+	MAXM86161_LED3_PA = 0xF0
+
+} MAXM86161_Led3PA;
+///////////////////////////////////////////////////
+
+
+/*##########################
+ * PPG LED RANGE [0x2A]
+ *  Bits 4:5: LED3_RGE
+ *  Bits 2:3: LED2_RGE
+ *  Bits 0:1: LED1_RGE
+ *########################## */
+typedef enum {
+	MAXM86161_LED1_RGE = 0x10
+} MAXM86161_Led3Range;
+typedef enum {
+	MAXM86161_LED1_RGE = 0x04
+} MAXM86161_Led2Range;
+typedef enum {
+	MAXM86161_LED1_RGE = 0x01
+} MAXM86161_Led1Range;
+
+
+
+/// Interrupts TODO to be implemented ??
+//#define MAXM86161_DATA_RDY	
+
+
+// MAXM86161 initialization structure
+typedef struct {
+	//TODO TO BE DONE
+} MAXM86161_Init_TypeDef;
 
 /// I2C communication functions
 /**
@@ -100,7 +180,7 @@ bool MAX3010x_I2C_Read(uint8_t regName, uint8_t* readByte, uint8_t numBytes);
 /// CHECK FUNCTIONS
 /**
  * Read sensor part ID
- * @return	Part ID (MAX3010x_PART_ID_VALUE = 0x15)
+ * @return	Part ID (MAXM86161_PART_ID_VALUE = 0x36)
  */
 uint8_t MAX3010x_Read_Part_ID(void);
 
