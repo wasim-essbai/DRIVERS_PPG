@@ -1,0 +1,39 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\usepackage{import}
+
+%inserire gestione figura
+
+\title{Progetto di un sistema optoelettronico indossabile per misure fotopletismografiche}
+\author{Wasim Esbai, Matteo Verzeroli}
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents
+	
+	\chapter{Fotopletismografia}
+	\import{./TextFiles/Fotopletismografia/}{Principio di funzionamento.tex}
+	\import{./TextFiles/Fotopletismografia/}{Siti di misura e lunghezze d’onda impiegate.tex}
+	\import{./TextFiles/Fotopletismografia/}{Stato dell’arte dei moduli PPG.tex}
+	
+	\chapter{Progetto della piattaforma indossabile}
+	\import{./TextFiles/Progetto della piattaforma indossabile/}{Hardware dell’adapter board.tex}
+	\import{./TextFiles/Progetto della piattaforma indossabile/}{Firmware.tex}
+	
+	\chapter{Caratterizzazione della piattaforma indossabile}
+	\import{./TextFiles/Caratterizzazione della piattaforma indossabile/}{Consumo di potenza.tex}
+	\import{./TextFiles/Caratterizzazione della piattaforma indossabile/}{Sito di misura.tex}
+	
+	\chapter{Conclusioni}
+	
+	%bibliografia
+	
+\end{document}
