@@ -6,10 +6,12 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
-
+\usepackage[style=numeric]{biblatex} %Imports biblatex package
 \usepackage{import}
 
 %inserire gestione figura
+
+\addbibresource{bibliography.bib} %Import the bibliography file
 
 \title{Progetto di un sistema optoelettronico indossabile per misure fotopletismografiche}
 \author{Wasim Esbai, Matteo Verzeroli}
@@ -38,6 +40,7 @@
 	\chapter*{Conclusioni}
 	\addcontentsline{toc}{chapter}{Conclusioni}
 	
-	%bibliografia
+	\chapter*{Bibliografia}
+	\printbibliography
 	
 \end{document}
