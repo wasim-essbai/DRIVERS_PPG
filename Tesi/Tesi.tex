@@ -6,15 +6,16 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
-\usepackage[style=numeric]{biblatex} %Imports biblatex package
 \usepackage{import}
+\usepackage{cite}
+\usepackage{todonotes}
 
 %inserire gestione figura
 
-\addbibresource{bibliography.bib} %Import the bibliography file
-
 \title{Progetto di un sistema optoelettronico indossabile per misure fotopletismografiche}
 \author{Wasim Esbai, Matteo Verzeroli}
+
+\pagestyle{plain}
 
 \begin{document}
 	\maketitle
@@ -40,7 +41,10 @@
 	\chapter*{Conclusioni}
 	\addcontentsline{toc}{chapter}{Conclusioni}
 	
-	\chapter*{Bibliografia}
-	\printbibliography
+	\bibliographystyle{plain}
+	\bibliography{./OtherFiles/bibliography}
+	\addcontentsline{toc}{chapter}{Bibliografia}
+
+	
 	
 \end{document}
