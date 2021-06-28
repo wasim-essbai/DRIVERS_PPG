@@ -7,8 +7,12 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{import}
+
 \usepackage{cite}
+
 \usepackage{todonotes}
+
+\newcommand{\Fig}[0]{Fig.}
 
 %inserire gestione figura
 
@@ -24,6 +28,17 @@
 	
 	\chapter*{Introduzione}
 	\addcontentsline{toc}{chapter}{Introduzione}
+	
+	Example of a Figure
+	\todo{Example of a figure}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Fotopletismografia/white_img}
+		\caption{xx}
+		\label{fig:xx}
+	\end{figure}
+	
+	Relying on the \Fig~\ref{fig:xx},
 	
 	\chapter{Fotopletismografia}
 	\import{./TextFiles/Fotopletismografia/}{Principio di funzionamento.tex}
