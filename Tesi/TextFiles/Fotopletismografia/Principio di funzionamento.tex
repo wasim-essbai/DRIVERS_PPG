@@ -31,14 +31,59 @@ Tuttavia, la distinzione nei due circuiti è puramente concettuale \todo{non mi 
 \subsection{La circolazione: Pressione, Flusso e Resistenza}
 \todo{inserire parte sulla velocità differente del sangue nelle varie parti del corpo?}
 Il sangue è assimilabile a un fluido e, come tale, è in grado di scorrere in tutto il corpo solamente lungo un \textit{gradiente di pressione}. Più precisamente, liquidi e gas fluisco da regioni a maggiore pressione verso regione a minore pressione. Negli esseri umani, il gradiente di pressione è mantenuto grazie alle contrazioni del cuore. Infatti, il sangue esce dal cuore, con una pressione elevata, e fluisce nei circuiti chiusi dei vasi sanguigni, che costituiscono una regione a pressione minore.\cite{SilverthornDeeUnglaub2020Fu:u}.
-Come mostrato nella figura \Fig~\ref{fig:PressioneSangue}, all'interno dell'aorta la pressione è mediamente alta pari a circa 100 mm Hg, con dei picchi di 120 mm Hg (\textit{pressione sistolica}) e dei minimi di 80 mm Hg (\textit{pressione diastolica}) \todo{spiegare a cosa sono dovuti questi picchi}.
- \begin{figure}[h]
+Come mostrato nella figura \Fig~\ref{fig:PressioneSangue}, all'interno dell'aorta la pressione è mediamente alta e pari a circa 100 mm Hg. Infatti, la pressione risulta essere pulsante con dei picchi di 120 mm Hg (\textit{pressione sistolica}) e dei minimi di 80 mm Hg (\textit{pressione diastolica}).
+\begin{figure}[h]
  	\centering
  	\includegraphics[width=0.9\linewidth]{ImageFiles/Fotopletismografia/PressioneSangue}
  	\caption{Pressione del sangue nelle differenti porzioni dell'apparato circolatorio quando una persona è in posizione supina.}
  	\label{fig:PressioneSangue}
- \end{figure}
-\todo{definizione di pressione}
-\todo{pressione su guyton e fisiologia umana}
+\end{figure}
+Mentre il sangue scorre all'interno della circolazione sistemica, la pressione media scende progressivamente fino a circa 0 mm Hg, alla terminazione delle vene cave superiore e inferiore. Inoltre, anche l'andamento pulsatile tende a diminuire a livello capillare e venoso. Si noti come, nella circolazione polmonare, la pressione nelle arterie polmonari ritorni ad essere pulsatile, a causa dell'azione del ventricolo destro, ma con una pressione media di 16 mm Hg, di molto inferiore rispetto a quella dell'aorta. La diminuzione della pressione del flusso ematico all'interno dell'apparato circolatorio è causato dalla \textit{resistenza vascolare}, che rappresenta la frizione tra il liquido e le pareti vascolari.
+
+Il flusso attraverso i vasi sanguigni può essere quindi calcolato con la seguente formula, chiamata \textit{legge di Ohm}:
+\begin{equation}
+	F=\frac{\Delta P}{R}
+	\label{eq:OhmsLaw}
+\end{equation}
+dove \textit{F} è il flusso del sangue, \textit{$\Delta$P} è il gradiente di pressione tra le due estremità di un vaso e \textit{R} è la resistenza.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{ImageFiles/Fotopletismografia/FlussoSangue}
+	\caption{Relazione tra pressione, resistenza e flusso ematico.P\ped{1}, pressione all'inizio del vaso, P\ped{2}, pressione all'altro capo del vaso}
+	\label{fig:FlussoSangue}
+\end{figure}
+Il flusso indica la quantità di sangue che passa in un dato punto della circolazione in un intervallo di tempo specificato. \`E espresso in millimetri o litri al minuto. Tipicamente in un essere umano adulto il flusso è di circa 5000 ml/min.
+
+Quando il sangue scorre con un ritmo constante all'interno di un vaso lungo e liscio, il suo flusso può essere considerato \textit{laminare}. In questo caso, la velocità del liquido ematico che si trova nel centro del vaso è maggiore rispetto a quello che si trova alle estremità, le cui particelle sono a contatto con le pareti. Questo effetto è chiamato \textit{profilo parabolico della velocità del flusso del sangue} ed è mostrato nella figura \Fig~\ref{fig:FlussoParabolico}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{ImageFiles/Fotopletismografia/FlussoParabolico}
+	\caption{\textbf{A}. Due fluidi prima che il flusso inizi.\textbf{B}. Lo stesso fluido un secondo dopo l'inizio del flusso. \textbf{C}. Flusso turbolento}
+	\label{fig:FlussoParabolico}
+\end{figure}
+Il flusso non è più laminare quando il ritmo diventa elevato oppure incontra una superficie ruvida o un ostacolo. Si parla quindi di \textit{flusso turboelnto}, caratterizzato da un moto disordinato delle particelle del sangue, causando un aumento della resistenza.
+
+La \textit{pressione idrostatica} del sangue rappresenta la forza esercitata dal sangue su una qualsiasi unità di area della parete di un vaso. In verità, il sangue è un liquido in movimento. Per cui, esso ha una componente dinamica, che rappresenta l'energia cinetica del sistema, da tenere in considerazione. In particolare, come si è già visto analizzando il gradiente di pressione nel circuito vascolare \todo{si dice?}, la pressione di un liquido in movimento diminuisce con la distanza percorsa, a causa dell'energia dispersa dall'attrito con le pareti del contenitore. Una grandezza importante dell'emodinamica (branca della fisiologia cardiovascolare che studia il comportamento del sangue in movimento nei vasi) è la \textit{conduttanza}, che rappresenta la misura del flusso del sangue attraverso un vaso per un dato gradiente di pressione. \`E evidente che la conduttanza è il reciproco della resistenza: 
+\begin{equation}
+	Conduttanza=\frac{1}{Resistenza}
+	\label{eq:Conduttanza}
+\end{equation}
+Inoltre, la conduttanza è strettamente legata al diametro del vaso: 
+\begin{equation}
+	Conduttanza\propto Diametro^4
+	\label{eq:ConduttanzaeDiametro}
+\end{equation}
+poiché tutti il sangue può essere considerato a contatto con le pareti e soggetto alla resistenza.
+Integrando le velocità del sangue in una sezione di un vaso sanguigno \todo{scrivere meglio}, si può ricavare la seguente formula (\textit{legge di Poiseuille}):
+\begin{equation}
+	F\xrightarrow{}\frac{\pi\Delta P r^4}{8 \eta l}
+	\label{eq:PoiseuuilleLaw}
+\end{equation}
+dove \textit{F} è la velocità del sangue, \textit{$\Delta$ P} è il gradiente di pressione, \textit{r} è il raggio del vaso, \textit{l} la lunghezza del vaso e \textit{$\eta$} è la viscosità del sangue. Si ponga ancora l'attenzione sulla dipendenza della velocità del flusso con la quarta potenza del raggio del vaso. Quindi, il controllo del flusso del sangue può essere effettuato controllando il diametro dei vasi sanguigni (tipicamente le arteriole). Al contrario, la lunghezza e la viscosità del sangue (che dipende dal rapporto tra eritrociti e plasma) possono essere considerati parametri costanti, che quindi non influenzano la pressione.
+
+\todo{da rileggere!!!}
+
+
+
 \todo{nell'articolo Blood Pressure Estimation from Photoplethysmogram relazione tra pressione e segnale ppg}
 \pagebreak
