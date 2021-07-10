@@ -88,18 +88,21 @@ La fotopletismografia (PPG) è una tecnica ottica, semplice ed economica, che pe
 	\caption{Andamento complessivo delle pubblicazioni che hanno utilizzato la tecnologia PPG a singola misura per stimare la PA da gennaio 2010 a gennaio 2019}
 	\label{fig:TrendStudies}
 \end{figure}
-Originariamente, l'analisi del segnale PPG era utilizzato per il monitoraggio continuo della frequenza cardiaca di pazienti in ospedale, utilizzando dei dispositivi che venivano indossati sulle dita. Un'altra importante applicazione della fotopletismografia è il monitoraggio dell'ossigenazione del sangue di pazienti affetti da COVID-19. La facilità dell'utilizzo di questi dispositivi ne ha permesso il monitoraggio a domicilio. Infatti, se un paziente presenta un livello basso, tipicamente inferiore al 90\%, necessita immediatamente di cure mediche. Inoltre, l'analisi congiunta dell'onda PPG e dei tracciati ECG sembra essere utile nel diagnosticare e monitorare diverse patologie cardiovascolari, come ad esempio l'ipertensione\cite{Elgendi2019}.
-\todo{immagini da sistemare e cambiare}
+Originariamente, l'analisi del segnale PPG era utilizzato per il monitoraggio continuo della frequenza cardiaca di pazienti in ospedale, utilizzando dei dispositivi che venivano indossati sulle dita. Un'altra importante applicazione della fotopletismografia è il monitoraggio dell'ossigenazione del sangue di pazienti affetti da COVID-19. La facilità dell'utilizzo di questi dispositivi ne ha permesso il monitoraggio a domicilio. Infatti, se un paziente presenta un livello basso, tipicamente inferiore al 90\%, necessita immediatamente di cure mediche. Inoltre, l'analisi congiunta dell'onda PPG e dei tracciati ECG sembra essere utile nel diagnosticare e monitorare diverse patologie cardiovascolari, come ad esempio l'ipertensione\cite{Elgendi2019}. 
+
+Esistono due differenti configurazioni per effettuare misurazioni fotopletismografiche (\Fig~\ref{fig:FlussoParabolico}). 
+\todo{immagini da sistemare ??}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.3\linewidth]{ImageFiles/Fotopletismografia/PPGTrasmissivo}
-	\includegraphics[width=0.3\linewidth]{ImageFiles/Fotopletismografia/PPGRiflessiva}
-	\caption{...}
-	\label{fig:aa}
+	\includegraphics[width=0.7\linewidth]{ImageFiles/Fotopletismografia/PPGTrasmissivaRiflettiva}
+	\caption{a)PPG modalità riflessiva. b)PPG modalità trasmissiva}
+	\label{fig:PPGTrasmissivaRiflettiva}
 \end{figure}
+La modalità \textit{riflessiva}, in cui la sorgente luminosa e il fotorivelatore sono posti sullo stesso piano. In questo modo, il fotorivelatore rileverà la luce che viene riflessa dal tessuto. Al contrario, nella modalità \textit{trasmissiva}, fotorilevatore è posto dal lato opposto del tessuto rispetto alla sorgente luminosa. In questo modo, la luce attraversa interamente il tessuto prima di essere acquisita. In genere, viene preferita la modalità riflessiva. Infatti, sebbene la configurazione trasmissiva permetta di ottenere segnali migliori, la modalità a riflessione consente di costruire sensori più comodi e piccoli, mantenendo una buona qualità dei segnali.
 
+La fotopletismografia è considerata una delle tecniche migliori per acquisizioni non invasive basate sul rilevamento degli impulsi periferici\cite{Nenova2009}. Come si è già evidenziato, i principali vantaggi di questa tecnologia sono legati alla sua relativa semplicità di utilizzo e basso costo di realizzazione, garantendo però un'elevata sensitività nella rilevazione nelle variazioni del flusso sanguigno nei tessuti. Inoltre, soprattutto nella configurazione riflessiva, le misurazioni possono essere effettuate in diverse parti del corpo e il suo posizionamento non risulta essere critico. Tuttavia, bisogna analizzare alcune criticità che devono considerate per ottenere segnali PPG affidabili. La qualità dell'onda PPG è molto sensibile agli artefatti introdotti dal movimento dell'individuo durante l'acquisizione. Infatti, si potrebbero ottenere delle distorsioni nel segnale dovute al movimento relativo tra sensore e tessuto. In aggiunta, è bene scegliere siti con un alto indice di perfusione, come i lobi delle orecchie\todo{ti risulta?}, in modo che la misurazione sia più robusta. Anche la temperatura superficiale della pelle (SST) e ambientale è un fattore che può influenzare le acquisizioni, influenzando alcuni parametri stimati a partire dal segnale PPG\cite{Jeong2014}. Anche le interferenze causate da sorgenti luminose esterne, che potrebbero essere rilevate dal fotorilevatore e disturbare il segnale. \`E necessario quindi studiare dei componenti, come ad esempio l'ALC (\textit{Ambient Light Cancellation})  che permettano di compensare l'effetto dovuto a questi disturbi \cite{Kim2015}.\todo{citazione da valutare}Infine, è importante anche isolare il LED e il fotorilevatore, soprattutto nella modalità riflessiva.In questo modo si evita che la luce possa raggiungere il fotodiodo senza aver attraversato i tessuti.
 
-\todo{da finire e rileggere: solamente scritto}
-\todo{accelerometri}
+\todo{introdurre confronto con ECG?}
+DA RILEGGERE ANCORA
 \todo{nell'articolo Blood Pressure Estimation from Photoplethysmogram relazione tra pressione e segnale ppg}
 \pagebreak
