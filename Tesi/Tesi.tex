@@ -1,15 +1,16 @@
-\documentclass[12pt,a4paper]{book}
-\usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
-\usepackage[italian]{babel}
+\documentclass[
+	a4paper,
+	cleardoublepage=empty,
+	headings=twolinechapter,
+	numbers=autoenddot,
+]{scrbook}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{graphicx}
 \usepackage{import}
 \usepackage{float}
 \usepackage{cite}
-\usepackage{hyperref}
+\usepackage[signatures,swapnames,sans]{frontespizio}
 
 \usepackage{todonotes}
 
@@ -19,15 +20,49 @@
 \newcommand{\Fig}[0]{Fig.}
 \newcommand{\Eq}[0]{Eq.}
 
-%inserire gestione figura
-
-\title{Progetto di un sistema optoelettronico indossabile per misure fotopletismografiche}
-\author{Wasim Esbai, Matteo Verzeroli}
-
 \pagestyle{plain}
+\input{preamble}
+\newcolumntype{C}{>{\centering\arraybackslash}p{3cm}}
 
 \begin{document}
-	\maketitle
+	\frontmatter
+	
+	\pdfbookmark{Title page}{titlepage}
+	\begin{frontespizio}
+		\Margini{3cm}{3cm}{3cm}{3cm}
+		\Universita{Bergamo}
+		\Logo[43.332mm]{unibg-mark}
+		\Divisione{Scuola di Ingegneria}
+		\Corso[Laurea Triennale]{Ingegneria Informatica\\Classe LM-32 --- Classe delle Lauree Triennali in Ingegneria Informatica}
+		\Titolo{Progetto di un sistema optoelettronico indossabile per misure fotopletismografiche}
+		\Punteggiatura{}
+		\NCandidato{Tesi di Laurea Triennale}
+		\Candidato[1]{Wasim Essbai, Matteo Verzeroli}
+		\Relatore{Prof.\ Gianluca Traversi}
+		\Correlatore{Dott.\ Andrea Pedrana}
+		\Annoaccademico{2020--2021}
+		\begin{Preambolo*}
+			\usepackage[italian]{babel}
+			\usepackage[T1]{fontenc}
+			\usepackage[utf8]{inputenc}
+			\usepackage{microtype}
+			\usepackage{lmodern}
+			\graphicspath{{img/}}
+			% Commented lines are the default font settings:
+			% \renewcommand{\frontinstitutionfont}{\fontsize{14}{17}\bfseries}
+			\renewcommand{\frontinstitutionfont}{\fontsize{14}{17}\bfseries\scshape}
+			% \renewcommand{\frontdivisionfont}{\fontsize{12}{16}}
+			% \renewcommand{\frontpretitlefont}{\fontsize{10}{12}\scshape}
+			% \renewcommand{\fronttitlefont}{\fontsize{17}{21}\bfseries}
+			\renewcommand{\fronttitlefont}{\fontsize{17}{21}\bfseries\scshape}
+			% \renewcommand{\frontsubtitlefont}{\fontsize{12}{14}}
+			% \renewcommand{\frontfixednamesfont}{\fontsize{12}{14}}
+			% \renewcommand{\frontnamesfont}{\fontsize{12}{14}\bfseries}
+			% \renewcommand{\frontsmallfont}{\fontsize{9}{11}\bfseries}
+			% \renewcommand{\frontfootfont}{\fontsize{12}{14}\bfseries}
+			\renewcommand{\frontfootfont}{\fontsize{12}{14}\bfseries\scshape}
+		\end{Preambolo*}
+	\end{frontespizio}
 	
 	\tableofcontents
 	

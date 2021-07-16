@@ -1,0 +1,104 @@
+% Language(s)
+\usepackage[italian]{babel}
+
+% Fonts & typography
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype,mathtools,amssymb}
+\usepackage{lmodern}
+
+% Margins
+\usepackage[top=3cm,bottom=3cm,inner=3cm,outer=3cm]{geometry}
+\usepackage{multicol}
+\usepackage{multirow}
+
+
+% Formulas
+\usepackage{physics,siunitx,xfrac}
+\def\diffd{\textnormal{d}}
+\sisetup{
+  detect-all,
+  binary-units,
+  per-mode=symbol,
+% per-mode=symbol-or-fraction,
+% fraction-function=\sfrac,
+% inter-unit-product=\ensuremath{{}\cdot{}},
+  retain-unity-mantissa=false,
+  retain-explicit-plus=true,
+  exponent-product=\cdot,
+  complex-root-position=before-number,
+  output-complex-root=\ensuremath{\mathrm{j}},
+  separate-uncertainty,
+}
+
+% Tabulars
+\usepackage{array,booktabs}
+
+% Images & floats
+\usepackage{graphicx,adjustbox}
+\usepackage{caption,subcaption}
+\graphicspath{{img/}}
+\captionsetup{
+  tableposition=top,
+  figureposition=bottom,
+  width=0.9\textwidth,
+  format=plain,
+  indent=5mm,
+  labelformat=simple,
+  labelsep=endash,
+  font=small,
+  labelfont={sf,bf},
+}
+\captionsetup[sub]{width=0.8\linewidth}
+
+% Cross-references & links
+\usepackage{hyperref,cleveref,bookmark}
+\hypersetup{
+  unicode=true,
+  breaklinks=true,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  pdftitle={}, % TODO
+  pdfauthor={}, % TODO
+}
+\urlstyle{same}
+
+% Bibliography
+\usepackage[
+  backend=bibtex,
+  bibstyle=numeric,
+  citestyle=numeric-comp,
+  style=numeric-comp,
+  sorting=none,
+% sortcase=true|false,
+]{biblatex}
+
+% Extra
+% \renewcommand{\thefootnote}{\Roman{footnote}}
+
+\renewcommand*{\vec}[1]{\ensuremath{\underline{#1}}}
+\newcommand*{\mat}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand*{\tran}{^\mathsf{T}}
+
+\AtBeginDocument{%
+  \renewcommand{\epsilon}{\varepsilon}
+  \renewcommand{\theta}{\vartheta}
+  \renewcommand{\kappa}{\varkappa}
+% \renewcommand{\rho}{\varrho}
+  \renewcommand{\phi}{\varphi}
+}
+
+% Alter some LaTeX defaults for better treatment of floats
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.7}
+\renewcommand{\dblfloatpagefraction}{0.7}
+
+
+
