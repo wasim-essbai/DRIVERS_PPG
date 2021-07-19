@@ -4,6 +4,7 @@
 	headings=twolinechapter,
 	numbers=autoenddot,
 ]{scrbook}
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -48,23 +49,15 @@
 			\usepackage{microtype}
 			\usepackage{lmodern}
 			\graphicspath{{img/}}
-			% Commented lines are the default font settings:
-			% \renewcommand{\frontinstitutionfont}{\fontsize{14}{17}\bfseries}
+			
 			\renewcommand{\frontinstitutionfont}{\fontsize{14}{17}\bfseries\scshape}
-			% \renewcommand{\frontdivisionfont}{\fontsize{12}{16}}
-			% \renewcommand{\frontpretitlefont}{\fontsize{10}{12}\scshape}
-			% \renewcommand{\fronttitlefont}{\fontsize{17}{21}\bfseries}
 			\renewcommand{\fronttitlefont}{\fontsize{17}{21}\bfseries\scshape}
-			% \renewcommand{\frontsubtitlefont}{\fontsize{12}{14}}
-			% \renewcommand{\frontfixednamesfont}{\fontsize{12}{14}}
-			% \renewcommand{\frontnamesfont}{\fontsize{12}{14}\bfseries}
-			% \renewcommand{\frontsmallfont}{\fontsize{9}{11}\bfseries}
-			% \renewcommand{\frontfootfont}{\fontsize{12}{14}\bfseries}
 			\renewcommand{\frontfootfont}{\fontsize{12}{14}\bfseries\scshape}
 		\end{Preambolo*}
 	\end{frontespizio}
 	
 	\tableofcontents
+	\mainmatter
 	
 	\chapter*{Introduzione}
 	\addcontentsline{toc}{chapter}{Introduzione}
