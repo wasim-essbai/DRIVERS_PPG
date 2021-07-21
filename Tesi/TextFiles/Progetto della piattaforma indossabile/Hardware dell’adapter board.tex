@@ -25,9 +25,26 @@ Si tratta di un modulo integrato a basso consumo, per acquisizioni di dati ottic
 \cite{STElectronicsLIS2DW12}
 
 % Insieme alle acquisizioni del sensore PPG vengono integrate anche delle misure accelero-metriche. L'accelerometro utilizzato è \textbf{LIS2DH12} \cite{STMicroelectronicsLIS2DH12} prodotto da STMicroelectronics. Si tratta di un accelerometro triassiale a basso consumo e dalle piccole dimensioni (2 x 2 mm). Questo sensore viene utilizzato per migliorare la qualità delle acquisizioni fotopletismografiche quando il soggetto è in movimento, fornendo un'informazione sull'entità di quest'ultimo, e quindi del disturbo che si introduce nella misura. Il LIS2DH12 richiede una tensione di alimentazione compresa tra i 1.71V e i 3.6V, con un consumo di corrente pari a \SI{185}{\micro\ampere}.
-\todo{inserirei come in facagni la tabella dei componenti}
-\paragraph{Progetto PCB}
-
+\todo{inserirei come in facagni la tabella dei componenti --> Si assoulutamente, lo facciamo come ultimo step}
+\paragraph{Progetto PCB} Il progetto della board è stato fatto con il software Autodesk Eagle. Come prima fase di progetto, è stato realizzato lo schematico, dove sono state definite le interconnessioni dei componente a livello logico, e in seguito il layout dove invece viene progettata la scheda fisica, quindi la posizione dei componenti e delle piste che le connettono.
+In figura \ref{fig:ImmagineMAXM86161} viene riportato lo schematico prodotto con il software Eagle, dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (quello sopra), e uno per la comunicazione I\ap{2}C (quello sotto).
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{ImageFiles/Hardware/schematic_maxm}
+	\caption{Schematico Adapater Board con il sensore PPG MAXM86161}
+	\label{fig:schematic_maxm}
+\end{figure}
+Il layout è stato prodotto partendo dallo schematico avendo cura di realizzare una board dalle dimensioni più ridotte possibili. Come si può vedere in figura \ref{fig:Layout_maxm} la board si compone su due layer, Top (in rosso) e Bottom (in blu).
+\todo{Immagini da sistemare per metterle in fila a stessa dimensione}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.1\linewidth]{ImageFiles/Hardware/layout_top_maxm}
+	\includegraphics[width=0.1\linewidth]{ImageFiles/Hardware/layout_bottom_maxm}
+	\includegraphics[width=0.4\linewidth]{ImageFiles/Hardware/manifacturing_top_maxm}
+	\includegraphics[width=0.4\linewidth]{ImageFiles/Hardware/manifacturing_bottom_maxm}
+	\caption{Da sistemare}
+	\label{fig:Layout_maxm}
+\end{figure}
 \subsection{Adapter Board: MAX86916}
 
 \paragraph{Sensore PPG} Il sensore PPG utilizzato è il MAX86916, prodotto da Maxim Integrated, descritto precedentemente come stato dell'arte.
