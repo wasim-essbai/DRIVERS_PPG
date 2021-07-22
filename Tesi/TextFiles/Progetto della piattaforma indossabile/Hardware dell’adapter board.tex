@@ -30,17 +30,18 @@ Si tratta di un modulo integrato a basso consumo, per acquisizioni di dati ottic
 \`E pensato per rivelazioni di movimento e riconoscimento dei gesti su dispositivi indossabili. Il sensore permette di selezionare un fondo scala di $\pm$\SI{2}{\gram}, $\pm$\SI{4}{\gram}, $\pm$\SI{8}{\gram} oppure $\pm$\SI{16}{\gram}. Necessita un'alimentazione compresa tra i 1.62V e i 3.6V e la corrente assorbita tipicamente è di \SI{50}{\nano\ampere} nella modalità \textit{power-down} e di \SI{1}{\micro\ampere} nella modalità attiva \textit{low-power}. Inoltre, l'accelerometro include un sensore di temperatura che permette di compensare gli effetti della temperatura ambientale sulle misure. Presenta un'interfaccia I\ap{2}C e un interfaccia SPI per la comunicazione. Questo sensore è stato inserito sull'Adapter Board poiché le misurazioni di accelerazione, dovute a movimenti dell'individuo durante l'acquisizione dei segnali PPG, possono essere utilizzare per ridurre eventuali distorsioni ed errori nelle misurazioni, permettendo di ottenere delle stime dei parametri migliori. Il sensore è realizzato in un package di tipo LGA-12 con dimensioni 2.0 mm x 2.0 mm x 0.7 mm.
 \todo{tabella riassuntiva dei componenti come facagni}
 
-\paragraph{Progetto PCB} Il progetto della board è stato fatto con il software Autodesk Eagle. Come prima fase di progetto, è stato realizzato lo schematico, dove sono state definite le interconnessioni dei componente a livello logico, e in seguito il layout dove invece viene progettata la scheda fisica, quindi la posizione dei componenti e delle piste che le connettono.
-In figura \ref{fig:ImmagineMAXM86161} viene riportato lo schematico prodotto con il software Eagle, dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (quello sopra), e uno per la comunicazione I\ap{2}C (quello sotto).
-\begin{figure}[h]
+\paragraph{Progetto PCB} Il progetto della board è stato realizzato con il software Autodesk Eagle. Come prima fase del progetto è stato realizzato lo schematico, dove sono state definite le interconnessioni dei componente a livello logico. In seguito, è stato definito il layout della PCB, definendo la posizione dei componenti e delle piste che li connettono.
+In figura \ref{fig:ImmagineMAXM86161} viene riportato lo schematico dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (quello sopra)\todo{non molto bello}, e uno per la comunicazione I\ap{2}C (quello sotto\todo{non molto bello magari c'è il modo per definirlo in modo più elegante}).
+\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.8\linewidth]{ImageFiles/Hardware/schematic_maxm}
 	\caption{Schematico Adapater Board con il sensore PPG MAXM86161}
 	\label{fig:schematic_maxm}
 \end{figure}
-Il layout è stato prodotto partendo dallo schematico avendo cura di realizzare una board dalle dimensioni più ridotte possibili. Come si può vedere in figura \ref{fig:Layout_maxm} la board si compone su due layer, Top (in rosso) e Bottom (in blu).
+\todo{attenzione a posizionare sempre le immagini o b o t come vuole traversi.. in questo caso mi sembra meglio posizionare entrambe a b ma anche t e b non è male}
+Il layout è stato progettato partendo dallo schematico, avendo cura di realizzare una board dalle dimensioni più ridotte possibili. Come si può vedere in figura \ref{fig:Layout_maxm} la board si compone su due layer, Top (in rosso) e Bottom (in blu).
 \todo{Immagini da sistemare per metterle in fila a stessa dimensione}
-\begin{figure}[h]
+\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_top_maxm}
 	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_bottom_maxm}
