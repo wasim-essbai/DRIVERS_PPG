@@ -8,7 +8,7 @@ Le due piattaforme si differenziano per l'Adapter Board, in cui sono stati utili
 	\caption{Diagramma a bloccchi dell'Adapter Board con modulo PPG MAXM86161}
 	\label{fig:DiagrammaBlocchiMAXM86161}
 \end{figure}
-L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro triassiale LIS2DW12, che comunicano con il microcontrollore tramite protocollo I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAXM86161}). Grazie al numero ridotto di componenti è stato possibile ottenere una scheda dalle dimensioni molto ridotte (12,4 mm x 4,6 mm).
+L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro triassiale LIS2DW12, che comunicano con il microcontrollore tramite protocollo I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAXM86161}). Grazie al numero ridotto di componenti è stato possibile ottenere una scheda dalle dimensioni molto ridotte (12,4 mm x 4,6 mm), con una superficie di appena \SI{57.04}{\square\milli\meter}.
 
 \paragraph{Sensore PPG} Il sensore PPG utilizzato è il MAXM86161 rappresentato nella figura \ref{fig:ImmagineMAXM86161}.
 \begin{figure}[tb]
@@ -31,7 +31,7 @@ La comunicazione con il microcontrollore avviene tramite i pin SDA e SCL, tipici
 \todo{tabella riassuntiva dei componenti come facagni}
 \todo{il pin di interrupt????}
 \paragraph{Progetto PCB} Il progetto della board è stato realizzato con il software Autodesk Eagle. Come prima fase del progetto è stato realizzato lo schematico, dove sono state definite le interconnessioni dei componente a livello logico. In seguito, è stato definito il layout della PCB, definendo la posizione dei componenti e delle piste che li connettono.
-In figura \ref{fig:ImmagineMAXM86161} viene riportato lo schematico dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (quello sopra)\todo{non molto bello}, e uno per la comunicazione I\ap{2}C (quello sotto\todo{non molto bello magari c'è il modo per definirlo in modo più elegante}).
+In figura \ref{fig:ImmagineMAXM86161} viene riportato lo schematico dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (VCC e GND), e uno per la comunicazione I\ap{2}C e l'interrupt del modulo PPG (SDA, SCL, INT\_PPG).
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.8\linewidth]{ImageFiles/Hardware/schematic_maxm}
@@ -40,24 +40,34 @@ In figura \ref{fig:ImmagineMAXM86161} viene riportato lo schematico dove si poss
 \end{figure}
 \todo{attenzione a posizionare sempre le immagini o b o t come vuole traversi.. in questo caso mi sembra meglio posizionare entrambe a b ma anche t e b non è male}
 Il layout è stato progettato partendo dallo schematico, avendo cura di realizzare una board dalle dimensioni più ridotte possibili. Come si può vedere in figura \ref{fig:Layout_maxm} la board si compone su due layer, Top (in rosso) e Bottom (in blu).
-\todo{Immagini da sistemare per metterle in fila a stessa dimensione}
 \begin{figure}[b]
 	\centering
+	a$)$
 	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_top_maxm}
+	b$)$
 	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_bottom_maxm}
-	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/manifacturing_top_maxm}
-	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/manifacturing_bottom_maxm}
-	\caption{Da sistemare}
+	c$)$
+	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_top_maxm}
+	d$)$
+	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_bottom_maxm}
+	\caption{Layout Adapter Board: a$)$ Livello Top, b$)$ Livello Bottom, c$)$ Rendering 2D Top, d$)$ Rendering 2D Bottom}
 	\label{fig:Layout_maxm}
 \end{figure}
-Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di 0.3 mm, con una corona di \SI{254}{\micro\meter}.
+Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
 
 \pagebreak
 \subsection{Adapter Board: MAX86916}
+La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da un accelerometro LIS2DW12 e da un LDO (Low-dropout regulator) prodotto da Analog Devices. Come nella board descritta precedentemente, il sensore MAX86916 e l'accelerometro comunicano con il controllore grazie a un'interfaccia standard I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAX86916}). I dati vengono poi acquisiti da un computer collegato tramite USB alla board STM32F4DISCOVERY, che ospita il microcontrollore. L'aggiunta del regolatore LDO esterno e le dimensioni maggiori del modulo PPG ha portato ad ottenere una PCB con dimensioni 4.5 mm x 17.5 mm. Sebbene siano leggermente maggiori rispetto all'Adapter Board sopra descritta, essa risulta essere molto compatta e adatta ad dispositivi indossabili, con una superficie di solo \SI{78.75}{\square\milli\meter}.
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/DiagrammaBlocchiMAX86916}
+	\caption{MAX86916 magari mettere in evidenza led e foto diodo}
+	\label{fig:DiagrammaBlocchiMAX86916}
+\end{figure}
 
 \paragraph{Sensore PPG} Il sensore PPG utilizzato è il MAX86916, prodotto da Maxim Integrated, descritto precedentemente come stato dell'arte.
 
-\begin{figure}[tb]
+\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/ImmagineMAX86916}
 	\caption{MAX86916 magari mettere in evidenza led e foto diodo}
@@ -65,7 +75,7 @@ Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di 0.3 
 \end{figure}
 
 \paragraph{LDO} \todo{Parliamo dei 3 LDO che abbiamo valutato? si parlerei di tutti e tre o almeno 2 mettendo in evidenza magari una tabella con le differenze}
-
+\cite{AnalogDevicesADP166}
 \paragraph{Accelerometro}\todo{ut supra} L'accelerometro utilizzato è sempre \textbf{LIS2DH12} prodotto da STMicroelectronics.
 
 \subsection{Microcontrollore: STM32F4DISCOVERY}\todo{farei una descrizione con alcune nozione sui componenti}
