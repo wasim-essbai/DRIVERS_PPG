@@ -14,7 +14,7 @@ L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro tri
 \begin{figure}[tb]
 	\centering
 	\includegraphics[width=0.7\linewidth]{ImageFiles/Hardware/ImmagineMAXM86161}
-	\caption{Il modulo MAXM86161.}
+	\caption{Il sensore MAXM86161.}
 	\label{fig:ImmagineMAXM86161}
 \end{figure}
 Si tratta di un modulo integrato a basso consumo, per acquisizioni di dati ottici. Il sensore integra 3 LED (rosso, infrarosse e verde), un fotodiodo ed elementi ottici. All'interno è anche presente un regolatore di tensione lineare (LDO). Per questo motivo non è necessario inserire un ulteriore LDO esterno per l'alimentazione dei circuiti interni e dei LED. Il modulo viene alimentato a singola tensione, che deve essere compresa tra i 3.0V e 5.5V. \`E presente un pin di uscita (VLDO) collegato all'uscita del regolatore interno che fornisce una tensione di 1.8V che può essere utilizzato per alimentare eventuali dispositivi esterni. Infatti, nell'Adapter Board, questa uscita è stata utilizzata per alimentare l'accelerometro. 
@@ -29,16 +29,15 @@ La comunicazione con il microcontrollore avviene tramite i pin SDA e SCL, tipici
 \end{figure}
 \`E pensato per rilevazioni di movimento e riconoscimento dei gesti su dispositivi indossabili. Il sensore permette di selezionare un fondo scala di $\pm$\SI{2}{\gram}, $\pm$\SI{4}{\gram}, $\pm$\SI{8}{\gram} oppure $\pm$\SI{16}{\gram}. Necessita di un'alimentazione compresa tra i 1.62V e i 3.6V e la corrente assorbita tipicamente è di \SI{50}{\nano\ampere} nella modalità \textit{power-down} e di \SI{1}{\micro\ampere} in quella attiva \textit{low-power}. Inoltre, l'accelerometro include un sensore di temperatura che permette di compensare gli effetti termici sulle misure. Presenta un'interfaccia I\ap{2}C e un interfaccia SPI per la comunicazione. Questo sensore è stato inserito nell'Adapter Board per ottenre una stima di eventuali disturbi, dovuti agli artefatti del movimento, permettendo quindi di ottenere delle stime dei parametri di qualità superiore. Il sensore è realizzato in un package di tipo LGA-12 con dimensioni 2.0 mm x 2.0 mm x 0.7 mm.
 \todo{tabella riassuntiva dei componenti come facagni}
-\todo{il pin di interrupt????}
+\todo{il pin di interrupt???? Lasciamo stare}
 \paragraph{Progetto PCB} Il progetto della board è stato realizzato con il software Autodesk Eagle. Come prima fase del progetto è stato realizzato lo schematico, dove sono state definite le interconnessioni dei componente a livello logico. In seguito, è stato definito il layout della PCB, definendo la posizione dei componenti e delle piste che li connettono.
-In figura \ref{fig:ImmagineMAXM86161} viene riportato lo schematico dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (VCC e GND), e uno per la comunicazione I\ap{2}C e l'interrupt del modulo PPG (SDA, SCL, INT\_PPG).
+In figura \ref{fig:schematic_maxm} viene riportato lo schematico dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (VCC e GND), e uno per la comunicazione I\ap{2}C e l'interrupt del modulo PPG (SDA, SCL, INT\_PPG).
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.8\linewidth]{ImageFiles/Hardware/schematic_maxm}
 	\caption{Schematico Adapater Board con il sensore PPG MAXM86161}
 	\label{fig:schematic_maxm}
 \end{figure}
-\todo{attenzione a posizionare sempre le immagini o b o t come vuole traversi.. in questo caso mi sembra meglio posizionare entrambe a b ma anche t e b non è male}
 Il layout è stato progettato partendo dallo schematico, avendo cura di realizzare una board dalle dimensioni più ridotte possibili. Come si può vedere in figura \ref{fig:Layout_maxm} la board si compone su due layer, Top (in rosso) e Bottom (in blu).
 \begin{figure}[b]
 	\centering
@@ -56,6 +55,20 @@ Il layout è stato progettato partendo dallo schematico, avendo cura di realizza
 Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
 
 \pagebreak
+\noindent Nella tabella \ref{tab:ComponentiAdapterMaxm} vengono riassunti i componenti presente nell'\textit{Adapter Board} descritta.
+\begin{table}[h]
+	\renewcommand{\arraystretch}{1.5}
+	\centering
+	\begin{tabular}{ccccc}
+		\hline
+		Nome    & Tipologia   & Principali caratteristiche   \\ \hline
+		MAXM86161 & Sensore PPG  &  \\ \hline
+		LIS2DW12  & Accelerometro triassiale &  \\ \hline
+	\end{tabular}
+	\caption{Riepilogo dei componenti dell'Adapter Board con sensore MAXM86161.}
+	\label{tab:ComponentiAdapterMaxm}
+\end{table}
+\todo{tabella completare}
 \subsection{Adapter Board: MAX86916}
 La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da un accelerometro LIS2DW12 e da un LDO (Low-dropout regulator) prodotto da Analog Devices. Come nella board descritta precedentemente, il sensore MAX86916 e l'accelerometro comunicano con il controllore grazie a un'interfaccia standard I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAX86916}). I dati vengono poi acquisiti da un computer collegato tramite USB alla board STM32F4DISCOVERY, che ospita il microcontrollore. L'aggiunta del regolatore LDO esterno e le dimensioni maggiori del modulo PPG ha portato ad ottenere una PCB con dimensioni 4.5 mm x 17.5 mm. Sebbene siano leggermente maggiori rispetto all'Adapter Board sopra descritta, essa risulta essere molto compatta e adatta ad dispositivi indossabili, con una superficie di solo \SI{78.75}{\square\milli\meter}.
 \begin{figure}[t]
@@ -74,7 +87,12 @@ La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da 
 \end{figure}
 Esso permette l'acquisizione di segnali fotopletismografici grazie a quattro LED, rispettivamente di colore rosso, infrarosso, verde e blu e di un fotodiodo. La peculiarità di questo modulo consiste nella presenza del LED blu, che tipicamente viene omesso. Nel corso di questa tesi, cercheremo di analizzare le caratteristiche delle acquisizioni effettuate con questa lunghezza d'onda (circa \SI{460}{\nano\meter}). Infatti, solitamente vengono utilizzate sorgenti luminose nelle regioni del verde, rosso e infrarosso considerate più efficienti per misure di SpO\ped{2} e HR. I LED vengono alimentati con una tensione di 5.0V \todo{da verificare} fornita dalla scheda STM32F4DISCOVERY, mentre i circuiti interni vengono alimentati con una tensione di 1.8V, grazie al regolatore lineare di tensione. Il modulo si presenta con un package di tipo OLGA a 14 pin con dimensioni 3.5 mm x 7.0 mm x 1.5 mm. Presenta consumi molto ridotti, con una corrente di \SI{0.7}{\micro\ampere} nella modalità \textit{shutdown}.\todo{non mi viene altro}
 
-\paragraph{LDO} Per fornire l'alimentazione di 1.8V al modulo PPG è stato inserito il regolatore lineare di tensione (LDO) \textbf{ADP166}, prodotto da Analog Devices\cite{AnalogDevicesADP166}.\todo{descrizione LDO ADP166}
+\paragraph{LDO} Per fornire l'alimentazione di 1.8V al modulo PPG è stato inserito il regolatore lineare di tensione (LDO), questo è un dispositivo che, data una tensione in ingresso, ne fornisce una costante in uscita di valore anche differenze da quello in ingresso. Nel caso dell'\textit{Adapter Board} realizzata, questo dispositivo viene utilizzato per alimentare l'accelerometro e la circuiteria interna del sensore PPG.
+Nella scelto del regolatore lineare di tensione sono stati presi in considerazione tre diversi dispositivi:
+\todo{tabella con i 3 LDO in stile cossali}
+
+
+\textbf{ADP166}, prodotto da Analog Devices\cite{AnalogDevicesADP166}.\todo{descrizione LDO ADP166}
 
 Sono stati presi in considerazione diversi LDO, che differivano per caratteristiche. 
 \subparagraph{ADP122}\cite{AnalogDevicesADP122}
@@ -84,7 +102,28 @@ Sono stati presi in considerazione diversi LDO, che differivano per caratteristi
 
 \paragraph{Accelerometro} L'accelerometro utilizzato è il \textbf{LIS2DH12} prodotto da STMicroelectronics, come nell'Adapter Board precedente.
 \todo{inserire tabella riassuntiva}
-\paragraph{Progetto PCB}
+\paragraph{Progetto PCB} Anche il progetto di questa board è stato realizzato con il software Autodesk Eagle, secondo gli stessi passi seguiti per la precedente. In figura \ref{fig:schematic_max} viene riportato lo schematico dove si possono vedere il sensore PPG, il regolatore di tensione lineare(LDO), l'accelerometro e i due connettori per l'alimentazione della scheda.
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.8\linewidth]{ImageFiles/Hardware/schematic_max}
+	\caption{Schematico Adapater Board con il sensore PPG MAXM86161}
+	\label{fig:schematic_max}
+\end{figure}
+La realizzazione del layout è stata fatta sempre avendo cura di avere una scheda dalle dimensioni ridotte. In figura \ref{fig:Layout_maxm} è riportato il layout della board, che si compone su due layer, Top (in rosso) e Bottom (in blu).
+\begin{figure}[b]
+	\centering
+	a$)$
+	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_top_max}
+	b$)$
+	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_bottom_max}
+	c$)$
+	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_top_max}
+	d$)$
+	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_bottom_max}
+	\caption{Layout Adapter Board: a$)$ Livello Top, b$)$ Livello Bottom, c$)$ Rendering 2D Top, d$)$ Rendering 2D Bottom}
+	\label{fig:Layout_max}
+\end{figure}
+Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
 
 \subsection{Microcontrollore: STM32F4DISCOVERY}\todo{farei una descrizione con alcune nozione sui componenti}
 \todo{inserire immagine della board}
