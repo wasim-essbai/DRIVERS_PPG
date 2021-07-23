@@ -65,18 +65,29 @@ La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da 
 	\label{fig:DiagrammaBlocchiMAX86916}
 \end{figure}
 
-\paragraph{Sensore PPG} Il sensore PPG utilizzato è il MAX86916, prodotto da Maxim Integrated, descritto precedentemente come stato dell'arte.
-
+\paragraph{Sensore PPG} Il sensore PPG utilizzato è il \textbf{MAX86916}, prodotto da Maxim Integrated e rappresentato nella figura\ref{fig:ImmagineMAX86916}.
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/ImmagineMAX86916}
 	\caption{MAX86916 magari mettere in evidenza led e foto diodo}
 	\label{fig:ImmagineMAX86916}
 \end{figure}
+Esso permette l'acquisizione di segnali fotopletismografici grazie a quattro LED, rispettivamente di colore rosso, infrarosso, verde e blu e di un fotodiodo. La peculiarità di questo modulo consiste nella presenza del LED blu, che tipicamente viene omesso. Nel corso di questa tesi, cercheremo di analizzare le caratteristiche delle acquisizioni effettuate con questa lunghezza d'onda (circa \SI{460}{\nano\meter}). Infatti, solitamente vengono utilizzate sorgenti luminose nelle regioni del verde, rosso e infrarosso considerate più efficienti per misure di SpO\ped{2} e HR. I LED vengono alimentati con una tensione di 5.0V \todo{da verificare} fornita dalla scheda STM32F4DISCOVERY, mentre i circuiti interni vengono alimentati con una tensione di 1.8V, grazie al regolatore lineare di tensione. Il modulo si presenta con un package di tipo OLGA a 14 pin con dimensioni 3.5 mm x 7.0 mm x 1.5 mm. Presenta consumi molto ridotti, con una corrente di \SI{0.7}{\micro\ampere} nella modalità \textit{shutdown}.\todo{non mi viene altro}
 
-\paragraph{LDO} \todo{Parliamo dei 3 LDO che abbiamo valutato? si parlerei di tutti e tre o almeno 2 mettendo in evidenza magari una tabella con le differenze}
-\cite{AnalogDevicesADP166}
-\paragraph{Accelerometro}\todo{ut supra} L'accelerometro utilizzato è sempre \textbf{LIS2DH12} prodotto da STMicroelectronics.
+\paragraph{LDO} Per fornire l'alimentazione di 1.8V al modulo PPG è stato inserito il regolatore lineare di tensione (LDO) \textbf{ADP166}, prodotto da Analog Devices\cite{AnalogDevicesADP166}.\todo{descrizione LDO ADP166}
+
+Sono stati presi in considerazione diversi LDO, che differivano per caratteristiche. 
+\subparagraph{ADP122}\cite{AnalogDevicesADP122}
+\subparagraph{ADP151}\cite{AnalogDevicesADP151}
+
+\todo{tabella tra i tre/quattro LDO considerati}
+
+\paragraph{Accelerometro} L'accelerometro utilizzato è il \textbf{LIS2DH12} prodotto da STMicroelectronics, come nell'Adapter Board precedente.
+\todo{inserire tabella riassuntiva}
+\paragraph{Progetto PCB}
 
 \subsection{Microcontrollore: STM32F4DISCOVERY}\todo{farei una descrizione con alcune nozione sui componenti}
 \todo{inserire immagine della board}
+
+
+\todo{alla fine: evidenziare in grassetto la prima volta che compaiono i componenti nei paragrafi componenti}
