@@ -52,7 +52,7 @@ Il layout è stato progettato partendo dallo schematico, avendo cura di realizza
 	\caption{Layout Adapter Board con modulo MAXM86161: a$)$ Livello Top, b$)$ Livello Bottom, c$)$ Rendering 2D Top, d$)$ Rendering 2D Bottom}
 	\label{fig:Layout_maxm}
 \end{figure}
-Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
+Le piste disegnate hanno una larghezza di 0.2 mm e dei vias con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
 
 \pagebreak
 Nella tabella \ref{tab:ComponentiAdapterMaxm} vengono riassunti i componenti presente nell'\textit{Adapter Board} descritta.
@@ -89,22 +89,33 @@ La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da 
 \end{figure}
 Esso permette l'acquisizione di segnali fotopletismografici grazie a quattro LED, rispettivamente di colore rosso, infrarosso, verde e blu e di un fotodiodo. La peculiarità di questo modulo consiste nella presenza del LED blu, che tipicamente viene omesso. Nel corso di questa tesi, cercheremo di analizzare le caratteristiche delle acquisizioni effettuate con questa lunghezza d'onda (circa \SI{460}{\nano\meter}). Infatti, solitamente vengono utilizzate sorgenti luminose nelle regioni del verde, rosso e infrarosso considerate più efficienti per misure di SpO\ped{2} e HR. I LED vengono alimentati con una tensione di 5.0V \todo{da verificare} fornita dalla scheda STM32F4DISCOVERY, mentre i circuiti interni vengono alimentati con una tensione di 1.8V, grazie al regolatore lineare di tensione. Il modulo si presenta con un package di tipo OLGA a 14 pin con dimensioni 3.5 mm x 7.0 mm x 1.5 mm. Presenta consumi molto ridotti, con una corrente di \SI{0.7}{\micro\ampere} nella modalità \textit{shutdown}.\todo{non mi viene altro}
 
-\paragraph{LDO} Per fornire l'alimentazione di 1.8V al modulo PPG è stato inserito il regolatore lineare di tensione (LDO), questo è un dispositivo che, data una tensione in ingresso, ne fornisce una costante in uscita di valore anche differenze da quello in ingresso. Nel caso dell'\textit{Adapter Board} realizzata, questo dispositivo viene utilizzato per alimentare l'accelerometro e la circuiteria interna del sensore PPG.
-Nella scelto del regolatore lineare di tensione sono stati presi in considerazione tre diversi dispositivi:
-\todo{tabella con i 3 LDO in stile cossali}
+\paragraph{LDO} Per fornire l'alimentazione di al modulo PPG è stato inserito un regolatore lineare di tensione. Il regolatore \textit{low-dropout} è un dispositivo elettronico integrato in grado di fornire una tensione in uscita costante, quando al suo ingresso è applicata un'opportuna tensione\cite{Horowitz2015}.\todo{cit da controllare} In questa Adapter Board, il regolatore viene alimentato con una tensione di 5.0V\todo{da verificare} e fornisce in uscita una tensione di 1.8V che alimenta sia il sensore PPG sia l'accelerometro. Inoltre, sull'ingresso e sull'uscita del LDO sono presenti due condensatori 0402 da \SI{4.7}{\micro\farad} per filtrare eventuali disturbi sulle alimentazioni.
 
+Per la scelta del regolatore da utilizzare in questa Adapter Board, sono stati confrontati diversi LDO disponibili sul mercato e prodotti da Analog Devices: \textbf{ADP166}\cite{AnalogDevicesADP166}, \textbf{ADP122}\cite{AnalogDevicesADP122} e \textbf{ADP151}\cite{AnalogDevicesADP151}. Le loro caratteristiche sono riportarte nella tabella \ref{tab:ConfrontoLDPO}
+\begin{table}[h]
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{cccc}
+		\hline
+		& \textbf{ADP166} & \textbf{ADP122} & \textbf{ADP151} \\ \hline
+		\textbf{Dimensioni {[}mm\ap{2}{]}}                   & 2 x 2           & 2 x 2           & 2 x 2           \\ \hline
+		\textbf{Intervallo tensione in ingresso {[}V{]}}  & 2.2 - 5.5       & 2.3 - 5.5       & 2.2 - 5.5       \\ \hline
+		\textbf{Intervallo tensione in uscita {[}V{]}}    & 1.0 - 4.2       & 0.8 - 5         & 1.1 - 3.3       \\ \hline
+		\textbf{Tensione di dropout {[}mV{]}}            & 120             & 85              & 140             \\ \hline
+		\textbf{Rumore in uscita {[}$\mu$Vrms{]}}         & 80              & 65              & 9               \\ \hline
+		\textbf{I\ped{q} Corrente di quiesceza {[}$\mu$A{]}}    & 0.89            & 45              & 10              \\ \hline
+		\textbf{I\ped{s} Corrente di shutdown {[}nA{]}}      & 50              & 100             & 200             \\ \hline
+		\textbf{I\ped{MAX} Massima corrente erogabile {[}mA{]}} & 150             & 300             & 200             \\ \hline
+	\end{tabular}
+	\caption{Confronto delle caratteristiche di diversi LDO.}
+	\label{tab:ConfrontoLDPO}
+\end{table}
 
-\textbf{ADP166}, prodotto da Analog Devices\cite{AnalogDevicesADP166}.\todo{descrizione LDO ADP166}
+\noindent Il modello scelto è l'ADP166, nella versione con tensione fissa di uscita pari a 1.8V e con un package LFCSP di dimesioni 2 mm x 2 mm. La peculiarità di questo LDO risiede nella bassa corrente di quiescenza, pari a circa \SI{890}{\nano\ampere} con un carico da \SI{1}{\micro\ampere}\cite{AnalogDevicesADP166}. Infatti, la \textit{corrente di quiescenza} è definita come la differenza tra la corrente di ingresso e la corrente di uscita\cite{Lee1999}. In altre parole, essa rappresenta la corrente assorbita dal regolatore di tensione e non trasferita al carico. Per questo motivo, dal momento che si vuole progettare una piattaforma indossabile a bassi consumi, avere una bassa corrente di quiescenza significa diminuire i consumi della Adapter Board. Inoltre, l'integrato presenta una bassa corrente di shutdown, che permette di ridurre i consumi quando esso viene disabilitato attraverso il pin EN. Tuttavia, nella nostra piattaforma abbiamo scelto di mantenere il regolatore sempre attivo.\todo{non mi viene in mente altro}
 
-Sono stati presi in considerazione diversi LDO, che differivano per caratteristiche. 
-\subparagraph{ADP122}\cite{AnalogDevicesADP122}
-\subparagraph{ADP151}\cite{AnalogDevicesADP151}
-
-\todo{tabella tra i tre LDO considerati}
 
 \paragraph{Accelerometro} L'accelerometro utilizzato è il \textbf{LIS2DH12} prodotto da STMicroelectronics, come nell'Adapter Board precedente.
-\todo{inserire tabella riassuntiva}
-\paragraph{Progetto PCB} Anche il progetto di questa board è stato realizzato con il software Autodesk Eagle, secondo gli stessi passi seguiti per la precedente. In figura \ref{fig:schematic_max} viene riportato lo schematico dove si possono vedere il sensore PPG, il regolatore di tensione lineare(LDO), l'accelerometro e i due connettori per l'alimentazione della scheda.
+\todo{inserire tabella riassuntiva pcb}
+\paragraph{Progetto PCB} Anche il progetto di questa board è stato realizzato con il software Autodesk Eagle. In figura \ref{fig:schematic_max} viene riportato lo schematico dove si possono vedere il sensore PPG, il regolatore di tensione lineare (LDO), l'accelerometro e i connettori per l'alimentazione della scheda e la comunicazione I\ap{2}C.
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.8\linewidth]{ImageFiles/Hardware/schematic_max}
@@ -127,8 +138,8 @@ La realizzazione del layout è stata fatta sempre avendo cura di avere una sched
 	\label{fig:Layout_max}
 \end{figure}
 \todo{ritagliare meglio e anche grandezze più precise}
-Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
-
+Le piste disegnate hanno una larghezza di 0.2 mm e dei vias con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
+\todo{tabella riassuntiva }
 \subsection{Microcontrollore: STM32F4DISCOVERY}\todo{farei una descrizione con alcune nozione sui componenti}
 \todo{inserire immagine della board}
 
