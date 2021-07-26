@@ -28,8 +28,7 @@ La comunicazione con il microcontrollore avviene tramite i pin SDA e SCL, tipici
 	\label{fig:ImmagineLIS2DW12}
 \end{figure}
 \`E pensato per rilevazioni di movimento e riconoscimento dei gesti su dispositivi indossabili. Il sensore permette di selezionare un fondo scala di $\pm$\SI{2}{\gram}, $\pm$\SI{4}{\gram}, $\pm$\SI{8}{\gram} oppure $\pm$\SI{16}{\gram}. Necessita di un'alimentazione compresa tra i 1.62V e i 3.6V e la corrente assorbita tipicamente è di \SI{50}{\nano\ampere} nella modalità \textit{power-down} e di \SI{1}{\micro\ampere} in quella attiva \textit{low-power}. Inoltre, l'accelerometro include un sensore di temperatura che permette di compensare gli effetti termici sulle misure. Presenta un'interfaccia I\ap{2}C e un interfaccia SPI per la comunicazione. Questo sensore è stato inserito nell'Adapter Board per ottenre una stima di eventuali disturbi, dovuti agli artefatti del movimento, permettendo quindi di ottenere delle stime dei parametri di qualità superiore. Il sensore è realizzato in un package di tipo LGA-12 con dimensioni 2.0 mm x 2.0 mm x 0.7 mm.
-\todo{tabella riassuntiva dei componenti come facagni}
-\todo{il pin di interrupt???? Lasciamo stare}
+
 \paragraph{Progetto PCB} Il progetto della board è stato realizzato con il software Autodesk Eagle. Come prima fase del progetto è stato realizzato lo schematico, dove sono state definite le interconnessioni dei componente a livello logico. In seguito, è stato definito il layout della PCB, definendo la posizione dei componenti e delle piste che li connettono.
 In figura \ref{fig:schematic_maxm} viene riportato lo schematico dove si possono vedere il sensore PPG, l'accelerometro e due connettori necessari, uno per l'alimentazione della scheda (VCC e GND), e uno per la comunicazione I\ap{2}C e l'interrupt del modulo PPG (SDA, SCL, INT\_PPG).
 \begin{figure}[b]
@@ -38,6 +37,7 @@ In figura \ref{fig:schematic_maxm} viene riportato lo schematico dove si possono
 	\caption{Schematico Adapater Board con il sensore PPG MAXM86161}
 	\label{fig:schematic_maxm}
 \end{figure}
+\todo{sistemare scritte gialle}
 Il layout è stato progettato partendo dallo schematico, avendo cura di realizzare una board dalle dimensioni più ridotte possibili. Come si può vedere in figura \ref{fig:Layout_maxm} la board si compone su due layer, Top (in rosso) e Bottom (in blu).
 \begin{figure}[b]
 	\centering
@@ -46,16 +46,16 @@ Il layout è stato progettato partendo dallo schematico, avendo cura di realizza
 	b$)$
 	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_bottom_maxm}
 	c$)$
-	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_top_maxm}
+	\includegraphics[width=0.1567\linewidth]{ImageFiles/Hardware/manifacturing_top_maxm}
 	d$)$
-	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_bottom_maxm}
-	\caption{Layout Adapter Board: a$)$ Livello Top, b$)$ Livello Bottom, c$)$ Rendering 2D Top, d$)$ Rendering 2D Bottom}
+	\includegraphics[width=0.1567\linewidth]{ImageFiles/Hardware/manifacturing_bottom_maxm}
+	\caption{Layout Adapter Board con modulo MAXM86161: a$)$ Livello Top, b$)$ Livello Bottom, c$)$ Rendering 2D Top, d$)$ Rendering 2D Bottom}
 	\label{fig:Layout_maxm}
 \end{figure}
 Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
 
 \pagebreak
-\noindent Nella tabella \ref{tab:ComponentiAdapterMaxm} vengono riassunti i componenti presente nell'\textit{Adapter Board} descritta.
+Nella tabella \ref{tab:ComponentiAdapterMaxm} vengono riassunti i componenti presente nell'\textit{Adapter Board} descritta.
 \begin{table}[h]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
@@ -69,9 +69,11 @@ Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \tex
 	\label{tab:ComponentiAdapterMaxm}
 \end{table}
 \todo{tabella completare}
+
+\pagebreak
 \subsection{Adapter Board: MAX86916}
 La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da un accelerometro LIS2DW12 e da un LDO (Low-dropout regulator) prodotto da Analog Devices. Come nella board descritta precedentemente, il sensore MAX86916 e l'accelerometro comunicano con il controllore grazie a un'interfaccia standard I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAX86916}). I dati vengono poi acquisiti da un computer collegato tramite USB alla board STM32F4DISCOVERY, che ospita il microcontrollore. L'aggiunta del regolatore LDO esterno e le dimensioni maggiori del modulo PPG ha portato ad ottenere una PCB con dimensioni 4.5 mm x 17.5 mm. Sebbene siano leggermente maggiori rispetto all'Adapter Board sopra descritta, essa risulta essere molto compatta e adatta ad dispositivi indossabili, con una superficie di solo \SI{78.75}{\square\milli\meter}.
-\begin{figure}[t]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/DiagrammaBlocchiMAX86916}
 	\caption{MAX86916 magari mettere in evidenza led e foto diodo}
@@ -98,7 +100,7 @@ Sono stati presi in considerazione diversi LDO, che differivano per caratteristi
 \subparagraph{ADP122}\cite{AnalogDevicesADP122}
 \subparagraph{ADP151}\cite{AnalogDevicesADP151}
 
-\todo{tabella tra i tre/quattro LDO considerati}
+\todo{tabella tra i tre LDO considerati}
 
 \paragraph{Accelerometro} L'accelerometro utilizzato è il \textbf{LIS2DH12} prodotto da STMicroelectronics, come nell'Adapter Board precedente.
 \todo{inserire tabella riassuntiva}
@@ -109,20 +111,22 @@ Sono stati presi in considerazione diversi LDO, che differivano per caratteristi
 	\caption{Schematico Adapater Board con il sensore PPG MAXM86161}
 	\label{fig:schematic_max}
 \end{figure}
+\todo{sistemare scritte gialle}
 La realizzazione del layout è stata fatta sempre avendo cura di avere una scheda dalle dimensioni ridotte. In figura \ref{fig:Layout_maxm} è riportato il layout della board, che si compone su due layer, Top (in rosso) e Bottom (in blu).
-\begin{figure}[b]
+\begin{figure}[tb]
 	\centering
 	a$)$
 	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_top_max}
 	b$)$
 	\includegraphics[width=0.15\linewidth]{ImageFiles/Hardware/layout_bottom_max}
 	c$)$
-	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_top_max}
+	\includegraphics[width=0.1568\linewidth]{ImageFiles/Hardware/manifacturing_top_max}
 	d$)$
-	\includegraphics[width=0.1569\linewidth]{ImageFiles/Hardware/manifacturing_bottom_max}
-	\caption{Layout Adapter Board: a$)$ Livello Top, b$)$ Livello Bottom, c$)$ Rendering 2D Top, d$)$ Rendering 2D Bottom}
+	\includegraphics[width=0.1568\linewidth]{ImageFiles/Hardware/manifacturing_bottom_max}
+	\caption{Layout Adapter Board con modulo MAX86916: a$)$ Livello Top, b$)$ Livello Bottom, c$)$ Rendering 2D Top, d$)$ Rendering 2D Bottom}
 	\label{fig:Layout_max}
 \end{figure}
+\todo{ritagliare meglio e anche grandezze più precise}
 Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \textcolor{red}{0.2}, con una corona di \SI{254}{\micro\meter} \todo{Misure da controllare}.
 
 \subsection{Microcontrollore: STM32F4DISCOVERY}\todo{farei una descrizione con alcune nozione sui componenti}
@@ -130,3 +134,5 @@ Le piste disegnate hanno una larghezza di 0.2 mm e dei fori con diametro di \tex
 
 
 \todo{alla fine: evidenziare in grassetto la prima volta che compaiono i componenti nei paragrafi componenti}
+
+\clearpage
