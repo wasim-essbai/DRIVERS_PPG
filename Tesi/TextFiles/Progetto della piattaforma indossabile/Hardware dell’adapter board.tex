@@ -5,15 +5,15 @@ Le due piattaforme si differenziano nell'Adapter Board progettata, in cui sono s
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/DiagrammaBlocchiMAXM86161}
-	\caption{Diagramma a bloccchi dell'Adapter Board con modulo PPG MAXM86161}
+	\caption{Diagramma a bloccchi dell'Adapter Board con modulo PPG MAXM86161.}
 	\label{fig:DiagrammaBlocchiMAXM86161}
 \end{figure}
-L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro triassiale LIS2DW12, che comunicano con il microcontrollore tramite protocollo I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAXM86161}). Grazie al numero ridotto di componenti è stato possibile ottenere una scheda dalle dimensioni molto ridotte (12,4 mm x 4,6 mm), con una superficie di appena \SI{57.04}{\square\milli\meter}.
+L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro triassiale LIS2DW12, che comunicano con il microcontrollore tramite protocollo I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAXM86161}). Il microcontrollore comunica a sua volta con un computer, grazie alla porta USB. Grazie al numero ridotto di componenti è stato possibile ottenere una scheda dalle dimensioni molto ridotte (12,4 mm x 4,6 mm), con una superficie di appena \SI{57.04}{\square\milli\meter}.
 
 \paragraph{Sensore PPG} Il sensore PPG utilizzato è il MAXM86161 rappresentato nella figura \ref{fig:ImmagineMAXM86161}.
 \begin{figure}[tb]
 	\centering
-	\includegraphics[width=0.7\linewidth]{ImageFiles/Hardware/ImmagineMAXM86161}
+	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/ImmagineMAXM86161}
 	\caption{Il sensore MAXM86161.}
 	\label{fig:ImmagineMAXM86161}
 \end{figure}
@@ -33,7 +33,7 @@ In figura \ref{fig:schematic_maxm} viene riportato lo schematico dove si possono
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.8\linewidth]{ImageFiles/Hardware/schematic_maxm}
-	\caption{Schematico Adapater Board con il sensore PPG MAXM86161}
+	\caption{Schematico Adapater Board con il sensore PPG MAXM86161.}
 	\label{fig:schematic_maxm}
 \end{figure}
 Il layout è stato progettato partendo dallo schematico, avendo cura di realizzare una board dalle dimensioni più ridotte possibili. Come si può vedere in figura \ref{fig:Layout_maxm} la board si compone su due layer, Top (in rosso) e Bottom (in blu).
@@ -89,24 +89,24 @@ Nella tabella \ref{tab:ComponentiAdapterMaxm} vengono riassunti i componenti pre
 
 \pagebreak
 \subsection{Adapter Board: MAX86916}
-La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da un accelerometro LIS2DW12 e da un LDO (Low-dropout regulator) prodotto da Analog Devices. Come nella board descritta precedentemente, il sensore MAX86916 e l'accelerometro comunicano con il controllore grazie a un'interfaccia standard I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAX86916}). I dati vengono poi acquisiti da un computer collegato tramite USB alla board STM32F4DISCOVERY, che ospita il microcontrollore. L'aggiunta del regolatore LDO esterno e le dimensioni maggiori del modulo PPG ha portato ad ottenere una PCB con dimensioni 4.5 mm x 17.5 mm. Sebbene siano leggermente maggiori rispetto all'Adapter Board sopra descritta, essa risulta essere molto compatta e adatta ad dispositivi indossabili, con una superficie di solo \SI{78.75}{\square\milli\meter}.
+La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da un accelerometro LIS2DW12 e da un LDO (Low-dropout regulator) prodotto da Analog Devices. Come nella board descritta precedentemente, il sensore MAX86916 e l'accelerometro comunicano con il microcontrollore grazie a un'interfaccia standard I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAX86916}). I dati vengono poi acquisiti da un computer collegato tramite USB alla board STM32F4DISCOVERY. L'aggiunta del regolatore LDO esterno e le dimensioni maggiori del modulo PPG ha portato ad ottenere una PCB con dimensioni 4.5 mm x 17.5 mm. Sebbene siano leggermente maggiori rispetto all'Adapter Board sopra descritta, essa risulta essere molto compatta e adatta a dispositivi indossabili, con una superficie di solo \SI{78.75}{\square\milli\meter}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/DiagrammaBlocchiMAX86916}
-	\caption{MAX86916 magari mettere in evidenza led e foto diodo}
+	\caption{Diagramma a bloccchi dell'Adapter Board con modulo PPG MAX86916.}
 	\label{fig:DiagrammaBlocchiMAX86916}
 \end{figure}
 
-\paragraph{Sensore PPG} Il sensore PPG utilizzato è il \textbf{MAX86916}, prodotto da Maxim Integrated e rappresentato nella figura\ref{fig:ImmagineMAX86916}.
+\paragraph{Sensore PPG} Il sensore PPG utilizzato è il MAX86916, prodotto da Maxim Integrated e rappresentato nella figura \ref{fig:ImmagineMAX86916}.
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Hardware/ImmagineMAX86916}
 	\caption{MAX86916 magari mettere in evidenza led e foto diodo}
 	\label{fig:ImmagineMAX86916}
 \end{figure}
-Esso permette l'acquisizione di segnali fotopletismografici grazie a quattro LED, rispettivamente di colore rosso, infrarosso, verde e blu e di un fotodiodo. La peculiarità di questo modulo consiste nella presenza del LED blu, che tipicamente viene omesso. Nel corso di questa tesi, cercheremo di analizzare le caratteristiche delle acquisizioni effettuate con questa lunghezza d'onda (circa \SI{460}{\nano\meter}). Infatti, solitamente vengono utilizzate sorgenti luminose nelle regioni del verde, rosso e infrarosso considerate più efficienti per misure di SpO\ped{2} e HR. I LED vengono alimentati con una tensione di 5.0V \todo{da verificare} fornita dalla scheda STM32F4DISCOVERY, mentre i circuiti interni vengono alimentati con una tensione di 1.8V, grazie al regolatore lineare di tensione. Il modulo si presenta con un package di tipo OLGA a 14 pin con dimensioni 3.5 mm x 7.0 mm x 1.5 mm. Presenta consumi molto ridotti, con una corrente di \SI{0.7}{\micro\ampere} in modalità \textit{shutdown}.
+Esso permette l'acquisizione di segnali fotopletismografici grazie a quattro LED, rispettivamente di colore rosso, infrarosso, verde e blu e di un fotodiodo. La peculiarità di questo modulo consiste nella presenza del LED blu, che tipicamente viene omesso. Nel corso di questa tesi, cercheremo di analizzare le caratteristiche delle acquisizioni effettuate con questa lunghezza d'onda (circa \SI{460}{\nano\meter}). Infatti, solitamente vengono utilizzate sorgenti luminose nelle regioni del verde, rosso e infrarosso considerate più efficienti per misure di SpO\ped{2} e HR. I LED vengono alimentati con una tensione di 5.0V \todo{da verificare se utilizziamo i 5V} fornita dalla scheda STM32F4DISCOVERY, mentre i circuiti interni vengono alimentati con una tensione di 1.8V fornita in uscita al regolatore LDO. Il modulo si presenta con un package di tipo OLGA a 14 pin con dimensioni 3.5 mm x 7.0 mm x 1.5 mm. Presenta consumi molto ridotti, con una corrente di \SI{0.7}{\micro\ampere} in modalità \textit{shutdown}.
 
-\paragraph{LDO} Per fornire l'alimentazione di al modulo PPG è stato inserito un regolatore lineare di tensione. Il regolatore \textit{low-dropout} è un dispositivo elettronico integrato in grado di fornire una tensione in uscita costante, quando al suo ingresso è applicata un'opportuna tensione\cite{Horowitz2015}.\todo{cit da controllare} In questa Adapter Board, il regolatore viene alimentato con una tensione di 5.0V\todo{da verificare} e fornisce in uscita una tensione di 1.8V che alimenta sia il sensore PPG sia l'accelerometro. Inoltre, sull'ingresso e sull'uscita del LDO sono presenti due condensatori 0402 da \SI{4.7}{\micro\farad} per filtrare eventuali disturbi sulle alimentazioni.
+\paragraph{LDO} Per fornire l'alimentazione al modulo PPG è stato inserito un regolatore di tensione. Il regolatore \textit{low-dropout} è un dispositivo elettronico integrato in grado di fornire una tensione in uscita costante, quando al suo ingresso è applicata un'opportuna tensione\cite{Horowitz2015}.\todo{cit da controllare} In questa Adapter Board, il regolatore viene alimentato con una tensione di 5.0V\todo{da verificare} e fornisce in uscita una tensione di 1.8V che alimenta sia il sensore PPG sia l'accelerometro. Inoltre, sull'ingresso e sull'uscita del LDO sono presenti due condensatori 0402 da \SI{4.7}{\micro\farad} per filtrare eventuali disturbi sulle alimentazioni.
 
 Per la scelta del regolatore da utilizzare in questa Adapter Board, sono stati confrontati diversi LDO disponibili sul mercato e prodotti da Analog Devices: \textbf{ADP166}\cite{AnalogDevicesADP166}, \textbf{ADP122}\cite{AnalogDevicesADP122} e \textbf{ADP151}\cite{AnalogDevicesADP151}. Le loro caratteristiche sono riportarte nella tabella \ref{tab:ConfrontoLDO}
 \begin{table}[h]
@@ -129,7 +129,8 @@ Per la scelta del regolatore da utilizzare in questa Adapter Board, sono stati c
 
 \noindent Il modello scelto è l'ADP166, nella versione con tensione fissa di uscita pari a 1.8V e con un package LFCSP di dimesioni 2 mm x 2 mm. La peculiarità di questo LDO risiede nella bassa corrente di quiescenza, pari a circa \SI{890}{\nano\ampere} con un carico da \SI{1}{\micro\ampere}\cite{AnalogDevicesADP166}. Infatti, la \textit{corrente di quiescenza} è definita come la differenza tra la corrente di ingresso e la corrente di uscita\cite{Lee1999}. In altre parole, essa rappresenta la corrente assorbita dal regolatore di tensione e non trasferita al carico. Per questo motivo, dal momento che si vuole progettare una piattaforma indossabile a bassi consumi, avere una bassa corrente di quiescenza significa diminuire i consumi della Adapter Board. Inoltre, l'integrato presenta una bassa corrente di shutdown, che permette di ridurre i consumi quando esso viene disabilitato attraverso il pin EN. Tuttavia, nella nostra piattaforma abbiamo scelto di mantenere il regolatore sempre attivo.
 
-\paragraph{Accelerometro} L'accelerometro utilizzato è il \textbf{LIS2DH12} prodotto da STMicroelectronics, come nell'Adapter Board precedente.
+\paragraph{Accelerometro} L'accelerometro utilizzato è il LIS2DH12 prodotto da STMicroelectronics, come nell'Adapter Board precedente.
+\pagebreak
 
 \paragraph{Progetto PCB} Anche il progetto di questa board è stato realizzato con il software Autodesk Eagle. In figura \ref{fig:schematic_max} viene riportato lo schematico dove si possono vedere il sensore PPG, il regolatore di tensione lineare (LDO), l'accelerometro e i connettori per l'alimentazione della scheda e la comunicazione I\ap{2}C.
 \begin{figure}[b]
@@ -138,7 +139,7 @@ Per la scelta del regolatore da utilizzare in questa Adapter Board, sono stati c
 	\caption{Schematico Adapater Board con il sensore PPG MAXM86161.}
 	\label{fig:schematic_max}
 \end{figure}
-La realizzazione del layout è stata fatta sempre avendo cura di avere una scheda dalle dimensioni ridotte. In figura \ref{fig:Layout_maxm} è riportato il layout della board, che si compone su due layer, Top (in rosso) e Bottom (in blu).
+La realizzazione del layout è stata pensata per ridurre al minimo le dimensioni della board. In figura \ref{fig:Layout_maxm} è riportato il layout della board, definito sul layer Top (in rosso) e Bottom (in blu).
 \begin{figure}[tb]
 	\centering
 	a$)$
@@ -191,7 +192,7 @@ La realizzazione del layout è stata fatta sempre avendo cura di avere una sched
 
 \pagebreak
 \subsection{Microcontrollore: STM32F4DISCOVERY}
-La comunicazione con i moduli PPG e l'accelerometro avviene tramite il protocollo I\ap{2}C. Per permettere a un computer di leggere, memorizzare e analizzare i dati raccolti dei sensori è necessario utilizzare un microcontrollore che supporti la comunicazione I\ap{2}C e permetta di inviare dati, tramite USB, a un PC. Il \textit{discovery kit} STM32F4DISCOVERY\cite{STMicroelectronics2020}, rappresentata in figura \ref{fig:ImmagineSTM32F4DISCOVERY}, è una board prodotta da STMicroelectronics che permette di semplificare il collegamento e l'utilizzo di un microcontrollore. In particolare, essa integra un microntrollore STM32F407 ad alte prestazioni prodotto dalla STMicroelectronics. In aggiunta, sulla scheda sono presenti un accelerometro digitale MEMS, un microfono omnidirezionale MEMS, pulsanti e LED utili che possono essere programmati e utilizzati dall'utente. Grazie a pin specifici\todo{quali pin usereremo?} è possibile collegare le Adapter Board progettate e utilizzando la USB comunicare i dati ad un PC collegato,\todo{cosa useremo per comunicare con il mirco?}. Inoltre, la board permette l'alimentazioni delle board tramite i pin GND e 5V.\todo{alimenteremo entrambe le board a 5V?}
+La comunicazione con i moduli PPG e l'accelerometro avviene tramite il protocollo I\ap{2}C. Per permettere a un computer di leggere, memorizzare e analizzare i dati raccolti dei sensori è necessario utilizzare un microcontrollore che supporti la comunicazione I\ap{2}C e permetta di inviare dati, tramite USB, a un PC. Il \textit{discovery kit} STM32F4DISCOVERY\cite{STMicroelectronics2020}, rappresentato in figura \ref{fig:ImmagineSTM32F4DISCOVERY}, è una board prodotta da STMicroelectronics che permette di semplificare il collegamento e l'utilizzo di un microcontrollore. In particolare, essa integra un microntrollore STM32F407 ad alte prestazioni prodotto dalla STMicroelectronics. In aggiunta, sulla scheda sono presenti un accelerometro digitale MEMS, un microfono omnidirezionale MEMS, pulsanti e LED che possono essere programmati e utilizzati dall'utente. Grazie a pin specifici\todo{quali pin usereremo?} è possibile collegare le Adapter Board progettate e comunicare i dati ad un PC collegato tramite la USB\todo{cosa useremo per comunicare con il mirco?}. Inoltre, la board permette l'alimentazioni delle board tramite i pin GND e 5V.\todo{alimenteremo entrambe le board a 5V?}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ImageFiles/Hardware/ImmagineSTM32F4DISCOVERY}
