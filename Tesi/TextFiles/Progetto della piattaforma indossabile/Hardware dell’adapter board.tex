@@ -190,16 +190,12 @@ La realizzazione del layout è stata fatta sempre avendo cura di avere una sched
 
 \pagebreak
 \subsection{Microcontrollore: STM32F4DISCOVERY}
-\cite{STMicroelectronics2020}
-
-\ref{fig:ImmagineSTM32F4DISCOVERY}
-\begin{figure}[b]
+La comunicazione con i moduli PPG e l'accelerometro avviene tramite il protocollo I\ap{2}C. Per permettere a un computer di leggere, memorizzare e analizzare i dati raccolti dei sensori è necessario utilizzare un microcontrollore che supporti la comunicazione I\ap{2}C e permetta di inviare dati, tramite USB, a un PC. Il \textit{discovery kit} STM32F4DISCOVERY\cite{STMicroelectronics2020}, rappresentata in figura \ref{fig:ImmagineSTM32F4DISCOVERY}, è una board prodotta da STMicroelectronics che permette di semplificare il collegamento e l'utilizzo di un microcontrollore. In particolare, essa integra un microntrollore STM32F407 ad alte prestazioni prodotto dalla STMicroelectronics. In aggiunta, sulla scheda sono presenti un accelerometro digitale MEMS, un microfono omnidirezionale MEMS, pulsanti e LED utili che possono essere programmati e utilizzati dall'utente. Grazie a pin specifici\todo{quali pin usereremo?} è possibile collegare le Adapter Board progettate e utilizzando la USB comunicare i dati ad un PC collegato,\todo{cosa useremo per comunicare con il mirco?}. Inoltre, la board permette l'alimentazioni delle board tramite i pin GND e 5V.\todo{alimenteremo entrambe le board a 5V?}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ImageFiles/Hardware/ImmagineSTM32F4DISCOVERY}
 	\caption{Board STM32F4DISCOVERY.}
 	\label{fig:ImmagineSTM32F4DISCOVERY}
 \end{figure}
-
-\todo{alla fine: evidenziare in grassetto la prima volta che compaiono i componenti nei paragrafi componenti}
 
 \clearpage
