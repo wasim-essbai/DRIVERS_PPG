@@ -1,6 +1,6 @@
 \section{Hardware dell'adapter board}
-L'hardware utilizzato per condurre lo studio oggetto di questa tesi consiste in due piattaforme indossabili per effettuare misure fotopletismografiche. Ciascuna piattaforma si compone di una \textit{Adapter Board} e una scheda ospitante un microcontrollore. L'Adapter Board consiste in una PCB sulla quale sono montati il modulo PPG, un accelerometro ed, eventualmente, un regolatore di tensione lineare(LDO) per l'alimentazione dei componenti. Il microcontrollore viene utilizzato per l'acquisizione dei dati dal sensore e per il suo controllo. In particolare, è stata utilizzata in entrambe le soluzioni la board \textbf{STM32F4DISCOVERY}, prodotta da STMicroelectronics, ospitante il microntrollore \textbf{STM32F407}. Grazie poi ad un'interfaccia USB è possibile trasmettere i dati ad un computer per permetterne l'elaborazione e la memorizzazione.
-Le due piattaforme si differenziano per l'Adapter Board, in cui sono stati utilizzati due differenti moduli PPG: il \textbf{MAXM86161} e \textbf{MAX86916}, prodotti entrambi da Maxim Integrated.
+L'hardware utilizzato per condurre lo studio, oggetto di questa tesi, consiste in due piattaforme indossabili per effettuare misure fotopletismografiche. Ciascuna piattaforma si compone di una \textit{Adapter Board} e una scheda sulla quale è montato un microcontrollore. L'Adapter Board è costituita da una PCB sulla quale sono montati il modulo PPG, un accelerometro e, in una delle due board, un regolatore \textit{low-dropout} di tensione (LDO) per l'alimentazione dei componenti. Il microcontrollore viene utilizzato per l'acquisizione dei dati dai sensori e per il loro controllo. In particolare, è stata utilizzata in entrambe le soluzioni la board \textbf{STM32F4DISCOVERY}, prodotta da STMicroelectronics, che ospita un microntrollore \textbf{STM32F407}. Inoltre, è possibile trasmettere i dati acquisiti ad un computer grazie ad un'interfaccia USB. In questo modo sarà possibile salvare ed elaborare i dati raccolti.
+Le due piattaforme si differenziano nell'Adapter Board progettata, in cui sono stati utilizzati due differenti moduli PPG: il \textbf{MAXM86161} e \textbf{MAX86916}, prodotti entrambi da Maxim Integrated.
 \subsection{Adapter Board: MAXM86161}
 \begin{figure}[b]
 	\centering
@@ -17,8 +17,8 @@ L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro tri
 	\caption{Il sensore MAXM86161.}
 	\label{fig:ImmagineMAXM86161}
 \end{figure}
-Si tratta di un modulo integrato a basso consumo, per acquisizioni di dati ottici. Il sensore integra 3 LED (rosso, infrarosse e verde), un fotodiodo ed elementi ottici. All'interno è anche presente un regolatore di tensione lineare (LDO). Per questo motivo non è necessario inserire un ulteriore LDO esterno per l'alimentazione dei circuiti interni e dei LED. Il modulo viene alimentato a singola tensione, che deve essere compresa tra i 3.0V e 5.5V. \`E presente un pin di uscita (VLDO) collegato all'uscita del regolatore interno che fornisce una tensione di 1.8V che può essere utilizzato per alimentare eventuali dispositivi esterni. Infatti, nell'Adapter Board, questa uscita è stata utilizzata per alimentare l'accelerometro. 
-La comunicazione con il microcontrollore avviene tramite i pin SDA e SCL, tipici della comunicazione I\ap{2}C. Il modulo presenta un package di tipo OLGA a 14 pin, dalle dimensioni ridotte, 2.9 mm x 4.3 mm x 1.4 mm, e un consumo minore di \SI{30}{\micro\watt}.
+Si tratta di un modulo integrato a basso consumo per acquisizioni di dati ottici. Il sensore integra 3 LED (rosso, infrarosse e verde), un fotodiodo ed elementi ottici. All'interno è anche presente un regolatore di tensione di tipo LDO. Per questo motivo non è necessario inserire un ulteriore LDO esterno per l'alimentazione dei circuiti interni e dei LED. Il modulo viene alimentato con una singola tensione che deve essere compresa tra i 3.0V e 5.5V. \`E presente un pin di uscita (VLDO) collegato all'uscita del regolatore interno che fornisce una tensione stabile di 1.8V. Esso può essere utilizzato per alimentare eventuali dispositivi esterni. Infatti, nell'Adapter Board, questa uscita è stata utilizzata per alimentare l'accelerometro. 
+La comunicazione con il microcontrollore avviene tramite i pin SDA e SCL, tipici della comunicazione I\ap{2}C. Il modulo presenta un package di tipo OLGA a 14 pin, dalle dimensioni ridotte, 2.9 mm x 4.3 mm x 1.4 mm, con un consumo tipicamente inferiore a \SI{30}{\micro\watt}.
 
 \paragraph{Accelerometro} Il LIS2DW12 è un accelerometro triassiale lineare, prodotto da STMicroelectronics\cite{STElectronicsLIS2DW12}, realizzato con tecnologia MEMS ad alte performance e basso consumo. 
 \begin{figure}[b]
@@ -58,6 +58,7 @@ Nella tabella \ref{tab:ComponentiAdapterMaxm} vengono riassunti i componenti pre
 \begin{table}[h]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
+	\footnotesize
 	\begin{tabular}{ccccc}
 		\hline Nome    & Tipologia   & Principali caratteristiche   \\ 
 		\hline MAXM86161 & Sensore PPG  & \begin{tabular}{@{}c@{}}								
@@ -160,6 +161,7 @@ La realizzazione del layout è stata fatta sempre avendo cura di avere una sched
 \begin{table}[h]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
+	\footnotesize
 	\begin{tabular}{ccccc}
 		\hline Nome    & Tipologia   & Principali caratteristiche   \\ 
 		\hline MAX86916 & Sensore PPG  & \begin{tabular}{@{}c@{}}								
