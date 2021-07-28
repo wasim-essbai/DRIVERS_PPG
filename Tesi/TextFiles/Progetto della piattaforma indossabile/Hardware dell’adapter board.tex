@@ -173,6 +173,18 @@ La realizzazione del layout è stata pensata per ridurre al minimo le dimensioni
 			\hline Protocollo di comunicazione: I\ap{2}C \\
 			\hline LED: Rosso, Infrarosso, Verde, Blu
 		\end{tabular} \\
+		\hline LIS2DW12  & Accelerometro triassiale &
+		\begin{tabular}{@{}c@{}}								
+			Dimensioni: 2mm x 2mm x 0.7mm \\ 
+			\hline Package: LGA-12 \\
+			\hline Consumo di shutdown: \SI{50}{\nano\ampere} \\
+			\hline Consumo di corrente: \SI{90}{\micro\ampere} \\
+			\hline Tensione di alimentazione: 1.62 - 3.6 V \\
+			\hline Fondo scala selezionabile: ±2g | ±4g | ±8g | ±16g \\
+			\hline Protocollo di comunicazione: I\ap{2}C \\
+			\hline Interrupt programmabili: 2 \\
+			\hline Orientamento 6D/4D. 
+		\end{tabular} \\
 		\hline ADP166  & Regolatore di tensione lineare (LDO) & \begin{tabular}{@{}c@{}}								
 			Dimensioni: 2.0mm x 2.0mm x 1.5mm, \\ 
 			\hline Package: 6-lead LFCSP \\
@@ -183,16 +195,15 @@ La realizzazione del layout è stata pensata per ridurre al minimo le dimensioni
 			\hline Tensione di dropout: \SI{120}{\milli\volt} \\
 			\hline Rumore in uscita: \textcolor{red}{\SI{100}{\micro\volt}rms} \\ 
 		\end{tabular} \\
-		\hline LIS2DW12  & Accelerometro triassiale & vedi sopra \\
 	\end{tabular}
 	\caption{Riepilogo dei componenti dell'Adapter Board con sensore MAX86916.}
 	\label{tab:ComponentiAdapterMax}
 \end{table}
-\todo{da verificare il rumore e aggiungere l'accelerometro e non vedi sopra}
+\todo{da verificare il rumore}
 
 \pagebreak
 \subsection{Microcontrollore: STM32F4DISCOVERY}
-La comunicazione con i moduli PPG e l'accelerometro avviene tramite il protocollo I\ap{2}C. Per permettere a un computer di leggere, memorizzare e analizzare i dati raccolti dei sensori è necessario utilizzare un microcontrollore che supporti la comunicazione I\ap{2}C e permetta di inviare dati, tramite USB, a un PC. Il \textit{discovery kit} STM32F4DISCOVERY\cite{STMicroelectronics2020}, rappresentato in figura \ref{fig:ImmagineSTM32F4DISCOVERY}, è una board prodotta da STMicroelectronics che permette di semplificare il collegamento e l'utilizzo di un microcontrollore. In particolare, essa integra un microntrollore STM32F407 ad alte prestazioni prodotto dalla STMicroelectronics. In aggiunta, sulla scheda sono presenti un accelerometro digitale MEMS, un microfono omnidirezionale MEMS, pulsanti e LED che possono essere programmati e utilizzati dall'utente. Grazie a pin specifici\todo{quali pin usereremo?} è possibile collegare le Adapter Board progettate e comunicare i dati ad un PC collegato tramite la USB\todo{cosa useremo per comunicare con il mirco?}. Inoltre, la board permette l'alimentazioni delle board tramite i pin GND e 5V.\todo{alimenteremo entrambe le board a 5V?}
+La comunicazione con i moduli PPG e l'accelerometro avviene tramite il protocollo I\ap{2}C. Per permettere a un computer di leggere, memorizzare e analizzare i dati raccolti dei sensori è necessario utilizzare un microcontrollore che supporti la comunicazione I\ap{2}C e permetta di inviare dati, ad un PC, che in questo caso avviene tramite interfaccia USB. Il \textit{discovery kit} STM32F4DISCOVERY\cite{STMicroelectronics2020}, rappresentato in figura \ref{fig:ImmagineSTM32F4DISCOVERY}, è una board prodotta da STMicroelectronics che permette di semplificare il collegamento e l'utilizzo di un microcontrollore. In particolare, essa integra il microntrollore STM32F407 ad alte prestazioni, prodotto sempre da STMicroelectronics. In aggiunta, sulla scheda sono presenti un accelerometro digitale MEMS, un microfono omnidirezionale MEMS, pulsanti e LED che possono essere programmati e utilizzati dall'utente. Le Adapter Board progettate si connettono alla scheda STM32F4DISCOVERY tramite i pin periferici, così che si possano comunicare i dati ad un PC collegato tramite USB\todo{cosa useremo per comunicare con il mirco?}. Inoltre, la scheda STM32F4DISCOVERY  permette l'alimentazione delle board tramite i pin GND e 5V.\todo{alimenteremo entrambe le board a 5V?}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ImageFiles/Hardware/ImmagineSTM32F4DISCOVERY}
