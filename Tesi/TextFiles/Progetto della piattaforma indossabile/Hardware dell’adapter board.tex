@@ -87,7 +87,7 @@ Nella tabella \ref{tab:ComponentiAdapterMaxm} vengono riassunti i componenti pre
 	\label{tab:ComponentiAdapterMaxm}
 \end{table}
 
-\pagebreak
+\clearpage
 \subsection{Adapter Board: MAX86916}
 La seconda Adapter Board progettata è costituita da un modulo PPG MAX86916, da un accelerometro LIS2DW12 e da un LDO (Low-dropout regulator) prodotto da Analog Devices. Come nella board descritta precedentemente, il sensore MAX86916 e l'accelerometro comunicano con il microcontrollore grazie a un'interfaccia standard I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAX86916}). I dati vengono poi acquisiti da un computer collegato tramite USB alla board STM32F4DISCOVERY. L'aggiunta del regolatore LDO esterno e le dimensioni maggiori del modulo PPG ha portato ad ottenere una PCB con dimensioni 4.5 mm x 17.5 mm. Sebbene siano leggermente maggiori rispetto all'Adapter Board sopra descritta, essa risulta essere molto compatta e adatta a dispositivi indossabili, con una superficie di solo \SI{78.75}{\square\milli\meter}.
 \begin{figure}[h]
@@ -162,7 +162,7 @@ La realizzazione del layout è stata pensata per ridurre al minimo le dimensioni
 	\renewcommand{\arraystretch}{1.5}
 	\centering
 	\footnotesize
-	\begin{tabular}{ccccc}
+	\begin{tabular}{ccc}
 		\hline Nome    & Tipologia   & Principali caratteristiche   \\ 
 		\hline MAX86916 & Sensore PPG  & \begin{tabular}{@{}c@{}}								
 			Dimensioni: 3.5mm x 7.0mm x 1.5mm, \\ 
@@ -199,9 +199,8 @@ La realizzazione del layout è stata pensata per ridurre al minimo le dimensioni
 	\caption{Riepilogo dei componenti dell'Adapter Board con sensore MAX86916.}
 	\label{tab:ComponentiAdapterMax}
 \end{table}
+\clearpage
 
-
-\pagebreak
 \subsection{Microcontrollore: STM32F4DISCOVERY}
 La comunicazione con i moduli PPG e l'accelerometro avviene tramite il protocollo I\ap{2}C. Per permettere a un computer di leggere, memorizzare e analizzare i dati raccolti dai sensori è necessario utilizzare un microcontrollore che supporti la comunicazione I\ap{2}C e che permetta la trasmissione dei dati al computer. In particolare, il collegamento con il computer avviene tramite interfaccia USB. Il \textit{discovery kit} STM32F4DISCOVERY\cite{STMicroelectronics2020}, rappresentato in figura \ref{fig:ImmagineSTM32F4DISCOVERY}, è una board prodotta da STMicroelectronics che permette di semplificare il collegamento e l'utilizzo di un microcontrollore. In particolare, essa integra il microntrollore ad alte prestazioni STM32F407, prodotto sempre da STMicroelectronics. In aggiunta, sulla scheda sono presenti un accelerometro digitale MEMS, un microfono omnidirezionale MEMS, pulsanti e LED che possono essere programmati e utilizzati dall'utente. Le Adapter Board progettate si connettono alla scheda STM32F4DISCOVERY tramite i pin dedicati, in modo da poter acquisire e trasmettere i dati al PC. Inoltre, la scheda STM32F4DISCOVERY fornisce l'alimentazione alle board tramite i pin GND e 5V.\todo{entrambe le board saranno alimentate a 5V?}
 \begin{figure}[h]
