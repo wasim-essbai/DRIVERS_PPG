@@ -1,9 +1,27 @@
 \section{Macchina a stati finiti}
-Il firmware implementato è stato formalizzato tramite una macchina a stati finiti (\textbf{FSM}). Si tratta di un modello matematico con cui è possibile descrivere precisamente il comportamento di un qualsiasi sistema tramite un numero finito di stati, che rappresentano le condizioni operative nelle quali il sistema si può trovare. Il passaggio da uno stato all'altra avviene in seguito all'avvenimento di determinati eventi e alla sotto determinate condizioni; la decisione per passare da uno stato all'altra avviene tramite una \textit{funzione di transizione}. In una FSM può essere attivo solo \textbf{uno} stato alla volta, e quindi ogni stato raggruppa funzionalità diverse.
-Questo modello matematico può essere utilizzato sia per la progettazione di un sistema nuovo che alla descrizione di uno esistente. In particolare, con le FSM è possibile modellare sistemi che sono:
+Il firmware implementato è stato formalizzato tramite una macchina a stati finiti (FSM). Si tratta di un modello matematico con cui è possibile descrivere precisamente il comportamento di un qualsiasi sistema tramite un numero finito di stati, che rappresentano le condizioni operative nelle quali il sistema si può trovare. Il passaggio da uno stato all'altro avviene in seguito al verificarsi di particolari eventi e condizioni, che definiscono le \textit{funzioni di transizione}. Un'altra caratteristica fondamentale delle FSM è che il sistema modellato può trovarsi solamente in un solo stato e può effettuare una sola transizione alla volta.
+Questo modello matematico può essere utile sia per la progettazione di un sistema sia per la descrizione di uno esistente. In particolare, con le FSM è possibile modellare sistemi che sono:
 \begin{itemize}
-	\item dinamici, che quindi evolvono cambiando stato nel tempo.
-	\item discreti, cioè che le variabili in ingresso e gli stati del sistema si possono rappresentare con valori discreti.
-	\item a simboli finiti, cioè che il numero di variabili in ingresso e gli stati può essere espresso con un numeri finito.
+	\item dinamici, che quindi evolvono cambiando stato nel tempo;
+	\item discreti, cioè che le variabili in ingresso e gli stati del sistema si possono rappresentare con valori discreti;
+	\item a simboli finiti, cioè che il numero di variabili in ingresso e gli stati può essere espresso con un numeri finito;
 \end{itemize}
+Una macchina a stati può essere rappresentata attraverso un grafo, in cui i nodi identificano gli stati e gli archi rappresentano le transizioni causate da eventi. 
+
+Nel firmware realizzato per questo progetto sono stati identificati i seguenti stati:
+\begin{enumerate}
+	\setcounter{enumi}{-1}
+	\item Start-up
+	\item Idle
+	\item Stream
+	\item Error
+\end{enumerate}
+
+\todo{inserire grafo macchina a stati}
+
+\paragraph{Start-up}
+\paragraph{Idle}
+\paragraph{Stream}
+\paragraph{Error}
+
 \clearpage
