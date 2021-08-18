@@ -251,7 +251,7 @@ bool MAX86916_Read_Sample_Flex_Mode(uint8_t* raw_red, uint8_t* raw_ired, uint8_t
 	uint8_t temp[12];
 	bool result = true;
 	__disable_irq();
-	result &= MAX86916_I2C_Read(MAX86916_REG_FIFO_DATA, temp, 9);
+	result &= MAX86916_I2C_Read(MAX86916_REG_FIFO_DATA, temp, 12);
 	__enable_irq();
 	raw_red[0] = temp[0] & 0x07;
 	raw_red[1] = temp[1];
