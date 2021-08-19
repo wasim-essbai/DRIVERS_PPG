@@ -66,8 +66,8 @@ all: main-build
 main-build: Firmware_MAX86916.elf secondary-outputs
 
 # Tool invocations
-Firmware_MAX86916.elf: $(OBJS) $(USER_OBJS) C:\Users\Matteo\ Verzeroli\Desktop\New\ folder\Firmware_MAX86916\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Firmware_MAX86916.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Matteo Verzeroli\Desktop\New folder\Firmware_MAX86916\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Firmware_MAX86916.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Firmware_MAX86916.elf: $(OBJS) $(USER_OBJS) C:\Users\Matteo\ Verzeroli\Desktop\Tesi_Github\Firmware_MAX86916\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Firmware_MAX86916.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Matteo Verzeroli\Desktop\Tesi_Github\Firmware_MAX86916\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Firmware_MAX86916.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -177,7 +177,7 @@ bool MAX86916_Config(MAX86916_Init_TypeDef initStruct) {
 	ppg_config.frequency = initStruct.frequency;
 	ppg_config.pulse_width = initStruct.pulse_width;
 	uint8_t i;
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < 4; i++) {
 		ppg_config.led_pa[i] = initStruct.led_pa[i];
 	}
 
@@ -247,18 +247,19 @@ bool MAX86916_Read_Sample_Spo2_Mode(uint8_t* raw_red, uint8_t* raw_ired) {
 /**
  * Read data when the module is configured in flex mode
  */
-bool MAX86916_Read_Sample_Flex_Mode(uint8_t* raw_red, uint8_t* raw_ired, uint8_t* raw_green, uint8_t* raw_blue) {
+
+bool MAX86916_Read_Sample_Flex_Mode(uint8_t* raw_ired, uint8_t* raw_red, uint8_t* raw_green, uint8_t* raw_blue) {
 	uint8_t temp[12];
 	bool result = true;
 	__disable_irq();
-	result &= MAX86916_I2C_Read(MAX86916_REG_FIFO_DATA, temp, 9);
+	result &= MAX86916_I2C_Read(MAX86916_REG_FIFO_DATA, temp, 12);
 	__enable_irq();
-	raw_red[0] = temp[0] & 0x07;
-	raw_red[1] = temp[1];
-	raw_red[2] = temp[2];
-	raw_ired[0] = temp[3] & 0x07;
-	raw_ired[1] = temp[4];
-	raw_ired[2] = temp[5];
+	raw_ired[0] = temp[0] & 0x07;
+	raw_ired[1] = temp[1];
+	raw_ired[2] = temp[2];
+	raw_red[0] = temp[3] & 0x07;
+	raw_red[1] = temp[4];
+	raw_red[2] = temp[5];
 	raw_green[0] = temp[6] & 0x07;
 	raw_green[1] = temp[7];
 	raw_green[2] = temp[8];

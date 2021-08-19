@@ -93,17 +93,18 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	HAL_Delay(500);
 	MAX86916_Init_TypeDef ppg_init;
+
 	if (MAX86916_Read_Part_ID() == MAX86916_PART_ID_VALUE) {
 
 		ppg_init.fifo_a_full = 0x0F;
 		ppg_init.fifo_avg = MAX86916_FIFO_AVG_1;
 		ppg_init.fifo_rollover = MAX86916_FIFO_ROLLOVER_OFF;
 		ppg_init.frequency = MAX86916_SR_100Hz;
-		ppg_init.full_scale = MAX86916_FS_16384;
-		ppg_init.led_pa[0] = 0x05;
-		ppg_init.led_pa[1] = 0x05;
-		ppg_init.led_pa[2] = 0x05;
-		ppg_init.led_pa[3] = 0x05;
+		ppg_init.full_scale = MAX86916_FS_32768;
+		ppg_init.led_pa[0] = 0x03; //ired PA
+		ppg_init.led_pa[1] = 0x02; //red PA
+		ppg_init.led_pa[2] = 0x01; //green PA
+		ppg_init.led_pa[3] = 0x01; //blue PA
 		ppg_init.mode = MAX86916_MODE_FLEX;
 		ppg_init.pulse_width = MAX86916_PW_420;
 		ppg_init.shutdown = MAX86916_SHDNMODE_SHUTDOWN;
@@ -116,9 +117,18 @@ int main(void) {
 	ppg_init.shutdown = MAX86916_SHDNMODE_ON;
 	MAX86916_Config(ppg_init);
 	while (1) {
-		//Codice che legge da PPG i campioni ~ 2ms?
-		CDC_Transmit_FS("CIAO", 4);
-		HAL_Delay(10);
+
+		uint8_t samples[18] = {0};
+		samples[0] = '!';
+		samples[1] = '?';
+
+		MAX86916_Read_Sample_Flex_Mode(samples + 2, samples + 6, samples + 10, samples + 14);
+
+		CDC_Transmit_FS(samples, 18);
+
+		HAL_Delay(10); //PPG clock sets to 100Hz
+
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
