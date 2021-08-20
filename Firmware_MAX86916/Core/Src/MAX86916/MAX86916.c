@@ -126,26 +126,39 @@ bool MAX86916_Config(MAX86916_Init_TypeDef initStruct) {
 	temp = initStruct.full_scale | initStruct.frequency | initStruct.pulse_width;
 	result &= MAX86916_I2C_Write(MAX86916_REG_MODE_CONFIGURATION2, &temp, 1);
 
-	// Forbidden configuration (table 12) HR mode
+	/*Configurazioni proibite da verificare*/
+	// Forbidden configuration HR mode
 	if (initStruct.mode == MAX86916_MODE_HR) {
-		if (initStruct.frequency > MAX86916_SR_1000Hz && initStruct.pulse_width == MAX86916_PW_420)
+		if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX86916_PW_420)
+			initStruct.frequency = MAX86916_SR_400Hz;
+		if (initStruct.frequency > MAX86916_SR_1000Hz && initStruct.pulse_width == MAX86916_PW_220)
 			initStruct.frequency = MAX86916_SR_1000Hz;
-		if (initStruct.frequency > MAX86916_SR_1600Hz && initStruct.pulse_width == MAX86916_PW_220)
-			initStruct.frequency = MAX86916_SR_1600Hz;
 		if (initStruct.frequency > MAX86916_SR_1600Hz && initStruct.pulse_width == MAX86916_PW_120)
 			initStruct.frequency = MAX86916_SR_1600Hz;
 	}
 
-	// Forbidden configuration (table 11) SPO2 mode
+	// Forbidden configuration SPO2 mode
 	if (initStruct.mode == MAX86916_MODE_SPO2) {
-		if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX86916_PW_420)
+		if (initStruct.frequency > MAX86916_SR_200Hz && initStruct.pulse_width == MAX86916_PW_420)
+			initStruct.frequency = MAX86916_SR_200Hz;
+		if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX86916_PW_220)
 			initStruct.frequency = MAX86916_SR_400Hz;
-		if (initStruct.frequency > MAX86916_SR_800Hz && initStruct.pulse_width == MAX86916_PW_220)
-			initStruct.frequency = MAX86916_SR_800Hz;
 		if (initStruct.frequency > MAX86916_SR_1000Hz && initStruct.pulse_width == MAX86916_PW_120)
 			initStruct.frequency = MAX86916_SR_1000Hz;
 		if (initStruct.frequency > MAX86916_SR_1600Hz && initStruct.pulse_width == MAX86916_PW_70)
 			initStruct.frequency = MAX86916_SR_1600Hz;
+	}
+
+	// Forbidden configuration Flex mode
+	if (initStruct.mode == MAX86916_MODE_FLEX) {
+			if (initStruct.frequency > MAX86916_SR_100Hz && initStruct.pulse_width == MAX86916_PW_420)
+				initStruct.frequency = MAX86916_SR_100Hz;
+			if (initStruct.frequency > MAX86916_SR_200Hz && initStruct.pulse_width == MAX86916_PW_220)
+				initStruct.frequency = MAX86916_SR_200Hz;
+			if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX86916_PW_120)
+				initStruct.frequency = MAX86916_SR_400Hz;
+			if (initStruct.frequency > MAX86916_SR_800Hz && initStruct.pulse_width == MAX86916_PW_70)
+				initStruct.frequency = MAX86916_SR_800Hz;
 	}
 
 	// 3. LED PULSE AMPLITUDE
@@ -153,7 +166,7 @@ bool MAX86916_Config(MAX86916_Init_TypeDef initStruct) {
 	result &= MAX86916_I2C_Write(MAX86916_REG_LED_SEQUENCE1, &led_seq1, 1);
 	result &= MAX86916_I2C_Write(MAX86916_REG_LED_RANGE, &led_rge, 1);
 
-	// Configure LED3 and LED4 amplitude and Multi-LED control registers if MULTI_LED_MODE is enabled
+	// Configure LED3 and LED4 amplitude and Flex-Mode control registers if FLEX_MODE is enabled
 	if (initStruct.mode == MAX86916_MODE_FLEX) {
 		temp = 0x43;
 		result &= MAX86916_I2C_Write(MAX86916_REG_LED_SEQUENCE2, &temp, 1);
