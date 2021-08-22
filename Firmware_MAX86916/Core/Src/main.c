@@ -100,11 +100,11 @@ int main(void) {
 		ppg_init.fifo_avg = MAX86916_FIFO_AVG_1;
 		ppg_init.fifo_rollover = MAX86916_FIFO_ROLLOVER_OFF;
 		ppg_init.frequency = MAX86916_SR_100Hz;
-		ppg_init.full_scale = MAX86916_FS_32768;
-		ppg_init.led_pa[0] = 0x03; //ired PA
-		ppg_init.led_pa[1] = 0x02; //red PA
-		ppg_init.led_pa[2] = 0x01; //green PA
-		ppg_init.led_pa[3] = 0x01; //blue PA
+		ppg_init.full_scale = MAX86916_FS_16384;
+		ppg_init.led_pa[0] = 0x05; //ired PA
+		ppg_init.led_pa[1] = 0x05; //red PA
+		ppg_init.led_pa[2] = 0x05; //green PA
+		ppg_init.led_pa[3] = 0x05; //blue PA
 		ppg_init.mode = MAX86916_MODE_FLEX;
 		ppg_init.pulse_width = MAX86916_PW_420;
 		ppg_init.shutdown = MAX86916_SHDNMODE_SHUTDOWN;
@@ -119,15 +119,13 @@ int main(void) {
 	while (1) {
 
 		uint8_t samples[18] = {0};
-		samples[0] = '!';
-		samples[1] = '?';
+		samples[0] = '?';
+		samples[1] = '!';
 
-		MAX86916_Read_Sample_Flex_Mode(samples + 2, samples + 6, samples + 10, samples + 14);
+		MAX86916_Read_Sample_Flex_Mode(samples + 3, samples + 7, samples + 11, samples + 15);
 
 		CDC_Transmit_FS(samples, 18);
-
 		HAL_Delay(10); //PPG clock sets to 100Hz
-
 
 		/* USER CODE END WHILE */
 
