@@ -136,15 +136,16 @@ int main(void)
 		case SYS_IDLE:
 			HAL_GPIO_WritePin(LD3_GPIO_Port,LD3_Pin,GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_SET);
+
 			HAL_Delay(5000);
 			discovery.state = SYS_STREAM; //inserire il pulsante al posto del delay
+			ppg_init.shutdown = MAX86916_SHDNMODE_ON;
+			MAX86916_Config(ppg_init);
+
 			break;
 		case SYS_STREAM:
 			HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(LD6_GPIO_Port,LD6_Pin,GPIO_PIN_SET);
-
-			ppg_init.shutdown = MAX86916_SHDNMODE_ON;
-			MAX86916_Config(ppg_init);
 
 			if (!ReadAndSendDataFromPPG()){
 				//discovery.state = SYS_ERROR; //da verificare perchè da errore
