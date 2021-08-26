@@ -52,7 +52,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
-bool ReadAndSendDataFromPPG(void);
+bool readDataFromPPGAndSendUSB(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -94,7 +94,8 @@ int main(void)
 	HAL_Delay(500);
 
 	DISCOVERY_FSM discovery;
-	discovery.state = SYS_START_UP;
+
+	setSystemState(&discovery, SYS_START_UP);
 
 	MAX86916_Init_TypeDef ppg_init;
 
@@ -114,7 +115,7 @@ int main(void)
 		ppg_init.shutdown = MAX86916_SHDNMODE_SHUTDOWN;
 		MAX86916_Config(ppg_init);
 	} else {
-		discovery.state = SYS_ERROR;
+		setSystemState(&discovery, SYS_ERROR);
 	}
   /* USER CODE END 2 */
 
@@ -147,7 +148,7 @@ int main(void)
 			HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(LD6_GPIO_Port,LD6_Pin,GPIO_PIN_SET);
 
-			if (!ReadAndSendDataFromPPG()){
+			if (!readDataFromPPGAndSendUSB()){
 				//discovery.state = SYS_ERROR; //da verificare perchè da errore
 			}
 			break;
@@ -372,7 +373,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-bool ReadAndSendDataFromPPG(){
+bool readDataFromPPGAndSendUSB(){
 	uint8_t samples[18] = {0};
 	bool result = true;
 
@@ -383,6 +384,8 @@ bool ReadAndSendDataFromPPG(){
 
 	result &= CDC_Transmit_FS(samples, 18) == USBD_OK;
 	HAL_Delay(10);
+
+	return result;
 }
 /* USER CODE END 4 */
 

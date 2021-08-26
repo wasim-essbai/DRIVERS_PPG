@@ -1,3 +1,4 @@
+"./Core/Src/FSM/FSM.o"
 "./Core/Src/MAX86916/MAX86916.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
