@@ -5,5 +5,3 @@ typedef enum {
 typedef struct{
 	SystemState state;
 }DISCOVERY_FSM;
-
-void setSystemState(DISCOVERY_FSM* discovery, SystemState state);

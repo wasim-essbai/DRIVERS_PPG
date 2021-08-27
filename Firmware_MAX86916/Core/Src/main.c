@@ -53,6 +53,7 @@ static void MX_GPIO_Init(void);
 static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
 bool readDataFromPPGAndSendUSB(void);
+void setSystemState(DISCOVERY_FSM discovery, SystemState state);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -387,6 +388,27 @@ bool readDataFromPPGAndSendUSB(){
 
 	return result;
 }
+
+void setSystemState(DISCOVERY_FSM discovery, SystemState state){
+	if(discovery.state != state){
+		switch(state){
+		case SYS_ERROR:
+			break;
+		case SYS_IDLE:
+			break;
+		case SYS_START_UP:
+			break;
+		case SYS_STOP:
+			break;
+		case SYS_STREAM:
+			break;
+		default:
+			break;
+		}
+		discovery.state = state;
+	}
+}
+
 /* USER CODE END 4 */
 
 /**
