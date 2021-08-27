@@ -45,6 +45,9 @@
 I2C_HandleTypeDef hi2c3;
 
 /* USER CODE BEGIN PV */
+
+DISCOVERY_FSM discovery;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -53,7 +56,7 @@ static void MX_GPIO_Init(void);
 static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
 bool readDataFromPPGAndSendUSB(void);
-void setSystemState(DISCOVERY_FSM discovery, SystemState state);
+void setSystemState(DISCOVERY_FSM* discovery, SystemState state);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -93,8 +96,6 @@ int main(void)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 	HAL_Delay(500);
-
-	DISCOVERY_FSM discovery;
 
 	setSystemState(&discovery, SYS_START_UP);
 
@@ -380,7 +381,6 @@ bool readDataFromPPGAndSendUSB(){
 
 	samples[0] = '?';
 	samples[1] = '!';
-
 	result &= MAX86916_Read_Sample_Flex_Mode(samples + 3, samples + 7, samples + 11, samples + 15);
 
 	result &= CDC_Transmit_FS(samples, 18) == USBD_OK;
@@ -389,8 +389,8 @@ bool readDataFromPPGAndSendUSB(){
 	return result;
 }
 
-void setSystemState(DISCOVERY_FSM discovery, SystemState state){
-	if(discovery.state != state){
+void setSystemState(DISCOVERY_FSM* discovery, SystemState state){
+	if((*discovery).state != state){
 		switch(state){
 		case SYS_ERROR:
 			break;
@@ -405,7 +405,7 @@ void setSystemState(DISCOVERY_FSM discovery, SystemState state){
 		default:
 			break;
 		}
-		discovery.state = state;
+		(*discovery).state = state;
 	}
 }
 

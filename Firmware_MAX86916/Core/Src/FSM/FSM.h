@@ -4,4 +4,4 @@ typedef enum {
 
 typedef struct{
 	SystemState state;
-}DISCOVERY_FSM;
+} DISCOVERY_FSM;
