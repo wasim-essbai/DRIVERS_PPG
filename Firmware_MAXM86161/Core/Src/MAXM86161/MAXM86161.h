@@ -126,7 +126,18 @@ typedef enum {
 
 // MAXM86161 initialization structure
 typedef struct {
-
+	MAXM86161_ShutdownMode shutdown;
+	MAXM86161_SampleRate frequency;
+	MAXM86161_ALCDisable ALC_disable;
+	MAXM86161_FullScale full_scale;
+	MAXM86161_IntegrationTime integration_time;
+	MAXM86161_Led1Range led1_range;
+	MAXM86161_Led2Range led2_range;
+	MAXM86161_Led3Range led3_range;
+	MAXM86161_SampleAvarage sample_avg;
+	MAXM86161_LedLenght led_lenght;
+	MAXM86161_ResetMode reset_mode;
+	uint8_t pa[3];
 } MAXM86161_Init_TypeDef;
 
 /// I2C communication functions
@@ -160,3 +171,11 @@ uint8_t MAXM86161_Read_Part_ID(void);
  * @return	true if the sensor has been configured correctly, false otherwise
  */
 bool MAXM86161_Check(void);
+
+/// CONFIG FUNCTIONS
+/**
+ * Configuration of MAX86916 operation
+ * @param initStruct Initialization structure
+ * @return True if successful, false otherwise
+ */
+bool MAXM86161_Config(MAXM86161_Init_TypeDef initStruct);

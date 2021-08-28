@@ -99,7 +99,29 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 
 	uint8_t part_id;
+	bool result = true;
+
 	part_id = MAXM86161_Read_Part_ID();
+
+	MAXM86161_Init_TypeDef ppg;
+	ppg.shutdown = MAXM86161_SHDNMODE_ON;
+	ppg.integration_time = MAXM86161_IT_4;
+	ppg.full_scale = MAXM86161_FS_16384;
+	ppg.sample_avg = MAXM86161_NO_AVG;
+	ppg.frequency = MAXM86161_SR_100HZ;
+
+	ppg.led1_range = MAXM86161_LED1_RGE;
+	ppg.led2_range = MAXM86161_LED2_RGE;
+	ppg.led3_range = MAXM86161_LED3_RGE;
+
+	ppg.pa[0] = 0xF0; //GREEN
+	ppg.pa[1] = 0xF0;//IR
+	ppg.pa[2] = 0xF0;//RED
+
+	result &= MAXM86161_Config(ppg);
+
+	uint8_t lettura;
+	MAXM86161_I2C_Read(MAXM86161_LED_RANGE_1, &lettura, 1);
 
 	while (1) {
 
