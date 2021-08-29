@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  00020180  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00016d88  00000000  00000000  000201b0  2**0
+ 13 .debug_info   00016e48  00000000  00000000  000201b0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 000032a3  00000000  00000000  00036f38  2**0
+ 14 .debug_abbrev 000032a3  00000000  00000000  00036ff8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00000e10  00000000  00000000  0003a1e0  2**3
+ 15 .debug_aranges 00000e10  00000000  00000000  0003a2a0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_ranges 00000ce0  00000000  00000000  0003aff0  2**3
+ 16 .debug_ranges 00000ce0  00000000  00000000  0003b0b0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00023911  00000000  00000000  0003bcd0  2**0
+ 17 .debug_macro  00023911  00000000  00000000  0003bd90  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00012f72  00000000  00000000  0005f5e1  2**0
+ 18 .debug_line   00012f72  00000000  00000000  0005f6a1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000c72a9  00000000  00000000  00072553  2**0
+ 19 .debug_str    000c73e1  00000000  00000000  00072613  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000053  00000000  00000000  001397fc  2**0
+ 20 .comment      00000053  00000000  00000000  001399f4  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00003960  00000000  00000000  00139850  2**2
+ 21 .debug_frame  00003960  00000000  00000000  00139a48  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -840,24 +840,24 @@ int main(void) {
  80007dc:	2318      	movs	r3, #24
  80007de:	727b      	strb	r3, [r7, #9]
 
-	ppg.led1_range = MAXM86161_LED1_RGE;
- 80007e0:	2310      	movs	r3, #16
+	ppg.led1_range = MAXM86161_LED1_RGE_1;
+ 80007e0:	2301      	movs	r3, #1
  80007e2:	737b      	strb	r3, [r7, #13]
-	ppg.led2_range = MAXM86161_LED2_RGE;
+	ppg.led2_range = MAXM86161_LED2_RGE_1;
  80007e4:	2304      	movs	r3, #4
  80007e6:	73bb      	strb	r3, [r7, #14]
-	ppg.led3_range = MAXM86161_LED3_RGE;
- 80007e8:	2301      	movs	r3, #1
+	ppg.led3_range = MAXM86161_LED3_RGE_1;
+ 80007e8:	2310      	movs	r3, #16
  80007ea:	73fb      	strb	r3, [r7, #15]
 
-	ppg.pa[0] = 0xF0; //GREEN
- 80007ec:	23f0      	movs	r3, #240	; 0xf0
+	ppg.pa[0] = 0x50; //GREEN
+ 80007ec:	2350      	movs	r3, #80	; 0x50
  80007ee:	74fb      	strb	r3, [r7, #19]
-	ppg.pa[1] = 0xF0;//IR
- 80007f0:	23f0      	movs	r3, #240	; 0xf0
+	ppg.pa[1] = 0x50;//IR
+ 80007f0:	2350      	movs	r3, #80	; 0x50
  80007f2:	753b      	strb	r3, [r7, #20]
-	ppg.pa[2] = 0xF0;//RED
- 80007f4:	23f0      	movs	r3, #240	; 0xf0
+	ppg.pa[2] = 0x50;//RED
+ 80007f4:	2350      	movs	r3, #80	; 0x50
  80007f6:	757b      	strb	r3, [r7, #21]
 
 	result &= MAXM86161_Config(ppg);

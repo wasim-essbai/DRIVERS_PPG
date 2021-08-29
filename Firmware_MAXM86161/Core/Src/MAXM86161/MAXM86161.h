@@ -41,8 +41,6 @@
  * Bits 0: Reset control
  *########################## */
 
- //TODO  READYENABLE ??
-
 typedef enum {
 	MAXM86161_SHDNMODE_SHUTDOWN = 0x02, MAXM86161_SHDNMODE_ON = 0x00
 } MAXM86161_ShutdownMode;
@@ -90,7 +88,15 @@ typedef enum {
 } MAXM86161_SampleRate;
 
 typedef enum {
-	MAXM86161_NO_AVG = 0x00 //NB
+	MAXM86161_NO_AVG = 0x00,
+	MAXM86161_AVG_2 = 0X01,
+	MAXM86161_AVG_4 = 0X02,
+	MAXM86161_AVG_8 = 0X03,
+	MAXM86161_AVG_16 = 0X04,
+	MAXM86161_AVG_32 = 0X05,
+	MAXM86161_AVG_64 = 0X06,
+	MAXM86161_AVG_128 = 0X07
+
 } MAXM86161_SampleAvarage;
 
 /*##########################
@@ -98,7 +104,7 @@ typedef enum {
  * Bits 6:7: Led Lenght
  *########################## */
 typedef enum {
-	MAXM86161_LED_SETLNG = 0x40 //NB
+	MAXM86161_LED_SETLNG = 0x40
 } MAXM86161_LedLenght;
 
 
@@ -108,21 +114,35 @@ typedef enum {
  *  Bits 2:3: LED2_RGE
  *  Bits 0:1: LED1_RGE
  *########################## */
+/*
+ * GREEN LED DRIVER CURRENT
+ */
 typedef enum {
-	MAXM86161_LED1_RGE = 0x10
+	MAXM86161_LED1_RGE_0 = 0x00,
+	MAXM86161_LED1_RGE_1 = 0x01,
+	MAXM86161_LED1_RGE_2 = 0x02,
+	MAXM86161_LED1_RGE_3 = 0x03
 } MAXM86161_Led1Range;
+
+/*
+ * IR LED DRIVER CURRENT
+ */
 typedef enum {
-	MAXM86161_LED2_RGE = 0x04
+	MAXM86161_LED2_RGE_0 = 0x00,
+	MAXM86161_LED2_RGE_1 = 0x04,
+	MAXM86161_LED2_RGE_2 = 0x08,
+	MAXM86161_LED2_RGE_3 = 0x0C
 } MAXM86161_Led2Range;
+
+/*
+ * RED LED DRIVER CURRENT
+ */
 typedef enum {
-	MAXM86161_LED3_RGE = 0x01
+	MAXM86161_LED3_RGE_0 = 0x00,
+	MAXM86161_LED3_RGE_1 = 0x10,
+	MAXM86161_LED3_RGE_2 = 0x20,
+	MAXM86161_LED3_RGE_3 = 0x30
 } MAXM86161_Led3Range;
-
-
-
-/// Interrupts TODO to be implemented ??
-//#define MAXM86161_DATA_RDY	
-
 
 // MAXM86161 initialization structure
 typedef struct {

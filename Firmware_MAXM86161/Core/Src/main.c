@@ -110,13 +110,13 @@ int main(void) {
 	ppg.sample_avg = MAXM86161_NO_AVG;
 	ppg.frequency = MAXM86161_SR_100HZ;
 
-	ppg.led1_range = MAXM86161_LED1_RGE;
-	ppg.led2_range = MAXM86161_LED2_RGE;
-	ppg.led3_range = MAXM86161_LED3_RGE;
+	ppg.led1_range = MAXM86161_LED1_RGE_1;
+	ppg.led2_range = MAXM86161_LED2_RGE_1;
+	ppg.led3_range = MAXM86161_LED3_RGE_1;
 
-	ppg.pa[0] = 0xF0; //GREEN
-	ppg.pa[1] = 0xF0;//IR
-	ppg.pa[2] = 0xF0;//RED
+	ppg.pa[0] = 0x50; //GREEN
+	ppg.pa[1] = 0x50;//IR
+	ppg.pa[2] = 0x50;//RED
 
 	result &= MAXM86161_Config(ppg);
 
