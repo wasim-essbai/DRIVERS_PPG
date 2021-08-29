@@ -98,10 +98,7 @@ int main(void) {
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 
-	uint8_t part_id;
 	bool result = true;
-
-	part_id = MAXM86161_Read_Part_ID();
 
 	MAXM86161_Init_TypeDef ppg;
 	ppg.shutdown = MAXM86161_SHDNMODE_ON;
@@ -109,21 +106,29 @@ int main(void) {
 	ppg.full_scale = MAXM86161_FS_16384;
 	ppg.sample_avg = MAXM86161_NO_AVG;
 	ppg.frequency = MAXM86161_SR_100HZ;
+	ppg.low_power = MAXM86161_LPMODE_OFF;
 
 	ppg.led1_range = MAXM86161_LED1_RGE_1;
 	ppg.led2_range = MAXM86161_LED2_RGE_1;
 	ppg.led3_range = MAXM86161_LED3_RGE_1;
 
-	ppg.pa[0] = 0x50; //GREEN
-	ppg.pa[1] = 0x50;//IR
-	ppg.pa[2] = 0x50;//RED
+	ppg.pa[0] = 0xF0; //GREEN
+	ppg.pa[1] = 0xF0;//IR
+	ppg.pa[2] = 0xF0;//RED
+
+	ppg.fifo_rollover = MAX86916_FIFO_ROLLOVER_OFF;
 
 	result &= MAXM86161_Config(ppg);
 
-	uint8_t lettura;
-	MAXM86161_I2C_Read(MAXM86161_LED_RANGE_1, &lettura, 1);
 
 	while (1) {
+		uint8_t samples[14] = {0};
+		samples[0] = '?';
+		samples[1] = '!';
+
+		MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
+		CDC_Transmit_FS(samples, 14);
+		HAL_Delay(10); //PPG clock sets to 100Hz
 
 		/* USER CODE END WHILE */
 

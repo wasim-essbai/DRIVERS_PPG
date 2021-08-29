@@ -29,6 +29,9 @@
 #define MAXM86161_LED3_PA						0X25 //RED
 #define MAXM86161_LED_RANGE_1					0X2A
 
+#define MAXM86161_REG_FIFO_DATA					0x08
+#define MAXM86161_REG_FIFO_CONF_2				0X0A
+
 /// Part ID
 #define MAXM86161_REG_PART_ID					0xFF
 
@@ -37,6 +40,7 @@
 
 /*##########################
  * SYSTEM CONTROL [0x0D]
+ * Bit 2: Low Power Mode
  * Bit 1: Shutdown control
  * Bits 0: Reset control
  *########################## */
@@ -48,6 +52,10 @@ typedef enum {
 typedef enum {
 	MAXM86161_RSTMODE_RESET_ON = 0x01, MAXM86161_RSTMODE_NO_RESET = 0x00
 } MAXM86161_ResetMode;
+
+typedef enum {
+	MAXM86161_LPMODE_ON = 0x04, MAXM86161_LPMODE_OFF = 0x00
+} MAXM86161_LowerPower;
 
 /*##########################
  * PPG CONFIGURATION 1 [0x11]
@@ -144,6 +152,10 @@ typedef enum {
 	MAXM86161_LED3_RGE_3 = 0x30
 } MAXM86161_Led3Range;
 
+typedef enum {
+	MAX86916_FIFO_ROLLOVER_ON = 0x20, MAX86916_FIFO_ROLLOVER_OFF = 0x00
+} MAX86916_FifoRollover;
+
 // MAXM86161 initialization structure
 typedef struct {
 	MAXM86161_ShutdownMode shutdown;
@@ -157,6 +169,8 @@ typedef struct {
 	MAXM86161_SampleAvarage sample_avg;
 	MAXM86161_LedLenght led_lenght;
 	MAXM86161_ResetMode reset_mode;
+	MAXM86161_LowerPower low_power;
+	MAX86916_FifoRollover fifo_rollover;
 	uint8_t pa[3];
 } MAXM86161_Init_TypeDef;
 
@@ -199,3 +213,8 @@ bool MAXM86161_Check(void);
  * @return True if successful, false otherwise
  */
 bool MAXM86161_Config(MAXM86161_Init_TypeDef initStruct);
+
+/**
+ * Read data from FIFO
+ */
+bool MAXM86161_ReadData(uint8_t* raw_data_green, uint8_t* raw_data_ir, uint8_t* raw_data_red);
