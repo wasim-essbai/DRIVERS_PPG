@@ -56,7 +56,9 @@ static void MX_GPIO_Init(void);
 static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
 bool readDataFromPPGAndSendUSB(void);
-void setSystemState(DISCOVERY_FSM* discovery, SystemState state);
+void setSystemState(SystemState state);
+SystemState getSystemState(void);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -97,12 +99,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	HAL_Delay(500);
 
-	setSystemState(&discovery, SYS_START_UP);
+	setSystemState(SYS_START_UP);
 
 	MAX86916_Init_TypeDef ppg_init;
 
 	if (MAX86916_Read_Part_ID() == MAX86916_PART_ID_VALUE) {
-
 		ppg_init.fifo_a_full = 0x0F;
 		ppg_init.fifo_avg = MAX86916_FIFO_AVG_1;
 		ppg_init.fifo_rollover = MAX86916_FIFO_ROLLOVER_OFF;
@@ -117,7 +118,7 @@ int main(void)
 		ppg_init.shutdown = MAX86916_SHDNMODE_SHUTDOWN;
 		MAX86916_Config(ppg_init);
 	} else {
-		setSystemState(&discovery, SYS_ERROR);
+		setSystemState(SYS_ERROR);
 	}
   /* USER CODE END 2 */
 
@@ -125,37 +126,29 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
 	while (1) {
-
 		switch (discovery.state){
 		case SYS_START_UP:
 
-			HAL_GPIO_WritePin(LD3_GPIO_Port,LD3_Pin,GPIO_PIN_SET);
-
 			if(MAX86916_Config(ppg_init))
-				discovery.state = SYS_IDLE;
+				setSystemState(SYS_IDLE);
 			else
-				discovery.state = SYS_ERROR;
+				setSystemState(SYS_ERROR);
 			break;
 		case SYS_IDLE:
-			HAL_GPIO_WritePin(LD3_GPIO_Port,LD3_Pin,GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_SET);
 
 			HAL_Delay(5000);
-			discovery.state = SYS_STREAM; //inserire il pulsante al posto del delay
-			ppg_init.shutdown = MAX86916_SHDNMODE_ON;
-			MAX86916_Config(ppg_init);
+
+			//ppg_init.shutdown = MAX86916_SHDNMODE_ON;
+			//MAX86916_Config(ppg_init);
 
 			break;
 		case SYS_STREAM:
-			HAL_GPIO_WritePin(LD4_GPIO_Port,LD4_Pin,GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(LD6_GPIO_Port,LD6_Pin,GPIO_PIN_SET);
 
-			if (!readDataFromPPGAndSendUSB()){
-				//discovery.state = SYS_ERROR; //da verificare perchè da errore
-			}
+			/*if (!readDataFromPPGAndSendUSB()){
+				//setSystemState(SYS_ERROR); //da verificare perchè da errore
+			}*/
 			break;
 		case SYS_ERROR:
-			HAL_GPIO_WritePin(LD5_GPIO_Port,LD5_Pin,GPIO_PIN_SET);
 			break;
 		default:
 			break;
@@ -270,7 +263,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(OTG_FS_PowerSwitchOn_GPIO_Port, OTG_FS_PowerSwitchOn_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin
+  HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin|LED_ORANGE_Pin|LED_RED_Pin|LED_BLUE_Pin
                           |Audio_RST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : CS_I2C_SPI_Pin */
@@ -295,11 +288,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
   HAL_GPIO_Init(PDM_OUT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : BLUE_BUTTON_Pin */
-  GPIO_InitStruct.Pin = BLUE_BUTTON_Pin;
+  /*Configure GPIO pin : BLUE_PUSH_BUTTON_Pin */
+  GPIO_InitStruct.Pin = BLUE_PUSH_BUTTON_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(BLUE_BUTTON_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(BLUE_PUSH_BUTTON_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : I2S3_WS_Pin */
   GPIO_InitStruct.Pin = I2S3_WS_Pin;
@@ -331,9 +324,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
   HAL_GPIO_Init(CLK_IN_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD4_Pin LD3_Pin LD5_Pin LD6_Pin
+  /*Configure GPIO pins : LED_GREEN_Pin LED_ORANGE_Pin LED_RED_Pin LED_BLUE_Pin
                            Audio_RST_Pin */
-  GPIO_InitStruct.Pin = LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin
+  GPIO_InitStruct.Pin = LED_GREEN_Pin|LED_ORANGE_Pin|LED_RED_Pin|LED_BLUE_Pin
                           |Audio_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -389,24 +382,53 @@ bool readDataFromPPGAndSendUSB(){
 	return result;
 }
 
-void setSystemState(DISCOVERY_FSM* discovery, SystemState state){
-	if((*discovery).state != state){
+SystemState getSystemState(void) {
+	return discovery.state;
+}
+
+void setSystemState(SystemState state){
+	if(getSystemState() != state){
+		reset_all_leds();
 		switch(state){
-		case SYS_ERROR:
+		case SYS_START_UP:
+			HAL_GPIO_WritePin(LED_ORANGE_GPIO_Port,LED_ORANGE_Pin,GPIO_PIN_SET);
 			break;
 		case SYS_IDLE:
-			break;
-		case SYS_START_UP:
-			break;
-		case SYS_STOP:
+			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET);
 			break;
 		case SYS_STREAM:
+			HAL_GPIO_WritePin(LED_BLUE_GPIO_Port,LED_BLUE_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_ERROR:
+			HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_STOP:
 			break;
 		default:
 			break;
 		}
-		(*discovery).state = state;
+		setSystemState(state);
 	}
+}
+
+void manage_button_push(void) {
+	switch (getSystemState()) {
+	case SYS_IDLE:
+		setSystemState(SYS_STREAM);
+		break;
+	case SYS_STREAM:
+		setSystemState(SYS_IDLE);
+		break;
+	default:
+		break;
+	}
+}
+
+void reset_all_leds(void) {
+	HAL_GPIO_WritePin(LED_ORANGE_GPIO_Port,LED_ORANGE_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_BLUE_GPIO_Port,LED_BLUE_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_RESET);
 }
 
 /* USER CODE END 4 */
