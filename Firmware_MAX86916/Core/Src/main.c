@@ -29,6 +29,13 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef enum {
+	SYS_IDLE, SYS_START_UP, SYS_STOP, SYS_STREAM, SYS_ERROR
+} SystemState;
+
+typedef struct{
+	SystemState state;
+} DiscoveryFSM;
 
 /* USER CODE END PTD */
 
@@ -46,7 +53,7 @@ I2C_HandleTypeDef hi2c3;
 
 /* USER CODE BEGIN PV */
 
-DISCOVERY_FSM discovery;
+DiscoveryFSM discovery;
 
 /* USER CODE END PV */
 
