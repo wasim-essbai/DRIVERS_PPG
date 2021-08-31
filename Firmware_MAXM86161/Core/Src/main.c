@@ -93,32 +93,34 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	HAL_Delay(500);
 
+	bool result = true;
+
+	MAXM86161_Init_TypeDef ppg;
+
+	if (MAXM86161_Read_Part_ID() == MAXM86161_PART_ID_VALUE) {
+		ppg.shutdown = MAXM86161_SHDNMODE_ON;
+		ppg.integration_time = MAXM86161_IT_4;
+		ppg.full_scale = MAXM86161_FS_16384;
+		ppg.sample_avg = MAXM86161_NO_AVG;
+		ppg.frequency = MAXM86161_SR_100HZ;
+		ppg.low_power = MAXM86161_LPMODE_OFF;
+
+		ppg.led1_range = MAXM86161_LED1_RGE_1;
+		ppg.led2_range = MAXM86161_LED2_RGE_1;
+		ppg.led3_range = MAXM86161_LED3_RGE_1;
+
+		ppg.pa[0] = 0xF0; //GREEN
+		ppg.pa[1] = 0xF0;//IR
+		ppg.pa[2] = 0xF0;//RED
+
+		ppg.fifo_rollover = MAX86916_FIFO_ROLLOVER_OFF;
+		result &= MAXM86161_Config(ppg);
+	}
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 
-	bool result = true;
-
-	MAXM86161_Init_TypeDef ppg;
-	ppg.shutdown = MAXM86161_SHDNMODE_ON;
-	ppg.integration_time = MAXM86161_IT_4;
-	ppg.full_scale = MAXM86161_FS_16384;
-	ppg.sample_avg = MAXM86161_NO_AVG;
-	ppg.frequency = MAXM86161_SR_100HZ;
-	ppg.low_power = MAXM86161_LPMODE_OFF;
-
-	ppg.led1_range = MAXM86161_LED1_RGE_1;
-	ppg.led2_range = MAXM86161_LED2_RGE_1;
-	ppg.led3_range = MAXM86161_LED3_RGE_1;
-
-	ppg.pa[0] = 0xF0; //GREEN
-	ppg.pa[1] = 0xF0;//IR
-	ppg.pa[2] = 0xF0;//RED
-
-	ppg.fifo_rollover = MAX86916_FIFO_ROLLOVER_OFF;
-
-	result &= MAXM86161_Config(ppg);
 
 
 	while (1) {
