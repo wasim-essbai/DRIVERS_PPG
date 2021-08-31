@@ -109,20 +109,27 @@ bool MAXM86161_ReadData(uint8_t* raw_data_green, uint8_t* raw_data_ir, uint8_t* 
 	result &= MAXM86161_I2C_Read(MAXM86161_REG_FIFO_DATA, temp, 9);
 	__enable_irq();
 
-	raw_data_green[0] = temp[0];
-	raw_data_green[1] = temp[1];
-	raw_data_green[2] = temp[2];
 
 
-	raw_data_ir[0] = temp[3];
-	raw_data_ir[1] = temp[4];
-	raw_data_ir[2] = temp[5];
-
-
-	raw_data_red[0] = temp[6];
-	raw_data_red[1] = temp[7];
-	raw_data_red[2] = temp[8];
-
+	for(int i = 0; i < 9; i += 3){
+		switch(temp[i] & 0xF8){
+		case 0x08:
+			raw_data_green[0] = temp[i] & 0x07;
+			raw_data_green[1] = temp[i + 1];
+			raw_data_green[2] = temp[i + 2];
+			break;
+		case 0x10:
+			raw_data_ir[0] = temp[i] & 0x07;
+			raw_data_ir[1] = temp[i + 1];
+			raw_data_ir[2] = temp[i + 2];
+			break;
+		case 0x18:
+			raw_data_red[0] = temp[i] & 0x07;
+			raw_data_red[1] = temp[i + 1];
+			raw_data_red[2] = temp[i + 2];
+			break;
+		}
+	}
 	return result;
 }
 
