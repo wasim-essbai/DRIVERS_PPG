@@ -24,18 +24,19 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "MAX86916/MAX86916.h"
-#include "FSM/FSM.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 typedef enum {
-	SYS_IDLE, SYS_START_UP, SYS_STOP, SYS_STREAM, SYS_ERROR
+	SYS_IDLE, SYS_START_UP, SYS_STREAM, SYS_ERROR
 } SystemState;
 
 typedef struct{
 	SystemState state;
 } DiscoveryFSM;
+
+MAX86916_Init_TypeDef ppg_init;
 
 /* USER CODE END PTD */
 
@@ -108,8 +109,6 @@ int main(void)
 
 	setSystemState(SYS_START_UP);
 
-	MAX86916_Init_TypeDef ppg_init;
-
 	if (MAX86916_Read_Part_ID() == MAX86916_PART_ID_VALUE) {
 		ppg_init.fifo_a_full = 0x0F;
 		ppg_init.fifo_avg = MAX86916_FIFO_AVG_1;
@@ -123,7 +122,6 @@ int main(void)
 		ppg_init.mode = MAX86916_MODE_FLEX;
 		ppg_init.pulse_width = MAX86916_PW_420;
 		ppg_init.shutdown = MAX86916_SHDNMODE_SHUTDOWN;
-		MAX86916_Config(ppg_init);
 	} else {
 		setSystemState(SYS_ERROR);
 	}
@@ -135,25 +133,17 @@ int main(void)
 	while (1) {
 		switch (discovery.state){
 		case SYS_START_UP:
-
 			if(MAX86916_Config(ppg_init))
 				setSystemState(SYS_IDLE);
 			else
 				setSystemState(SYS_ERROR);
 			break;
 		case SYS_IDLE:
-
-			HAL_Delay(5000);
-
-			//ppg_init.shutdown = MAX86916_SHDNMODE_ON;
-			//MAX86916_Config(ppg_init);
-
 			break;
 		case SYS_STREAM:
-
-			/*if (!readDataFromPPGAndSendUSB()){
-				//setSystemState(SYS_ERROR); //da verificare perchè da errore
-			}*/
+			if (!readDataFromPPGAndSendUSB()){
+				setSystemState(SYS_ERROR);
+			}
 			break;
 		case SYS_ERROR:
 			break;
@@ -384,7 +374,7 @@ bool readDataFromPPGAndSendUSB(){
 	result &= MAX86916_Read_Sample_Flex_Mode(samples + 3, samples + 7, samples + 11, samples + 15);
 
 	result &= CDC_Transmit_FS(samples, 18) == USBD_OK;
-	HAL_Delay(10);
+	HAL_Delay(9);
 
 	return result;
 }
@@ -408,23 +398,31 @@ void setSystemState(SystemState state){
 			break;
 		case SYS_ERROR:
 			HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET);
-			break;
-		case SYS_STOP:
+			ppg_init.shutdown = MAX86916_SHDNMODE_SHUTDOWN;
+			MAX86916_Config(ppg_init);
 			break;
 		default:
 			break;
 		}
-		setSystemState(state);
+		discovery.state = state;
 	}
 }
 
 void manage_button_push(void) {
 	switch (getSystemState()) {
 	case SYS_IDLE:
-		setSystemState(SYS_STREAM);
+		ppg_init.shutdown = MAX86916_SHDNMODE_ON;
+		if(MAX86916_Config(ppg_init))
+			setSystemState(SYS_STREAM);
+		else
+			setSystemState(SYS_ERROR);
 		break;
 	case SYS_STREAM:
-		setSystemState(SYS_IDLE);
+		ppg_init.shutdown = MAX86916_SHDNMODE_SHUTDOWN;
+		if(MAX86916_Config(ppg_init))
+			setSystemState(SYS_IDLE);
+		else
+			setSystemState(SYS_ERROR);
 		break;
 	default:
 		break;
