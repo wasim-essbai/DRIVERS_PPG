@@ -1,8 +1,0 @@
-MAXM86161.c:15:6:MAXM86161_I2C_Write	48	dynamic
-MAXM86161.c:29:6:MAXM86161_I2C_Read	32	static
-MAXM86161.c:41:9:MAXM86161_Read_Part_ID	16	static
-MAXM86161.c:50:6:MAXM86161_Check	16	static
-MAXM86161.c:65:6:MAXM86161_Config	40	static
-MAXM86161.c:104:6:MAXM86161_ReadData	40	static,ignoring_inline_asm
-MAXM86161.c:132:6:MAXM86161_Read_Sample_Flex_Mode	24	static
-MAXM86161.c:140:6:MAXM86161_Clear_Fifo	4	static
