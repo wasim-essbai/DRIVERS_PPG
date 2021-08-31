@@ -40,7 +40,7 @@ bool MAX86916_I2C_Read(uint8_t regName, uint8_t* readByte, uint8_t numBytes) {
  */
 uint8_t MAX86916_Read_Part_ID(void) {
 	uint8_t part_id;
-	MAX86916x_I2C_Read(MAX86916_REG_PART_ID, &part_id, 1);
+	MAX86916_I2C_Read(MAX86916_REG_PART_ID, &part_id, 1);
 	return part_id;
 }
 
@@ -49,7 +49,7 @@ uint8_t MAX86916_Read_Part_ID(void) {
  */
 uint8_t MAX86916_Read_Revision_ID(void) {
 	uint8_t rev_id;
-	MAX3010x_I2C_Read(MAX86916_REG_REVISION_ID, &rev_id, 1);
+	MAX86916_I2C_Read(MAX86916_REG_REVISION_ID, &rev_id, 1);
 	return rev_id;
 }
 
@@ -62,12 +62,11 @@ bool MAX86916_Check(void) {
 	uint8_t reg_value, temp;
 
 	// Read REV_ID e PART_ID to check if they are correct
-	if (MAX86916_Read_Part_ID() != MAX86916_PART_ID_VALUE
-			&& MAX86916_Read_Revision_ID() != MAX86916_REVISION_ID_VALUE)
+	if (MAX86916_Read_Part_ID() != MAX86916_PART_ID_VALUE)
 		check = false;
 
 	// Check mode configuration 1
-	check &= MAX86916_I2C_Read(MAX86916x_REG_MODE_CONFIGURATION1, &reg_value, 1);
+	check &= MAX86916_I2C_Read(MAX86916_REG_MODE_CONFIGURATION1, &reg_value, 1);
 	temp = ppg_config.shutdown | ppg_config.mode;
 	if (reg_value != temp)
 		check = false;
@@ -127,26 +126,39 @@ bool MAX86916_Config(MAX86916_Init_TypeDef initStruct) {
 	temp = initStruct.full_scale | initStruct.frequency | initStruct.pulse_width;
 	result &= MAX86916_I2C_Write(MAX86916_REG_MODE_CONFIGURATION2, &temp, 1);
 
-	// Forbidden configuration (table 12) HR mode
-	if (initStruct.mode == MAX86916x_MODE_HR) {
-		if (initStruct.frequency > MAX86916_SR_1000Hz && initStruct.pulse_width == MAX86916_PW_420)
+	/*Configurazioni proibite da verificare*/
+	// Forbidden configuration HR mode
+	if (initStruct.mode == MAX86916_MODE_HR) {
+		if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX86916_PW_420)
+			initStruct.frequency = MAX86916_SR_400Hz;
+		if (initStruct.frequency > MAX86916_SR_1000Hz && initStruct.pulse_width == MAX86916_PW_220)
 			initStruct.frequency = MAX86916_SR_1000Hz;
-		if (initStruct.frequency > MAX86916_SR_1600Hz && initStruct.pulse_width == MAX86916_PW_220)
-			initStruct.frequency = MAX86916_SR_1600Hz;
 		if (initStruct.frequency > MAX86916_SR_1600Hz && initStruct.pulse_width == MAX86916_PW_120)
 			initStruct.frequency = MAX86916_SR_1600Hz;
 	}
 
-	// Forbidden configuration (table 11) SPO2 mode
-	if (initStruct.mode == MAX3010x_MODE_SPO2) {
-		if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX3010x_PW_420)
+	// Forbidden configuration SPO2 mode
+	if (initStruct.mode == MAX86916_MODE_SPO2) {
+		if (initStruct.frequency > MAX86916_SR_200Hz && initStruct.pulse_width == MAX86916_PW_420)
+			initStruct.frequency = MAX86916_SR_200Hz;
+		if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX86916_PW_220)
 			initStruct.frequency = MAX86916_SR_400Hz;
-		if (initStruct.frequency > MAX86916_SR_800Hz && initStruct.pulse_width == MAX86916_PW_220)
-			initStruct.frequency = MAX86916_SR_800Hz;
 		if (initStruct.frequency > MAX86916_SR_1000Hz && initStruct.pulse_width == MAX86916_PW_120)
 			initStruct.frequency = MAX86916_SR_1000Hz;
 		if (initStruct.frequency > MAX86916_SR_1600Hz && initStruct.pulse_width == MAX86916_PW_70)
 			initStruct.frequency = MAX86916_SR_1600Hz;
+	}
+
+	// Forbidden configuration Flex mode
+	if (initStruct.mode == MAX86916_MODE_FLEX) {
+			if (initStruct.frequency > MAX86916_SR_100Hz && initStruct.pulse_width == MAX86916_PW_420)
+				initStruct.frequency = MAX86916_SR_100Hz;
+			if (initStruct.frequency > MAX86916_SR_200Hz && initStruct.pulse_width == MAX86916_PW_220)
+				initStruct.frequency = MAX86916_SR_200Hz;
+			if (initStruct.frequency > MAX86916_SR_400Hz && initStruct.pulse_width == MAX86916_PW_120)
+				initStruct.frequency = MAX86916_SR_400Hz;
+			if (initStruct.frequency > MAX86916_SR_800Hz && initStruct.pulse_width == MAX86916_PW_70)
+				initStruct.frequency = MAX86916_SR_800Hz;
 	}
 
 	// 3. LED PULSE AMPLITUDE
@@ -154,7 +166,7 @@ bool MAX86916_Config(MAX86916_Init_TypeDef initStruct) {
 	result &= MAX86916_I2C_Write(MAX86916_REG_LED_SEQUENCE1, &led_seq1, 1);
 	result &= MAX86916_I2C_Write(MAX86916_REG_LED_RANGE, &led_rge, 1);
 
-	// Configure LED3 and LED4 amplitude and Multi-LED control registers if MULTI_LED_MODE is enabled
+	// Configure LED3 and LED4 amplitude and Flex-Mode control registers if FLEX_MODE is enabled
 	if (initStruct.mode == MAX86916_MODE_FLEX) {
 		temp = 0x43;
 		result &= MAX86916_I2C_Write(MAX86916_REG_LED_SEQUENCE2, &temp, 1);
@@ -169,7 +181,7 @@ bool MAX86916_Config(MAX86916_Init_TypeDef initStruct) {
 	result &= MAX86916_I2C_Write(MAX86916_REG_FIFO_CONFIGURATION, &fifo_config, 1);
 
 	// 5. CLEAR FIFO
-	MAX3010x_Clear_Fifo();
+	MAX86916_Clear_Fifo();
 
 	// SAVE SETTINGS
 	ppg_config.mode = ppg_config.mode;
@@ -178,7 +190,7 @@ bool MAX86916_Config(MAX86916_Init_TypeDef initStruct) {
 	ppg_config.frequency = initStruct.frequency;
 	ppg_config.pulse_width = initStruct.pulse_width;
 	uint8_t i;
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < 4; i++) {
 		ppg_config.led_pa[i] = initStruct.led_pa[i];
 	}
 
@@ -235,12 +247,12 @@ bool MAX86916_Read_Sample_Spo2_Mode(uint8_t* raw_red, uint8_t* raw_ired) {
 	uint8_t temp[6];
 	bool result = true;
 	result &= MAX86916_I2C_Read(MAX86916_REG_FIFO_DATA, temp, 6);
-	raw_red[0] = temp[0] & 0x07;
-	raw_red[1] = temp[1];
-	raw_red[2] = temp[2];
-	raw_ired[0] = temp[3] & 0x07;
-	raw_ired[1] = temp[4];
-	raw_ired[2] = temp[5];
+	raw_ired[0] = temp[0] & 0x07;
+	raw_ired[1] = temp[1];
+	raw_ired[2] = temp[2];
+	raw_red[0] = temp[3] & 0x07;
+	raw_red[1] = temp[4];
+	raw_red[2] = temp[5];
 
 	return result;
 }
@@ -248,18 +260,19 @@ bool MAX86916_Read_Sample_Spo2_Mode(uint8_t* raw_red, uint8_t* raw_ired) {
 /**
  * Read data when the module is configured in flex mode
  */
-bool MAX86916_Read_Sample_Flex_Mode(uint8_t* raw_red, uint8_t* raw_ired, uint8_t* raw_green, uint8_t* raw_blue) {
+
+bool MAX86916_Read_Sample_Flex_Mode(uint8_t* raw_ired, uint8_t* raw_red, uint8_t* raw_green, uint8_t* raw_blue) {
 	uint8_t temp[12];
 	bool result = true;
 	__disable_irq();
-	result &= MAX86916_I2C_Read(MAX86916_REG_FIFO_DATA, temp, 9);
+	result &= MAX86916_I2C_Read(MAX86916_REG_FIFO_DATA, temp, 12);
 	__enable_irq();
-	raw_red[0] = temp[0] & 0x07;
-	raw_red[1] = temp[1];
-	raw_red[2] = temp[2];
-	raw_ired[0] = temp[3] & 0x07;
-	raw_ired[1] = temp[4];
-	raw_ired[2] = temp[5];
+	raw_ired[0] = temp[0] & 0x07;
+	raw_ired[1] = temp[1];
+	raw_ired[2] = temp[2];
+	raw_red[0] = temp[3] & 0x07;
+	raw_red[1] = temp[4];
+	raw_red[2] = temp[5];
 	raw_green[0] = temp[6] & 0x07;
 	raw_green[1] = temp[7];
 	raw_green[2] = temp[8];
@@ -288,7 +301,7 @@ uint32_t MAX86916_ConvertSample(uint8_t* raw_data) {
 bool MAX86916_Clear_Interrupts(void) {
 	uint8_t temp;
 	bool result = true;
-	result &= MAX86916_I2C_Read(MAX3010x_REG_INTERRUPT_STATUS1, &temp, 1);
+	result &= MAX86916_I2C_Read(MAX86916_REG_INTERRUPT_STATUS1, &temp, 1);
 	return result;
 }
 
