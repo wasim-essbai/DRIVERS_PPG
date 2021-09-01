@@ -79,9 +79,9 @@ typedef enum {
 // Integration time of ADC [us]
 typedef enum {
 	MAXM86161_IT_1 = 0x00,
-	MAXM86161_IT_2 = 0x04,
-	MAXM86161_IT_3 = 0x08,
-	MAXM86161_IT_4 = 0x0C
+	MAXM86161_IT_2 = 0x01,
+	MAXM86161_IT_3 = 0x02,
+	MAXM86161_IT_4 = 0x03
 } MAXM86161_IntegrationTime;
 
 /*##########################
