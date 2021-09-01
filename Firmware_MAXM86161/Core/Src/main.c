@@ -105,15 +105,16 @@ int main(void) {
 		ppg.frequency = MAXM86161_SR_100HZ;
 		ppg.low_power = MAXM86161_LPMODE_OFF;
 
-		ppg.led1_range = MAXM86161_LED1_RGE_1;
-		ppg.led2_range = MAXM86161_LED2_RGE_1;
-		ppg.led3_range = MAXM86161_LED3_RGE_1;
+		ppg.led1_range = MAXM86161_LED1_RGE_0;
+		ppg.led2_range = MAXM86161_LED2_RGE_0;
+		ppg.led3_range = MAXM86161_LED3_RGE_0;
 
-		ppg.pa[0] = 0xF0; //GREEN
-		ppg.pa[1] = 0xF0;//IR
-		ppg.pa[2] = 0xF0;//RED
+		ppg.pa[0] = 0x05; //GREEN
+		ppg.pa[1] = 0x05;//IR
+		ppg.pa[2] = 0x05;//RED
 
-		ppg.fifo_rollover = MAX86916_FIFO_ROLLOVER_OFF;
+		ppg.fifo_rollover = MAXM86161_FIFO_ROLLOVER_OFF;
+		ppg.led_lenght = MAXM86161_LED_SETLNG_3;
 		result &= MAXM86161_Config(ppg);
 	}
 	/* USER CODE END 2 */

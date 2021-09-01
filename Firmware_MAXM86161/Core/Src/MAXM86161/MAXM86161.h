@@ -92,6 +92,7 @@ typedef enum {
 
  // SS = samples per second
 typedef enum {
+	MAXM86161_SR_25HZ = 0x00,
 	MAXM86161_SR_100HZ = 0x18 //NB 0x03 shiftato
 } MAXM86161_SampleRate;
 
@@ -112,7 +113,10 @@ typedef enum {
  * Bits 6:7: Led Lenght
  *########################## */
 typedef enum {
-	MAXM86161_LED_SETLNG = 0x40
+	MAXM86161_LED_SETLNG_0 = 0x00,
+	MAXM86161_LED_SETLNG_1 = 0x40,
+	MAXM86161_LED_SETLNG_2 = 0x80,
+	MAXM86161_LED_SETLNG_3 = 0xC0
 } MAXM86161_LedLenght;
 
 
@@ -153,8 +157,8 @@ typedef enum {
 } MAXM86161_Led3Range;
 
 typedef enum {
-	MAX86916_FIFO_ROLLOVER_ON = 0x20, MAX86916_FIFO_ROLLOVER_OFF = 0x00
-} MAX86916_FifoRollover;
+	MAXM86161_FIFO_ROLLOVER_ON = 0x20, MAXM86161_FIFO_ROLLOVER_OFF = 0x00
+} MAXM86161_FifoRollover;
 
 // MAXM86161 initialization structure
 typedef struct {
@@ -170,7 +174,7 @@ typedef struct {
 	MAXM86161_LedLenght led_lenght;
 	MAXM86161_ResetMode reset_mode;
 	MAXM86161_LowerPower low_power;
-	MAX86916_FifoRollover fifo_rollover;
+	MAXM86161_FifoRollover fifo_rollover;
 	uint8_t pa[3];
 } MAXM86161_Init_TypeDef;
 

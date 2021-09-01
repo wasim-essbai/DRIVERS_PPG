@@ -79,6 +79,9 @@ bool MAXM86161_Config(MAXM86161_Init_TypeDef initStruct){
 	temp = initStruct.sample_avg | initStruct.frequency;
 	result &= MAXM86161_I2C_Write(MAXM86161_PPG_CONFIGURATION_2, &temp, 1);
 
+	temp = initStruct.led_lenght;
+	result &= MAXM86161_I2C_Write(MAXM86161_PPG_CONFIGURATION_3, &temp, 1);
+
 	temp = initStruct.led1_range | initStruct.led2_range | initStruct.led3_range;
 	result &= MAXM86161_I2C_Write(MAXM86161_LED_RANGE_1, &temp, 1);
 
