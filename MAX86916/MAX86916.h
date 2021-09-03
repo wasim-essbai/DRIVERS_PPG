@@ -47,6 +47,8 @@
 #define MAX86916_REG_REVISION_ID				0xFE
 #define MAX86916_REG_PART_ID					0xFF
 
+#define MAX86916_PART_ID_VALUE					0x2B
+
 /*##########################
  * MODE CONFIGURATION1 [0x09] -> MAX86916_MODE_CFG
  * Bit 7: Shutdown control
