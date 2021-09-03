@@ -129,7 +129,7 @@ Per la scelta del regolatore da utilizzare in questa Adapter Board, sono stati c
 
 \noindent Il modello scelto è l'ADP166, nella versione con tensione fissa di uscita pari a 1.8V e con un package LFCSP di dimesioni 2 mm x 2 mm. La peculiarità di questo LDO risiede nella bassa corrente di quiescenza, pari a circa \SI{890}{\nano\ampere} con un carico da \SI{1}{\micro\ampere}\cite{AnalogDevicesADP166}. Infatti, la \textit{corrente di quiescenza} è definita come la differenza tra la corrente di ingresso e la corrente di uscita\cite{Lee1999}. In altre parole, essa rappresenta la corrente assorbita dal regolatore di tensione e non trasferita al carico. Per questo motivo, dal momento che si vuole progettare una piattaforma indossabile a bassi consumi, avere una bassa corrente di quiescenza significa diminuire i consumi della Adapter Board. Inoltre, l'integrato presenta una bassa corrente di shutdown, che permette di ridurre i consumi quando esso viene disabilitato attraverso il pin EN. Tuttavia, nella nostra piattaforma abbiamo scelto di mantenere il regolatore sempre attivo.
 
-\paragraph{Accelerometro} L'accelerometro utilizzato è il LIS2DH12 prodotto da STMicroelectronics, come nell'Adapter Board precedente.
+\paragraph{Accelerometro} L'accelerometro utilizzato è il LIS2DW12 prodotto da STMicroelectronics, come nell'Adapter Board precedente.
 \pagebreak
 
 \paragraph{Progetto PCB} Anche il progetto di questa board è stato realizzato con il software Autodesk Eagle. In figura \ref{fig:schematic_max} viene riportato lo schematico dove si possono vedere il sensore PPG, il regolatore di tensione lineare (LDO), l'accelerometro e i connettori per l'alimentazione della scheda e la comunicazione I\ap{2}C.
