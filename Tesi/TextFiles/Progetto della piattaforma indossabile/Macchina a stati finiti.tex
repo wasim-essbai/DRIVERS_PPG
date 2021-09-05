@@ -8,7 +8,7 @@ L'utilizzo di una macchina a numero finito di stai può essere adatto sia per la
 \end{itemize}
 Una macchina a stati può essere rappresentata attraverso un grafo, in cui i nodi identificano gli stati e gli archi rappresentano le transizioni causate da eventi. 
 
-Nel firmware realizzato per questo progetto sono stati identificati i seguenti stati:
+Il firmware realizzato per questo progetto è stato implementato, con le opportune modifiche, sia per l'acquisizione dei dati con il sensore MAX86916 sia con l'integrato MAXM86161. Sono stati identificati i seguenti stati:
 \begin{enumerate}
 	\setcounter{enumi}{-1}
 	\item Start-up
@@ -16,9 +16,14 @@ Nel firmware realizzato per questo progetto sono stati identificati i seguenti s
 	\item Stream
 	\item Error
 \end{enumerate}
-
-\todo{inserire grafo macchina a stati}
-
+La figura \ref{fig:FSM} mostra il grafo della macchina a stati finiti implementata.
+Nella figura \ref{fig:FSM} è stato riportato il grafico che riassume il comportamento della macchina a stati implementata.
+\begin{figure}[tb]
+	\centering
+	\includegraphics[width=0.6\linewidth]{ImageFiles/Macchina a stati finiti/FSM}
+	\caption{Macchina a stati finiti del firmware delle due board progettate.}
+	\label{fig:FSM}
+\end{figure}
 \paragraph{Start-up}
 \paragraph{Idle}
 \paragraph{Stream}
