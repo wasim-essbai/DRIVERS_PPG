@@ -17,14 +17,16 @@ Il firmware realizzato per questo progetto è stato implementato, con le opportu
 	\item Error
 \end{enumerate}
 Nella figura \ref{fig:FSM} è stato riportato il grafico che riassume il comportamento della macchina a stati implementata.
-\begin{figure}[tb]
+\begin{figure}[b]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Macchina a stati finiti/FSM}
 	\caption{Macchina a stati finiti del firmware delle due board progettate.}
 	\label{fig:FSM}
 \end{figure}
+
 \paragraph{Start-up}
-\paragraph{Idle}
+Lo stato di \textit{Start-up} rappresenta la fase di inizializzazione del sistema. Quando la board STM32F4DISCOVERY viene alimentata tramite una porta usb, il microcontrollore si avvia e entra nello stato di \textit{Start-up}. Ad ogni condizione del sistema è stata associata ad un indicatore luminoso (uno dei quattro LED integrati sulla board) per segnalare all'utente lo stato attivo. Mentre il sistema si trova nello stato \textit{Start-up} il LED arancio rimane acceso. Vengono inizialmente configurate tutte le periferiche necessarie al funzionamento della comunicazione I\ap{2}C, della porta seriale USB e vengono inizializzati i pin della GPIO. Inoltre, sono inizializzate anche le strutture necessarie alle librerie HAL, presentate nella sezione~\ref{sec:Firmware}, fondamentali per la comunicazione I\ap{2}C. Di seguito, viene effettuata la lettura tramite I\ap{2}C del registro del sensore PPG che contenente il \textit{part-id} della scheda. Se non ci sono errori di lettura e l'identificativo acquisito rispetta le informazioni contenute nel datasheet del sensore, si può proseguire con l'inizializzazione della struttura dati che conterrà tutte le informazioni per la configurazione del sensore. Nel caso di errore, il sistema andrà nello stato di \textit{Error}. A questo punto, vengono scritti i registri che determinano la configurazione del modulo PPG. Se l'operazione di scrittura avviene correttamente, il sistema può transitare nello stato di \textit{Idle}, altrimenti entra nello stato di \textit{Error}.
+\paragraph{Idle} 
 \paragraph{Stream}
 \paragraph{Error}
 
