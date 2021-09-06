@@ -81,9 +81,7 @@ I dati letti vengono temporaneamente memorizzati in un buffer, in attesa dell'in
 \end{table}
 \noindent Come indicato nelle tabelle, i primi due byte contengono i caratteri ("!?") che identificano l'inizio del messaggio. Successivamente, vengono inseriti i valori acquisiti dalla FIFO (tre byte per ogni LED). Si utilizza la convezione \textit{Big Endian} per la trasmissione dei byte.
 
-Come mostrato in \Fig\ref{fig:FSM}, il sistema permane nello stato \textit{Stream} fino a quando l'utente non preme nuovamente il pulsante oppure si verifica un errore durante la lettura dei dati dal sensore o l'invio dei messaggi tramite USB. Se si verifica un errore, il sistema transita nello stato di \textit{Error}. Se invece viene premuto il pulsante, il sistema torna nello stato di \textit{Idle}.
-
-Mentre il sistema si trova in questo stato, solamente il LED blu rimane acceso.
+Come mostrato in \Fig\ref{fig:FSM}, il sistema permane nello stato \textit{Stream} fino a quando l'utente non preme nuovamente il pulsante oppure si verifica un errore durante la lettura dei dati dal sensore o l'invio dei messaggi tramite USB. Se si verifica un errore, il sistema transita nello stato di \textit{Error}. Se invece viene premuto il pulsante, il sistema torna nello stato di \textit{Idle}. Mentre il sistema si trova in questo stato, solamente il LED blu rimane acceso.
 
 \paragraph{Error} Il sistema si trova nello stato di \textit{Error} a seguito del verificarsi di un errore durante il funzionamento. Per questo motivo, tutte le operazioni di lettura e scrittura, sia con il sensore PPG sia tramite USB, vengono inibite e per utilizzare nuovamente il sistema è necessario spegnere e riaccendere la board. Lo stato viene indicato all'utente tramite l'accensione del LED rosso presente sulla STM32F4DISCOVERY. 
 
