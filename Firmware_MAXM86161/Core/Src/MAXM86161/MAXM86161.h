@@ -93,7 +93,8 @@ typedef enum {
  // SS = samples per second
 typedef enum {
 	MAXM86161_SR_25HZ = 0x00,
-	MAXM86161_SR_100HZ = 0x18 //NB 0x03 shiftato
+	MAXM86161_SR_100HZ = 0x18, //NB 0x03 shiftato
+	MAXM86161_SR_400HZ = 0x28
 } MAXM86161_SampleRate;
 
 typedef enum {
