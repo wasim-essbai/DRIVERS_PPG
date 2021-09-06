@@ -27,8 +27,64 @@ Nella figura \ref{fig:FSM} è stato riportato il grafico che riassume il comport
 \paragraph{Start-up}
 Lo stato di \textit{Start-up} rappresenta la fase di inizializzazione del sistema. Quando la board STM32F4DISCOVERY viene alimentata tramite una porta usb, il microcontrollore si avvia e entra nello stato di \textit{Start-up}. Ad ogni condizione del sistema è stata associata ad un indicatore luminoso (uno dei quattro LED integrati sulla board) per segnalare all'utente lo stato attivo. Mentre il sistema si trova nello stato \textit{Start-up} il LED arancio rimane acceso. Vengono inizialmente configurate tutte le periferiche necessarie al funzionamento della comunicazione I\ap{2}C, della porta seriale USB e vengono inizializzati i pin della GPIO. Inoltre, sono inizializzate anche le strutture necessarie alle librerie HAL, presentate nella sezione~\ref{sec:Firmware}, fondamentali per la comunicazione I\ap{2}C. Di seguito, viene effettuata la lettura tramite I\ap{2}C del registro del sensore PPG che contenente il \textit{part-id} della scheda. Se non ci sono errori di lettura e l'identificativo acquisito rispetta le informazioni contenute nel datasheet del sensore, si può proseguire con l'inizializzazione della struttura dati che conterrà tutte le informazioni per la configurazione del sensore. Nel caso di errore, il sistema andrà nello stato di \textit{Error}. A questo punto, vengono scritti i registri che determinano la configurazione del modulo PPG. Se l'operazione di scrittura avviene correttamente, il sistema può transitare nello stato di \textit{Idle}, altrimenti entra nello stato di \textit{Error}.
 \paragraph{Idle}
-Quando il sistema entra nello stato di \textit{Idle}, il LED arancio viene spento e viene acceso il LED verde. Il sistema attende la pressione da parte dell'utente del pulsante integrato sulla STM32F4DISCOVERY. Quando il pulsante viene premuto, il sensore PPG viene accesso (tramite la scrittura di un particolare registro) e il sistema transita nello stato di \textit{Stream}. Se l'operazione di scrittura non avviene con successo, il sistema viene portato nello stato di \textit{Error}.
+Quando il sistema entra nello stato di \textit{Idle}, il LED arancio viene spento e si attiva il LED verde. Il sistema attende la pressione da parte dell'utente del pulsante integrato sulla STM32F4DISCOVERY. Quando il pulsante viene premuto, il sensore PPG viene accesso (tramite la scrittura di un particolare registro) e il sistema transita nello stato di \textit{Stream}. Se l'operazione di scrittura non avviene con successo, il sistema viene portato nello stato di \textit{Error}.
 \paragraph{Stream}
-\paragraph{Error}
+Nello stato di \textit{Stream}, il sistema esegue due operazioni consecutive:
+\begin{enumerate}
+	\item lettura dei dati acquisiti dalla FIFO interna al sensore;
+	\item invio tramite USB dei dati letti.
+\end{enumerate}
+La lettura dei campioni acquisiti dal sensore PPG avviene utilizzando una funzione di lettura I\ap{2}C sul registro \textit{FIFO\_DATA} che permette di accedere alla FIFO dove vengono memorizzati temporaneamente le misurazioni effettuate dal sensore. La dimensione del registro è di 1 byte mentre le acquisizioni hanno dimensione \SI{19}{\bit}, pari alla risoluzione dell'ADC. Per questo motivo, per ottenere il valore acquisito di un campione è necessario effettuare tre letture consecutive del registro, per un totale di 24 byte letti. \`E necessario quindi applicare la maschera \textbf{0x07} sul primo byte letto cosicché il valore dei primi \SI{5}{\bit}, che non contengono informazioni rilevanti, vengano ignorati. Più precisamente, solamente il sensore MAXM86161 valorizza i primi \SI{5}{\bit} con un'informazione rilevante. Infatti, essi rappresentano un \textit{tag} che identifica il contenuto dei successivi byte, confrontando il valore del tag letto e i valori riportati nel datasheet. Per cui, nella lettura dei campioni dal sensore MAXM86161 si è introdotto un controllo sul tag per assicurasi che il valore letto corrisponda alla misurazione dell'intensità luminosa del LED corretto. Il sensore MAXM86161 presenta tre LED (rosso, infrarosso e verde). Per questo motivo, è necessario effettuare tre letture, ognuna delle quali di dimensione 3 byte, per acquisire i campioni relativi ai tre differenti LED. Il sensore MAX86916 presenta invece quattro LED (rosso, infrarosso, verde e blu) e necessita quindi di effettuare quattro letture, per un totale di 12 byte.
+
+Affinché sia possibile inviare tramite USB i campioni letti, è necessario stabile il formato dei messaggi che il microcontrollore invia al computer collegato. Nelle tabelle \ref{tab:USBByteMAX86916} e \ref{tab:USBByteMAXM86161} sono mostrati i formati dei messaggi rispettivamente per la board con il sensore MAX86916 e MAXM86161. 
+\begin{table}[tb]
+	\newcolumntype{C}{>{\centering\arraybackslash}p{2em}}
+	\centering
+	\begin{tabular}[c]{|l|C|C|C|C|C|C|C|C|C|}
+		\hline
+		BIT   & 0 & 1 & 2 & 3         & 4         & 5         & 6 & 7        & 8 
+		\\ \hline
+		VALORE & ? & ! & 0 & IR{[}0{]} & IR{[}1{]} & IR{[}2{]} & 0 & R{[}0{]} & R{[}1{]} \\ 
+		\hline
+	\end{tabular}
+
+	\vspace{0.5cm}
+		
+	\begin{tabular}[c]{|l|C|C|C|C|C|C|C|C|C|}
+		\hline
+		BIT & 9        & 10 & 11       & 12       & 13       & 14 & 15       & 16       & 17       \\ \hline
+		VALORE & R{[}2{]} & 0  & G{[}0{]} & G{[}1{]} & G{[}2{]} & 0  & B{[}0{]} & B{[}1{]} & B{[}2{]} \\ \hline
+	\end{tabular}
+	\caption{Struttura del messaggio inviato tramite USB della board con il sensore MAX86916.}
+	\label{tab:USBByteMAX86916}
+\end{table}
+
+\begin{table}[h]
+	\newcolumntype{C}{>{\centering\arraybackslash}p{2em}}
+	\centering
+	\begin{tabular}[c]{|l|C|C|C|C|C|C|C|}
+		\hline
+		BIT   & 0 & 1 & 2 & 3         & 4         & 5         & 6 
+		\\ \hline
+		VALORE & ? & ! & 0 & G{[}0{]} & G{[}1{]} & G{[}2{]} & 0 \\ \hline
+	\end{tabular}
+	
+	\vspace{0.5cm}
+	
+	\begin{tabular}[c]{|l|C|C|C|C|C|C|C|}
+		\hline
+		BIT & 7        & 8 & 9       & 10       & 11       & 12 & 13  \\ \hline
+		VALORE & IR{[}0{]} & IR{[}1{]}  & IR{[}2{]} & 0 & R{[}0{]} & R{[}1{]}  & R{[}2{]} \\ \hline
+	\end{tabular}
+	\caption{Struttura del messaggio inviato tramite USB della board con il sensore MAXM86161.}
+	\label{tab:USBByteMAXM86161}
+\end{table}
+Come indicato nelle tabelle, i primi due bit contengono due caratteri ("!?") che identificano l'inizio del messaggio. Successivamente, vengono inseriti i valori acquisiti dalla FIFO (tre byte per ogni LED). Si utilizza la convezione \textit{Big Endian} per l'ordinamento dei byte.
+
+Come mostrato in \Fig\ref{fig:FSM}, il sistema permane nello stato \textit{Stream} fino a quando l'utente non preme nuovamente il pulsante oppure si verifica un errore durante la lettura dei dati dal sensore o dell'invio dei messaggi tramite USB. Se si verifica un errore, il sistema transita nello stato di \textit{Error}. Se invece viene premuto il pulsante, il sistema torna nello stato di \textit{Idle}.
+
+Mentre il sistema si trova in questo stato, solamente il LED blu rimane acceso.
+
+\paragraph{Error} Il sistema si trova nello stato di \text{Error} a seguito del verificarsi di un errore durante il funzionamento. Per questo motivo, tutte le operazioni di lettura e scrittura, sia con il sensore PPG sia tramite USB, vengono inibite e per utilizzare nuovamente il sistema è necessario spegnere e riaccendere la board. Lo stato viene indicato all'utente tramite l'accensione del LED rosso presente sulla STM32F4DISCOVERY. 
 
 \clearpage
