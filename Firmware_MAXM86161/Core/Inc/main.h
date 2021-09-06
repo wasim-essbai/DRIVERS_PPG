@@ -54,7 +54,6 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
 void manage_button_push(void);
 void reset_all_leds(void);
 /* USER CODE END EFP */

@@ -64,7 +64,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
-
+bool readDataFromPPGAndSendUSB(void);
+void setSystemState(SystemState state);
+SystemState getSystemState(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -128,26 +130,38 @@ int main(void)
 		ppg.fifo_rollover = MAXM86161_FIFO_ROLLOVER_OFF;
 		ppg.led_lenght = MAXM86161_LED_SETLNG_3;
 		result &= MAXM86161_Config(ppg);
+	} else {
+		setSystemState(SYS_ERROR);
 	}
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-	uint8_t samples[14] = {0};
-
 	while (1) {
-		samples[0] = '?';
-		samples[1] = '!';
-
-		MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
-		CDC_Transmit_FS(samples, 14);
-		HAL_Delay(40); //PPG clock sets to 100Hz
-
+		switch (discovery.state){
+		case SYS_START_UP:
+			if(MAXM86161_Config(ppg_init))
+				setSystemState(SYS_IDLE);
+			else
+				setSystemState(SYS_ERROR);
+			break;
+		case SYS_IDLE:
+			break;
+		case SYS_STREAM:
+			if (!readDataFromPPGAndSendUSB()){
+				setSystemState(SYS_ERROR);
+			}
+			break;
+		case SYS_ERROR:
+			break;
+		default:
+			break;
+		}
+	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	}
+
   /* USER CODE END 3 */
 }
 

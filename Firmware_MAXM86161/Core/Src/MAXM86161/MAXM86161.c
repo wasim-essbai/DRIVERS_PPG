@@ -112,8 +112,6 @@ bool MAXM86161_ReadData(uint8_t* raw_data_green, uint8_t* raw_data_ir, uint8_t* 
 	result &= MAXM86161_I2C_Read(MAXM86161_REG_FIFO_DATA, temp, 9);
 	__enable_irq();
 
-
-
 	for(int i = 0; i < 9; i += 3){
 		switch(temp[i] & 0xF8){
 		case 0x08:
