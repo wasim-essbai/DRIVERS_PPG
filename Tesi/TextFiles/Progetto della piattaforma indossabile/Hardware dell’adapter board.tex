@@ -10,7 +10,7 @@ Le due piattaforme si differenziano nell'Adapter Board progettata, in cui sono s
 	\caption{Diagramma a bloccchi dell'Adapter Board con modulo PPG MAXM86161.}
 	\label{fig:DiagrammaBlocchiMAXM86161}
 \end{figure}
-L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro triassiale LIS2DW12, che comunicano con il microcontrollore tramite protocollo I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAXM86161}). Il microcontrollore comunica a sua volta con un computer, grazie alla porta USB. Grazie al numero ridotto di componenti è stato possibile ottenere una scheda dalle dimensioni molto ridotte (12,4 mm x 4,6 mm), con una superficie di appena \SI{57.04}{\square\milli\meter}.
+L'Adapter Board progettata ospita il sensore PPG MAXM96161 e l'accelerometro triassiale LIS2DW12, che comunicano con il microcontrollore tramite protocollo I\ap{2}C (\Fig~\ref{fig:DiagrammaBlocchiMAXM86161}). Il microcontrollore comunica a sua volta con un computer, grazie alla porta USB. Grazie al numero ridotto di componenti è stato possibile ottenere una scheda dalle dimensioni molto ridotte (12.4 mm x 4.6 mm), con una superficie di appena \SI{57.04}{\square\milli\meter}.
 
 \paragraph{Sensore PPG} Il sensore PPG utilizzato è il MAXM86161 rappresentato nella figura \ref{fig:ImmagineMAXM86161}.
 \begin{figure}[tb]
@@ -23,7 +23,7 @@ Si tratta di un modulo integrato a basso consumo per acquisizioni di dati ottici
 
 \paragraph{Accelerometro} 
 Le acquisizioni fotopletismografiche effettuate con il modulo PPG sono sensibili agli artefatti del movimento, che possono disturbare le misure. Per compensare questi disturbi è stato inserito un accelerometro triassiale, che  è in grado di rilevare le accelerazioni dovute al movimento del soggetto in analisi, fornendo una stima dell'entità del movimento, e quindi del disturbo della misurazione.
-Per la scelta dell'accelerometro sono stati valutati tre diversi dispositivi: \textbf{LIS2DW12} \cite{STElectronicsLIS2DW12}, \textbf{LIS2DH12} \cite{STMicroelectronics2017}, \textbf{BMA422} \cite{BoshBMA422}. In tabella \ref{tab:ConfrontoAccelerometri} vengono riportate e messe a confronto le diverse caratteristiche degli accelerometri.
+Per la scelta dell'accelerometro sono stati valutati tre diversi dispositivi: \textbf{LIS2DW12}\cite{STElectronicsLIS2DW12}, \textbf{LIS2DH12}\cite{STMicroelectronics2017}, \textbf{BMA422}\cite{BoshBMA422}. In tabella \ref{tab:ConfrontoAccelerometri} vengono riportate e messe a confronto le diverse caratteristiche degli accelerometri presi in esame.
 \begin{table}[h]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
@@ -33,17 +33,17 @@ Per la scelta dell'accelerometro sono stati valutati tre diversi dispositivi: \t
 		\textbf{Package} & LGA12 & LGA12 & LGA12 \\ \hline
 		\textbf{Dimensioni {[}mm\ap{2}{]}}& 2.0 x 2.0 x 0.7 & 2.0 x 2.0 x 1.0 & 2.0 x 2.0 x 0.95\\\hline
 		\textbf{Intervallo tensione di alimentazione {[}V{]}}&1.62 - 3.6&1.71 - 3.6&1.72 - 3.6\\ \hline
-		\textbf{I\ped{dd} Consumo di corrente in low power {[}$\mu$A{]}} &   5.5   &    6     &   13\\ \hline
-		\textbf{I\ped{dd} Consumo di corrente in hight performance {[}$\mu$A{]}} &   120   &    185     &   150\\ \hline
+		\textbf{Consumo in low power {[}$\mu$A{]}} &   5.5   &    6     &   13\\ \hline
+		\textbf{Consumo di corrente {[}$\mu$A{]}} &   120   &    185     &   150\\ \hline
 		\textbf{Densità di rumore {[}$\mu$g/$\sqrt{Hz}${]}} &  90   &    220     &   220\\ \hline
 		\textbf{Fondo scala [g]} &  ±2/±4/±8/±16   &    ±2/±4/±8/±16   &   ±2/±4/±8/±16 \\ \hline
 		\textbf{Risoluzione [Bit]} &   14   &    12     & 12 \\ \hline
 		\textbf{Zero-g offset [mg]} &   ±20   &    ±40     & ±80 \\ \hline		
 	\end{tabular}
-	\caption{Confronto delle caratteristiche dei diversi accelerometri.}
+	\caption{Confronto delle caratteristiche degli accelerometri.}
 	\label{tab:ConfrontoAccelerometri}
 \end{table}
-Il dispositivo scelto è il LIS2DW12. Si tratta di un accelerometro triassiale lineare ad alte performance e basso consumo, prodotto da STMicroelectronics e realizzato con tecnologia MEMS. LIS2DW12 rappresenta un'evoluzione del modello LIS2DH12, impiegato anche nella precedente tesi, che ne migliora le performance sia in termini di consumi che del rumore di misura aumentando la risoluzione passando da 12 a 14 bit.
+Il dispositivo scelto è il LIS2DW12. Si tratta di un accelerometro triassiale lineare ad alte performance e basso consumo, prodotto da STMicroelectronics e realizzato con tecnologia MEMS. LIS2DW12 rappresenta un'evoluzione del modello LIS2DH12, impiegato nella tesi prima citata\cite{Ingegneria2018}, che ne migliora le performance sia in termini di consumi e rumore. Inoltre, si può notare anche un miglioramento nella risoluzione, che da \SI{12}{\bit} aumenta a \SI{14}{\bit}.
 \begin{figure}[b]
 	\centering
 	\includegraphics[width=0.3\linewidth]{ImageFiles/Hardware/ImmagineLIS2DW12}
@@ -135,6 +135,7 @@ Esso permette l'acquisizione di segnali fotopletismografici grazie a quattro LED
 Per la scelta del regolatore da utilizzare in questa Adapter Board, sono stati confrontati diversi LDO disponibili sul mercato e prodotti da Analog Devices: \textbf{ADP166}\cite{AnalogDevicesADP166}, \textbf{ADP122}\cite{AnalogDevicesADP122} e \textbf{ADP151}\cite{AnalogDevicesADP151}. Le loro caratteristiche sono riportarte nella tabella \ref{tab:ConfrontoLDO}.
 \begin{table}[h]
 	\renewcommand{\arraystretch}{1.5}
+	\centering
 	\begin{tabular}{cccc}
 		\hline
 		& \textbf{ADP166} & \textbf{ADP122} & \textbf{ADP151} \\ \hline
