@@ -30,6 +30,15 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
+typedef enum {
+	SYS_IDLE, SYS_START_UP, SYS_STREAM, SYS_ERROR
+} SystemState;
+
+typedef struct{
+	SystemState state;
+} DiscoveryFSM;
+
+MAXM86161_Init_TypeDef ppg_init;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -45,6 +54,8 @@
 I2C_HandleTypeDef hi2c3;
 
 /* USER CODE BEGIN PV */
+
+DiscoveryFSM discovery;
 
 /* USER CODE END PV */
 
@@ -243,7 +254,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(OTG_FS_PowerSwitchOn_GPIO_Port, OTG_FS_PowerSwitchOn_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin
+  HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin|LED_ORANGE_Pin|LED_RED_Pin|LED_BLUE_Pin
                           |Audio_RST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : CS_I2C_SPI_Pin */
@@ -268,11 +279,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
   HAL_GPIO_Init(PDM_OUT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
+  /*Configure GPIO pin : BLUE_PUSH_BUTTON_Pin */
+  GPIO_InitStruct.Pin = BLUE_PUSH_BUTTON_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(BLUE_PUSH_BUTTON_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : I2S3_WS_Pin */
   GPIO_InitStruct.Pin = I2S3_WS_Pin;
@@ -304,9 +315,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
   HAL_GPIO_Init(CLK_IN_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD4_Pin LD3_Pin LD5_Pin LD6_Pin
+  /*Configure GPIO pins : LED_GREEN_Pin LED_ORANGE_Pin LED_RED_Pin LED_BLUE_Pin
                            Audio_RST_Pin */
-  GPIO_InitStruct.Pin = LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin
+  GPIO_InitStruct.Pin = LED_GREEN_Pin|LED_ORANGE_Pin|LED_RED_Pin|LED_BLUE_Pin
                           |Audio_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -344,6 +355,76 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+bool readDataFromPPGAndSendUSB(){
+	uint8_t samples[18] = {0};
+	bool result = true;
+
+	samples[0] = '?';
+	samples[1] = '!';
+	result &= MAXM86161_Read_Sample_Flex_Mode(samples + 3, samples + 7, samples + 11, samples + 15);
+
+	result &= CDC_Transmit_FS(samples, 18) == USBD_OK;
+	HAL_Delay(9);
+
+	return result;
+}
+
+SystemState getSystemState(void) {
+	return discovery.state;
+}
+
+void setSystemState(SystemState state){
+	if(getSystemState() != state){
+		reset_all_leds();
+		switch(state){
+		case SYS_START_UP:
+			HAL_GPIO_WritePin(LED_ORANGE_GPIO_Port,LED_ORANGE_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_IDLE:
+			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_STREAM:
+			HAL_GPIO_WritePin(LED_BLUE_GPIO_Port,LED_BLUE_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_ERROR:
+			HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET);
+			ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
+			MAXM86161_Config(ppg_init);
+			break;
+		default:
+			break;
+		}
+		discovery.state = state;
+	}
+}
+
+void manage_button_push(void) {
+	switch (getSystemState()) {
+	case SYS_IDLE:
+		ppg_init.shutdown = MAXM86161_SHDNMODE_ON;
+		if(MAXM86161_Config(ppg_init))
+			setSystemState(SYS_STREAM);
+		else
+			setSystemState(SYS_ERROR);
+		break;
+	case SYS_STREAM:
+		ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
+		if(MAXM86161_Config(ppg_init))
+			setSystemState(SYS_IDLE);
+		else
+			setSystemState(SYS_ERROR);
+		break;
+	default:
+		break;
+	}
+}
+
+void reset_all_leds(void) {
+	HAL_GPIO_WritePin(LED_ORANGE_GPIO_Port,LED_ORANGE_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_BLUE_GPIO_Port,LED_BLUE_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_RESET);
+}
 
 /* USER CODE END 4 */
 
