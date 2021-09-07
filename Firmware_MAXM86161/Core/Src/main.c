@@ -135,30 +135,30 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	while (1) {
-		switch (discovery.state){
-		case SYS_START_UP:
-			if(MAXM86161_Config(ppg_init))
-				setSystemState(SYS_IDLE);
-			else
-				setSystemState(SYS_ERROR);
-			break;
-		case SYS_IDLE:
-			break;
-		case SYS_STREAM:
-			if (!readDataFromPPGAndSendUSB()){
-				setSystemState(SYS_ERROR);
-			}
-			break;
-		case SYS_ERROR:
-			break;
-		default:
-			break;
-		}
-	}
-    /* USER CODE END WHILE */
+  while (1) {
+	  switch (discovery.state){
+	  case SYS_START_UP:
+		  if(MAXM86161_Config(ppg_init))
+			  setSystemState(SYS_IDLE);
+		  else
+			  setSystemState(SYS_ERROR);
+		  break;
+	  case SYS_IDLE:
+		  break;
+	  case SYS_STREAM:
+		  if (!readDataFromPPGAndSendUSB()){
+			  setSystemState(SYS_ERROR);
+		  }
+		  break;
+	  case SYS_ERROR:
+		  break;
+	  default:
+		  break;
+	  }
+  }
+  /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+  /* USER CODE BEGIN 3 */
 
   /* USER CODE END 3 */
 }
