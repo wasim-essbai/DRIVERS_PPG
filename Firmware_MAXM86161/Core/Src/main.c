@@ -39,6 +39,7 @@ typedef struct{
 } DiscoveryFSM;
 
 MAXM86161_Init_TypeDef ppg_init;
+uint8_t samples[14] = {0};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -365,15 +366,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 bool readDataFromPPGAndSendUSB(){
-	uint8_t samples[18] = {0};
 	bool result = true;
 
 	samples[0] = '?';
 	samples[1] = '!';
-	result &= MAXM86161_Read_Sample_Flex_Mode(samples + 3, samples + 7, samples + 11, samples + 15);
 
-	result &= CDC_Transmit_FS(samples, 18) == USBD_OK;
-	HAL_Delay(9);
+	MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
+	CDC_Transmit_FS(samples, 14);
+	HAL_Delay(40);
 
 	return result;
 }
