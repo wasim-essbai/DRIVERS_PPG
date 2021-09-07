@@ -129,7 +129,6 @@ int main(void)
 
 		ppg.fifo_rollover = MAXM86161_FIFO_ROLLOVER_OFF;
 		ppg.led_lenght = MAXM86161_LED_SETLNG_3;
-		result &= MAXM86161_Config(ppg);
 	} else {
 		setSystemState(SYS_ERROR);
 	}
