@@ -30,6 +30,16 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
+typedef enum {
+	SYS_IDLE, SYS_START_UP, SYS_STREAM, SYS_ERROR
+} SystemState;
+
+typedef struct{
+	SystemState state;
+} DiscoveryFSM;
+
+MAXM86161_Init_TypeDef ppg_init;
+uint8_t samples[14] = {0};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -46,6 +56,8 @@ I2C_HandleTypeDef hi2c3;
 
 /* USER CODE BEGIN PV */
 
+DiscoveryFSM discovery;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -53,7 +65,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
-
+bool readDataFromPPGAndSendUSB(void);
+void setSystemState(SystemState state);
+SystemState getSystemState(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -92,51 +106,60 @@ int main(void)
   MX_I2C3_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-	HAL_Delay(500);
+  HAL_Delay(500);
 
-	bool result = true;
+  setSystemState(SYS_START_UP);
 
-	MAXM86161_Init_TypeDef ppg;
+  if (MAXM86161_Read_Part_ID() == MAXM86161_PART_ID_VALUE) {
+	  ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
+	  ppg_init.integration_time = MAXM86161_IT_4;
+	  ppg_init.full_scale = MAXM86161_FS_16384;
+	  ppg_init.sample_avg = MAXM86161_AVG_32;
+	  ppg_init.frequency = MAXM86161_SR_400HZ;
+	  ppg_init.low_power = MAXM86161_LPMODE_OFF;
 
-	if (MAXM86161_Read_Part_ID() == MAXM86161_PART_ID_VALUE) {
-		ppg.shutdown = MAXM86161_SHDNMODE_ON;
-		ppg.integration_time = MAXM86161_IT_4;
-		ppg.full_scale = MAXM86161_FS_16384;
-		ppg.sample_avg = MAXM86161_AVG_32;
-		ppg.frequency = MAXM86161_SR_400HZ;
-		ppg.low_power = MAXM86161_LPMODE_OFF;
+	  ppg_init.led1_range = MAXM86161_LED1_RGE_0;
+	  ppg_init.led2_range = MAXM86161_LED2_RGE_0;
+	  ppg_init.led3_range = MAXM86161_LED3_RGE_0;
 
-		ppg.led1_range = MAXM86161_LED1_RGE_0;
-		ppg.led2_range = MAXM86161_LED2_RGE_0;
-		ppg.led3_range = MAXM86161_LED3_RGE_0;
+	  ppg_init.pa[0] = 0x50; //GREEN
+	  ppg_init.pa[1] = 0x50;//IR
+	  ppg_init.pa[2] = 0x50;//RED
 
-		ppg.pa[0] = 0x00; //GREEN
-		ppg.pa[1] = 0x50;//IR
-		ppg.pa[2] = 0x00;//RED
-
-		ppg.fifo_rollover = MAXM86161_FIFO_ROLLOVER_OFF;
-		ppg.led_lenght = MAXM86161_LED_SETLNG_3;
-		result &= MAXM86161_Config(ppg);
-	}
+	  ppg_init.fifo_rollover = MAXM86161_FIFO_ROLLOVER_OFF;
+	  ppg_init.led_lenght = MAXM86161_LED_SETLNG_3;
+  } else {
+	  setSystemState(SYS_ERROR);
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  while (1) {
+	  switch (discovery.state){
+	  case SYS_START_UP:
+		  if(MAXM86161_Config(ppg_init))
+			  setSystemState(SYS_IDLE);
+		  else
+			  setSystemState(SYS_ERROR);
+		  break;
+	  case SYS_IDLE:
+		  break;
+	  case SYS_STREAM:
+		  if (!readDataFromPPGAndSendUSB()){
+			  setSystemState(SYS_ERROR);
+		  }
+		  break;
+	  case SYS_ERROR:
+		  break;
+	  default:
+		  break;
+	  }
+  }
+  /* USER CODE END WHILE */
 
-	uint8_t samples[14] = {0};
+  /* USER CODE BEGIN 3 */
 
-	while (1) {
-		samples[0] = '?';
-		samples[1] = '!';
-
-		MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
-		CDC_Transmit_FS(samples, 14);
-		HAL_Delay(40); //PPG clock sets to 100Hz
-
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-	}
   /* USER CODE END 3 */
 }
 
@@ -243,7 +266,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(OTG_FS_PowerSwitchOn_GPIO_Port, OTG_FS_PowerSwitchOn_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin
+  HAL_GPIO_WritePin(GPIOD, LED_GREEN_Pin|LED_ORANGE_Pin|LED_RED_Pin|LED_BLUE_Pin
                           |Audio_RST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : CS_I2C_SPI_Pin */
@@ -268,11 +291,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
   HAL_GPIO_Init(PDM_OUT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
+  /*Configure GPIO pin : BLUE_PUSH_BUTTON_Pin */
+  GPIO_InitStruct.Pin = BLUE_PUSH_BUTTON_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(BLUE_PUSH_BUTTON_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : I2S3_WS_Pin */
   GPIO_InitStruct.Pin = I2S3_WS_Pin;
@@ -304,9 +327,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
   HAL_GPIO_Init(CLK_IN_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD4_Pin LD3_Pin LD5_Pin LD6_Pin
+  /*Configure GPIO pins : LED_GREEN_Pin LED_ORANGE_Pin LED_RED_Pin LED_BLUE_Pin
                            Audio_RST_Pin */
-  GPIO_InitStruct.Pin = LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin
+  GPIO_InitStruct.Pin = LED_GREEN_Pin|LED_ORANGE_Pin|LED_RED_Pin|LED_BLUE_Pin
                           |Audio_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -341,9 +364,82 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(MEMS_INT2_GPIO_Port, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
 }
 
 /* USER CODE BEGIN 4 */
+bool readDataFromPPGAndSendUSB(){
+	bool result = true;
+
+	samples[0] = '?';
+	samples[1] = '!';
+
+	MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
+	result &= CDC_Transmit_FS(samples, 14) == USBD_OK;
+	HAL_Delay(40);
+
+	return result;
+}
+
+SystemState getSystemState(void) {
+	return discovery.state;
+}
+
+void setSystemState(SystemState state){
+	if(getSystemState() != state){
+		reset_all_leds();
+		switch(state){
+		case SYS_START_UP:
+			HAL_GPIO_WritePin(LED_ORANGE_GPIO_Port,LED_ORANGE_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_IDLE:
+			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_STREAM:
+			HAL_GPIO_WritePin(LED_BLUE_GPIO_Port,LED_BLUE_Pin,GPIO_PIN_SET);
+			break;
+		case SYS_ERROR:
+			HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET);
+			ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
+			MAXM86161_Config(ppg_init);
+			break;
+		default:
+			break;
+		}
+		discovery.state = state;
+	}
+}
+
+void manage_button_push(void) {
+	switch (getSystemState()) {
+	case SYS_IDLE:
+		ppg_init.shutdown = MAXM86161_SHDNMODE_ON;
+		if(MAXM86161_Config(ppg_init))
+			setSystemState(SYS_STREAM);
+		else
+			setSystemState(SYS_ERROR);
+		break;
+	case SYS_STREAM:
+		ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
+		if(MAXM86161_Config(ppg_init))
+			setSystemState(SYS_IDLE);
+		else
+			setSystemState(SYS_ERROR);
+		break;
+	default:
+		break;
+	}
+}
+
+void reset_all_leds(void) {
+	HAL_GPIO_WritePin(LED_ORANGE_GPIO_Port,LED_ORANGE_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_BLUE_GPIO_Port,LED_BLUE_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_RESET);
+}
 
 /* USER CODE END 4 */
 
