@@ -75,6 +75,7 @@ void reset_all_leds(void);
 #define PDM_OUT_GPIO_Port GPIOC
 #define BLUE_PUSH_BUTTON_Pin GPIO_PIN_0
 #define BLUE_PUSH_BUTTON_GPIO_Port GPIOA
+#define BLUE_PUSH_BUTTON_EXTI_IRQn EXTI0_IRQn
 #define I2S3_WS_Pin GPIO_PIN_4
 #define I2S3_WS_GPIO_Port GPIOA
 #define SPI1_SCK_Pin GPIO_PIN_5

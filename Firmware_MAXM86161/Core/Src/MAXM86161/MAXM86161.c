@@ -68,8 +68,7 @@ bool MAXM86161_Config(MAXM86161_Init_TypeDef initStruct){
 
 	temp = 0x01; //Soft Reset
 	result &= MAXM86161_I2C_Write(MAXM86161_SYSTEM_CONTROL, &temp, 1);
-	HAL_Delay(1);
-
+	//perchè non va con il delay????
 	temp = initStruct.shutdown | initStruct.low_power;
 	result &= MAXM86161_I2C_Write(MAXM86161_SYSTEM_CONTROL, &temp, 1);
 
@@ -132,19 +131,4 @@ bool MAXM86161_ReadData(uint8_t* raw_data_green, uint8_t* raw_data_ir, uint8_t* 
 		}
 	}
 	return result;
-}
-
-/**
- * Read data when the module is configured in flex mode
- */
-bool MAXM86161_Read_Sample_Flex_Mode(uint8_t* raw_red, uint8_t* raw_ired, uint8_t* raw_green, uint8_t* raw_blue) {
-
-	return true;
-}
-
-/**
- * Clear Fifo registers
- */
-bool MAXM86161_Clear_Fifo(void) {
-	return true;
 }
