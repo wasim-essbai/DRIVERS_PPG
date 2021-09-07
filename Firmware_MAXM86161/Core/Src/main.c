@@ -114,8 +114,8 @@ int main(void)
 	  ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
 	  ppg_init.integration_time = MAXM86161_IT_4;
 	  ppg_init.full_scale = MAXM86161_FS_16384;
-	  ppg_init.sample_avg = MAXM86161_AVG_32;
-	  ppg_init.frequency = MAXM86161_SR_400HZ;
+	  ppg_init.sample_avg = MAXM86161_NO_AVG;
+	  ppg_init.frequency = MAXM86161_SR_100HZ;
 	  ppg_init.low_power = MAXM86161_LPMODE_OFF;
 
 	  ppg_init.led1_range = MAXM86161_LED1_RGE_0;
@@ -379,7 +379,7 @@ bool readDataFromPPGAndSendUSB(){
 
 	MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
 	result &= CDC_Transmit_FS(samples, 14) == USBD_OK;
-	HAL_Delay(40);
+	HAL_Delay(10);
 
 	return result;
 }
