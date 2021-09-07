@@ -106,31 +106,31 @@ int main(void)
   MX_I2C3_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-	HAL_Delay(500);
+  HAL_Delay(500);
 
-	setSystemState(SYS_START_UP);
+  setSystemState(SYS_START_UP);
 
-	if (MAXM86161_Read_Part_ID() == MAXM86161_PART_ID_VALUE) {
-		ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
-		ppg_init.integration_time = MAXM86161_IT_4;
-		ppg_init.full_scale = MAXM86161_FS_16384;
-		ppg_init.sample_avg = MAXM86161_AVG_32;
-		ppg_init.frequency = MAXM86161_SR_400HZ;
-		ppg_init.low_power = MAXM86161_LPMODE_OFF;
+  if (MAXM86161_Read_Part_ID() == MAXM86161_PART_ID_VALUE) {
+	  ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
+	  ppg_init.integration_time = MAXM86161_IT_4;
+	  ppg_init.full_scale = MAXM86161_FS_16384;
+	  ppg_init.sample_avg = MAXM86161_AVG_32;
+	  ppg_init.frequency = MAXM86161_SR_400HZ;
+	  ppg_init.low_power = MAXM86161_LPMODE_OFF;
 
-		ppg_init.led1_range = MAXM86161_LED1_RGE_0;
-		ppg_init.led2_range = MAXM86161_LED2_RGE_0;
-		ppg_init.led3_range = MAXM86161_LED3_RGE_0;
+	  ppg_init.led1_range = MAXM86161_LED1_RGE_0;
+	  ppg_init.led2_range = MAXM86161_LED2_RGE_0;
+	  ppg_init.led3_range = MAXM86161_LED3_RGE_0;
 
-		ppg_init.pa[0] = 0x50; //GREEN
-		ppg_init.pa[1] = 0x50;//IR
-		ppg_init.pa[2] = 0x50;//RED
+	  ppg_init.pa[0] = 0x50; //GREEN
+	  ppg_init.pa[1] = 0x50;//IR
+	  ppg_init.pa[2] = 0x50;//RED
 
-		ppg_init.fifo_rollover = MAXM86161_FIFO_ROLLOVER_OFF;
-		ppg_init.led_lenght = MAXM86161_LED_SETLNG_3;
-	} else {
-		setSystemState(SYS_ERROR);
-	}
+	  ppg_init.fifo_rollover = MAXM86161_FIFO_ROLLOVER_OFF;
+	  ppg_init.led_lenght = MAXM86161_LED_SETLNG_3;
+  } else {
+	  setSystemState(SYS_ERROR);
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
