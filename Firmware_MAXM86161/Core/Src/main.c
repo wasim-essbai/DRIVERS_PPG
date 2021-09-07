@@ -38,8 +38,6 @@ typedef struct{
 	SystemState state;
 } DiscoveryFSM;
 
-MAXM86161_Init_TypeDef ppg_init;
-uint8_t samples[14] = {0};
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -56,7 +54,10 @@ I2C_HandleTypeDef hi2c3;
 
 /* USER CODE BEGIN PV */
 
+MAXM86161_Init_TypeDef ppg_init;
+uint8_t samples[14] = {0};
 DiscoveryFSM discovery;
+bool toConfig;
 
 /* USER CODE END PV */
 
@@ -136,6 +137,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
+	  if(toConfig){
+			 toConfig = false;
+		  if(!MAXM86161_Config(ppg_init))
+			  setSystemState(SYS_ERROR);
+
+	  }
 	  switch (discovery.state){
 	  case SYS_START_UP:
 		  if(MAXM86161_Config(ppg_init))
@@ -394,17 +401,22 @@ void setSystemState(SystemState state){
 		switch(state){
 		case SYS_START_UP:
 			HAL_GPIO_WritePin(LED_ORANGE_GPIO_Port,LED_ORANGE_Pin,GPIO_PIN_SET);
+			toConfig = false;
 			break;
 		case SYS_IDLE:
 			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET);
+			ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
+			toConfig = true;
 			break;
 		case SYS_STREAM:
 			HAL_GPIO_WritePin(LED_BLUE_GPIO_Port,LED_BLUE_Pin,GPIO_PIN_SET);
+			ppg_init.shutdown = MAXM86161_SHDNMODE_ON;
+			toConfig = true;
 			break;
 		case SYS_ERROR:
 			HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET);
 			ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
-			MAXM86161_Config(ppg_init);
+			toConfig = true;
 			break;
 		default:
 			break;
@@ -416,19 +428,10 @@ void setSystemState(SystemState state){
 void manage_button_push(void) {
 	switch (getSystemState()) {
 	case SYS_IDLE:
-		ppg_init.shutdown = MAXM86161_SHDNMODE_ON;
-		if(MAXM86161_Config(ppg_init))
-			setSystemState(SYS_STREAM);
-		else
-			setSystemState(SYS_ERROR);
+		setSystemState(SYS_STREAM);
 		break;
 	case SYS_STREAM:
-		ppg_init.shutdown = MAXM86161_SHDNMODE_SHUTDOWN;
-		if(MAXM86161_Config(ppg_init))
-			setSystemState(SYS_IDLE);
-		else
-			setSystemState(SYS_ERROR);
-		break;
+		setSystemState(SYS_IDLE);
 	default:
 		break;
 	}

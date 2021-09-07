@@ -68,7 +68,7 @@ bool MAXM86161_Config(MAXM86161_Init_TypeDef initStruct){
 
 	temp = 0x01; //Soft Reset
 	result &= MAXM86161_I2C_Write(MAXM86161_SYSTEM_CONTROL, &temp, 1);
-	//perchè non va con il delay????
+	HAL_Delay(1);
 	temp = initStruct.shutdown | initStruct.low_power;
 	result &= MAXM86161_I2C_Write(MAXM86161_SYSTEM_CONTROL, &temp, 1);
 
