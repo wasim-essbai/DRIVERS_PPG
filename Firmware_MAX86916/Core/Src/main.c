@@ -36,8 +36,6 @@ typedef struct{
 	SystemState state;
 } DiscoveryFSM;
 
-MAX86916_Init_TypeDef ppg_init;
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -54,6 +52,7 @@ I2C_HandleTypeDef hi2c3;
 
 /* USER CODE BEGIN PV */
 
+MAX86916_Init_TypeDef ppg_init;
 DiscoveryFSM discovery;
 
 /* USER CODE END PV */
@@ -63,7 +62,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C3_Init(void);
 /* USER CODE BEGIN PFP */
-bool readDataFromPPGAndSendUSB(void);
 void setSystemState(SystemState state);
 SystemState getSystemState(void);
 
@@ -150,10 +148,10 @@ int main(void)
 		default:
 			break;
 		}
+	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	}
   /* USER CODE END 3 */
 }
 
