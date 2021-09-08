@@ -377,7 +377,7 @@ bool readDataFromPPGAndSendUSB(){
 	samples[0] = '?';
 	samples[1] = '!';
 
-	MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
+	result &= MAXM86161_ReadData(samples + 3, samples + 7, samples + 11);
 	result &= CDC_Transmit_FS(samples, 14) == USBD_OK;
 	HAL_Delay(10);
 
