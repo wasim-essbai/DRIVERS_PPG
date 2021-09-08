@@ -5,13 +5,13 @@ close all
 figure
 
 subplot(4,1,1)
-plot(maxavg1100Hz.Channel1, 'm')
+plot(maxmavg1100Hz.Channel1(1:1000), 'm')
 subplot(4,1,2)
 plot(maxavg1100Hz.Channel2, 'r')
 subplot(4,1,3)
 plot(maxavg1100Hz.Channel3, 'g')
 subplot(4,1,4)
-plot(maxavg1100Hz.Channel4, 'b')
+
 
 pos_iniziale = 200;
 flag = maxavg1100Hz.timestamp >= maxavg1100Hz.timestamp(pos_iniziale) & maxavg1100Hz.timestamp < maxavg1100Hz.timestamp(pos_iniziale)+10000
@@ -62,7 +62,7 @@ exportgraphics(f,'blu.pdf','Resolution',600)
 samplepersecond = 20;
 coeff = ones(1, samplepersecond)/samplepersecond;
 
-smoothed = filter(coeff, 1, maxavg1100Hz.Channel2(flag));
+smoothed = filter(coeff, 1, maxmavg1100Hz.Channel2(flag));
 f = figure
 plot(smoothed(samplepersecond:end),'r')
 legend('LED RED')
