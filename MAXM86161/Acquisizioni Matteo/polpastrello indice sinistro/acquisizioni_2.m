@@ -5,7 +5,7 @@ close all
 figure
 
 subplot(3,1,1)
-plot(maxmavg1100Hz.Channel1(1:1000), 'g')
+plot(maxmavg1100Hz.Channel1, 'g')
 subplot(3,1,2)
 plot(maxmavg1100Hz.Channel2, 'm')
 subplot(3,1,3)
