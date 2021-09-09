@@ -76,7 +76,7 @@ milli_zero = maxmavg1100Hz.timestamp(pos_iniziale)
 time = maxmavg1100Hz.timestamp-milli_zero
 time = time ./1000
 
-milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+20)
+milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+samplepersecond)
 time_avg = maxmavg1100Hz.timestamp-milli_zero_avg
 time_avg = time_avg ./1000
 
@@ -118,7 +118,7 @@ milli_zero = maxmavg1100Hz.timestamp(pos_iniziale)
 time = maxmavg1100Hz.timestamp-milli_zero
 time = time ./1000
 
-milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+20)
+milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+samplepersecond)
 time_avg = maxmavg1100Hz.timestamp-milli_zero_avg
 time_avg = time_avg ./1000
 
@@ -161,7 +161,7 @@ milli_zero = maxmavg1100Hz.timestamp(pos_iniziale)
 time = maxmavg1100Hz.timestamp-milli_zero
 time = time ./1000
 
-milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+20)
+milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+samplepersecond)
 time_avg = maxmavg1100Hz.timestamp-milli_zero_avg
 time_avg = time_avg ./1000
 
