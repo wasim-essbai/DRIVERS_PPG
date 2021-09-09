@@ -73,16 +73,20 @@ milli_zero = maxmavg1100Hz.timestamp(pos_iniziale)
 time = maxmavg1100Hz.timestamp-milli_zero
 time = time ./1000
 
+milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+20)
+time_avg = maxmavg1100Hz.timestamp-milli_zero_avg
+time_avg = time_avg ./1000
+
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, maxmavg1100Hz.Channel1(flag));
-plot(time(test), smoothed(samplepersecond+1:end),'g')
+plot(time_avg(test), smoothed(samplepersecond+1:end),'g')
 legend('LED GREEN')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
+xlim([0 10])
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'green_moving_avg.pdf','Resolution',600)
-
 
 f = figure
 samplepersecond = 20;
@@ -110,19 +114,23 @@ milli_zero = maxmavg1100Hz.timestamp(pos_iniziale)
 time = maxmavg1100Hz.timestamp-milli_zero
 time = time ./1000
 
+milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+20)
+time_avg = maxmavg1100Hz.timestamp-milli_zero_avg
+time_avg = time_avg ./1000
+
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, maxmavg1100Hz.Channel2(flag));
-plot(time(test), smoothed(samplepersecond+1:end),'m')
-legend('LED IRED')
+plot(time_avg(test), smoothed(samplepersecond+1:end),'m')
+legend('LED IR')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
+xlim([0 10])
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'ir_moving_avg.pdf','Resolution',600)
 
-
 f = figure
-samplepersecond = 10;
+samplepersecond = 20;
 
 flag = maxmavg1100Hz.timestamp >= maxmavg1100Hz.timestamp(pos_iniziale) & maxmavg1100Hz.timestamp < maxmavg1100Hz.timestamp(pos_iniziale)+10000
 
@@ -147,13 +155,17 @@ milli_zero = maxmavg1100Hz.timestamp(pos_iniziale)
 time = maxmavg1100Hz.timestamp-milli_zero
 time = time ./1000
 
+milli_zero_avg = maxmavg1100Hz.timestamp(pos_iniziale+20)
+time_avg = maxmavg1100Hz.timestamp-milli_zero_avg
+time_avg = time_avg ./1000
+
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, maxmavg1100Hz.Channel3(flag));
-plot(time(test), smoothed(samplepersecond+1:end),'r')
+plot(time_avg(test), smoothed(samplepersecond+1:end),'r')
 legend('LED RED')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
+xlim([0 10])
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'red_moving_avg.pdf','Resolution',600)
-
