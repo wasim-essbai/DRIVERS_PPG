@@ -11,7 +11,8 @@ plot(maxmavg1100Hz.Channel2, 'm')
 subplot(3,1,3)
 plot(maxmavg1100Hz.Channel3, 'r')
 
-pos_iniziale = 1400;
+%pos_iniziale = 3000;
+pos_iniziale = 1300;
 
 flag = maxmavg1100Hz.timestamp >= maxmavg1100Hz.timestamp(pos_iniziale) & maxmavg1100Hz.timestamp < maxmavg1100Hz.timestamp(pos_iniziale)+10000
 
@@ -49,7 +50,8 @@ exportgraphics(f,'red.pdf','Resolution',600)
 
 %%
 f = figure
-samplepersecond = 25;
+%samplepersecond = 10;
+samplepersecond = 15;
 
 flag = maxmavg1100Hz.timestamp >= maxmavg1100Hz.timestamp(pos_iniziale) & maxmavg1100Hz.timestamp < maxmavg1100Hz.timestamp(pos_iniziale)+10000
 
@@ -90,6 +92,7 @@ set(f,'PaperSize',[1511 189])
 exportgraphics(f,'green_moving_avg.pdf','Resolution',600)
 %%
 f = figure
+%samplepersecond = 25;
 samplepersecond = 20;
 
 flag = maxmavg1100Hz.timestamp >= maxmavg1100Hz.timestamp(pos_iniziale) & maxmavg1100Hz.timestamp < maxmavg1100Hz.timestamp(pos_iniziale)+10000
@@ -132,7 +135,8 @@ exportgraphics(f,'ir_moving_avg.pdf','Resolution',600)
 
 %%
 f = figure
-samplepersecond = 20;
+%samplepersecond = 30;
+samplepersecond = 15;
 
 flag = maxmavg1100Hz.timestamp >= maxmavg1100Hz.timestamp(pos_iniziale) & maxmavg1100Hz.timestamp < maxmavg1100Hz.timestamp(pos_iniziale)+10000
 
