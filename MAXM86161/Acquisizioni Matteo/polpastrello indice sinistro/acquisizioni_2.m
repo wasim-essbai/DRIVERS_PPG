@@ -47,7 +47,9 @@ f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'red.pdf','Resolution',600)
 
-%%
+%%Campioni filtrati
+
+%RED
 f = figure
 samplepersecond = 25;
 

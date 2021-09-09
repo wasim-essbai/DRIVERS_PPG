@@ -46,35 +46,133 @@ f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'green.pdf','Resolution',600)
 
+%%Campioni filtrati
+
+%RED
+
+f = figure
 samplepersecond = 20;
-coeff = ones(1, samplepersecond)/samplepersecond;
 
+flag = indicesxmaxmavg1100Hz.timestamp >= indicesxmaxmavg1100Hz.timestamp(pos_iniziale) & indicesxmaxmavg1100Hz.timestamp < indicesxmaxmavg1100Hz.timestamp(pos_iniziale)+10000
+
+for i=1:length(flag)
+    if int8(flag(i))-int8(flag(i+1)) == 1
+        i
+        break
+    end
+end
+flag((i+1):(i+samplepersecond))= 1
+test = flag
+
+for i=1:length(flag)
+    if int8(flag(i))-int8(flag(i+1)) == -1
+        i
+        break
+    end
+end
+test(i+1:i+samplepersecond) = 0
+
+milli_zero = indicesxmaxmavg1100Hz.timestamp(pos_iniziale)
+time = indicesxmaxmavg1100Hz.timestamp-milli_zero
+time = time ./1000
+
+milli_zero_avg = indicesxmaxmavg1100Hz.timestamp(pos_iniziale+20)
+time_avg = indicesxmaxmavg1100Hz.timestamp-milli_zero_avg
+time_avg = time_avg ./1000
+
+coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, indicesxmaxmavg1100Hz.Channel3(flag));
-f = figure
-plot(smoothed(samplepersecond:end),'r')
+plot(time_avg(test), smoothed(samplepersecond+1:end),'r')
 legend('LED RED')
+xlabel('Tempo [s]');
+ylabel('Valore ADC');
+xlim([0 10])
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
-exportgraphics(f,'red_moving_avg.pdf','Resolution',600)
+exportgraphics(f,'polpastrello_red_moving_avg.pdf','Resolution',600)
 
+%IR
+
+f = figure
 samplepersecond = 25;
-coeff = ones(1, samplepersecond)/samplepersecond;
 
+flag = indicesxmaxmavg1100Hz.timestamp >= indicesxmaxmavg1100Hz.timestamp(pos_iniziale) & indicesxmaxmavg1100Hz.timestamp < indicesxmaxmavg1100Hz.timestamp(pos_iniziale)+10000
+
+for i=1:length(flag)
+    if int8(flag(i))-int8(flag(i+1)) == 1
+        i
+        break
+    end
+end
+flag((i+1):(i+samplepersecond))= 1
+test = flag
+
+for i=1:length(flag)
+    if int8(flag(i))-int8(flag(i+1)) == -1
+        i
+        break
+    end
+end
+test(i+1:i+samplepersecond) = 0
+
+milli_zero = indicesxmaxmavg1100Hz.timestamp(pos_iniziale)
+time = indicesxmaxmavg1100Hz.timestamp-milli_zero
+time = time ./1000
+
+milli_zero_avg = indicesxmaxmavg1100Hz.timestamp(pos_iniziale+20)
+time_avg = indicesxmaxmavg1100Hz.timestamp-milli_zero_avg
+time_avg = time_avg ./1000
+
+coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, indicesxmaxmavg1100Hz.Channel2(flag));
-f = figure
-plot(smoothed(samplepersecond:end),'m')
+plot(time_avg(test), smoothed(samplepersecond+1:end),'m')
 legend('LED IR')
+xlabel('Tempo [s]');
+ylabel('Valore ADC');
+xlim([0 10])
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
-exportgraphics(f,'ir_moving_avg.pdf','Resolution',600)
+exportgraphics(f,'polpastrello_ir_moving_avg.pdf','Resolution',600)
 
-samplepersecond = 10;
-coeff = ones(1, samplepersecond)/samplepersecond;
+%GREEN
 
-smoothed = filter(coeff, 1, indicesxmaxmavg1100Hz.Channel1(flag));
 f = figure
-plot(smoothed(samplepersecond:end),'g')
+samplepersecond = 10;
+
+flag = indicesxmaxmavg1100Hz.timestamp >= indicesxmaxmavg1100Hz.timestamp(pos_iniziale) & indicesxmaxmavg1100Hz.timestamp < indicesxmaxmavg1100Hz.timestamp(pos_iniziale)+10000
+
+for i=1:length(flag)
+    if int8(flag(i))-int8(flag(i+1)) == 1
+        i
+        break
+    end
+end
+flag((i+1):(i+samplepersecond))= 1
+test = flag
+
+for i=1:length(flag)
+    if int8(flag(i))-int8(flag(i+1)) == -1
+        i
+        break
+    end
+end
+test(i+1:i+samplepersecond) = 0
+
+milli_zero = indicesxmaxmavg1100Hz.timestamp(pos_iniziale)
+time = indicesxmaxmavg1100Hz.timestamp-milli_zero
+time = time ./1000
+
+milli_zero_avg = indicesxmaxmavg1100Hz.timestamp(pos_iniziale+20)
+time_avg = indicesxmaxmavg1100Hz.timestamp-milli_zero_avg
+time_avg = time_avg ./1000
+
+coeff = ones(1, samplepersecond)/samplepersecond;
+smoothed = filter(coeff, 1, indicesxmaxmavg1100Hz.Channel1(flag));
+plot(time_avg(test), smoothed(samplepersecond+1:end),'g')
 legend('LED GREEN')
+xlabel('Tempo [s]');
+ylabel('Valore ADC');
+xlim([0 10])
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
-exportgraphics(f,'green_moving_avg.pdf','Resolution',600)
+exportgraphics(f,'polpastrello_green_moving_avg.pdf','Resolution',600)
