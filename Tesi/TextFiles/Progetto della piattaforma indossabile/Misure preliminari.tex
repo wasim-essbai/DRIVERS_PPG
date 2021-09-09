@@ -74,13 +74,14 @@ La seconda \textit{Adapeter Board}, quella che monta il sensore MAX86916, è sta
 		\textbf{Frequenza di acquisizione [Hz]} & 100 \\ \hline
 		\textbf{Fondo scala ADC [nA]} & 16384 \\ \hline
 		\textbf{Corrente di alimentazione dei LED [mA]} & 2.0 \\ \hline
-		\textbf{Ampiezza impulso luce LED [$\mu$s]} & 420 \\ \hline
+		\textbf{Larghezza impulso luce LED [$\mu$s]} & 420 \\ \hline
 		\textbf{Modalità operativa} & FLEX MODE \\ \hline
 	\end{tabular}
 	\caption{Confronto delle caratteristiche degli accelerometri.}
 	\label{tab:ConfigMAX86916}
 \end{table}
-La scelta principale è quella relativa alla modalità operativa. Dal momento che si vuole verificare il corretto funzionamento della piattaforma, si è deciso di utilizzare la modalità FLEX MODE, dove vengono accesi tutti e quattro i LED del modulo PPG MAX86916. Il valore di corrente fornita è scelto in modo da essere sufficientemente elevato per garantire una buona qualità di segnale, tenendo conto anche della necessità di mantenere bassi valori di corrente per limitare i consumi. Per l'acquisizione invece è stato utilizzato per l'ADC (\textit{Analog to Digital Converter}) il fondo scala di 16384 nA, che permette di evitare saturazioni in sede di conversione. Non è stato utilizzato il valore 32768 nA (Il massimo a disposizione) perché sarebbe più elevato del necessario, portando quindi solo ad un maggior consumo di corrente. La frequenza di campionamento scelta invece è di 100Hz e rappresenta una valore intermedio che, in questa fase di studio, è sufficiente per valutare il segnale acquisito. Infine, per l'ampiezza dell'impulso della luce emessa dai LED è stato scelto il massimo valore a disposizione, che è di 420$\mu$s, in modo da avere sufficiente tempo per l'assestamento del segnale. \todo{sta cosa della l'ampiezza dell'impulso ha senso?}
+La scelta principale è quella relativa alla modalità operativa. Dal momento che si vuole verificare il corretto funzionamento della piattaforma, si è deciso di utilizzare la modalità FLEX MODE, dove vengono accesi tutti e quattro i LED del modulo PPG MAX86916. Il valore di corrente fornita è scelto in modo da essere sufficientemente elevato per garantire una buona qualità di segnale, tenendo conto anche della necessità di mantenere bassi valori di corrente per limitare i consumi. Per l'acquisizione invece è stato utilizzato per l'ADC (\textit{Analog to Digital Converter}) il fondo scala di 16384 nA, che permette di evitare saturazioni in sede di conversione. Non è stato utilizzato il valore 32768 nA (Il massimo a disposizione) perché sarebbe più elevato del necessario, portando quindi solo ad un maggior consumo di corrente. La frequenza di campionamento scelta invece è di 100Hz e rappresenta una valore intermedio che, in questa fase di studio, è sufficiente per valutare il segnale acquisito. Infine, per la durata dell'impulso della luce emessa dai LED è stato scelto il massimo valore a disposizione, che è di 420$\mu$s, in modo da avere sufficiente tempo per l'assestamento del segnale. \todo{sta cosa della la larghezza dell'impulso ha senso?}
 
-\todo{misure}
+\import{./TextFiles/Progetto della piattaforma indossabile/}{Misure soggetto 1.tex}
+\import{./TextFiles/Progetto della piattaforma indossabile/}{Misure soggetto 2.tex}
 \todo{commenti}
