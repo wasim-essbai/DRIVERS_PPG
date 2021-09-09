@@ -132,7 +132,7 @@ f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'polpastrello_ir_moving_avg.pdf','Resolution',600)
 
-%GREEN
+%RED
 f = figure
 samplepersecond = 20;
 
