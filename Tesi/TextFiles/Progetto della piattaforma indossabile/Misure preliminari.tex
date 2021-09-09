@@ -26,18 +26,18 @@ Come descritto nel paragrafo 2.1.0(\ref{cap:Hardware}), sono state realizzate du
 
 \subsection{Segnale PPG}
 Il segnale PPG grezzo non rappresenta una stima di un particolare parametro, ma solo grazie ad una successiva elaborazione, tramite opportuni algoritmi, è possibile ottenere informazioni interessanti su alcuni indicatori, come la frequenza cardiaca, la saturazione e la pressione arteriosa.
-Tuttavia, osservando la sua morfologia è possibile ottenere alcuni informazioni\cite{Foroozan2018}. In figura \ref{fig:Descrizione_Segnale_PPG} è mostrato un segnale PPG acquisito sulla parte superiore del polso e filtrato da rumore e disturbi esterni. In questa immagine, si può notare una periodicità del segnale che è strettamente legata al ritmo cardiaco del soggetto.
+Tuttavia, osservando la sua morfologia è possibile ottenere alcuni informazioni\cite{Foroozan2018}. In figura \ref{fig:Descrizione_Segnale_PPG} è mostrato un esempio di segnale PPG ideale. Un segnale fotopletismografico reale è soggetto a del rumore (come sarà ben visibile nel paragrafo \ref{cap:misure_preliminari}, mantenendo le caratteristiche presentate nella figura. Inoltre, esso è un segnale periodico, il cui periodo è definito dal ciclo cardiaco.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\linewidth]{ImageFiles/Misure Preliminari/descrizione_segnale_ppg}
 	\caption{Caratteristiche tipiche di un onda PPG (immagine tratta da \cite{Ppgsignal}).}
 	\label{fig:Descrizione_Segnale_PPG}
 \end{figure}
-Inoltre, è presente anche una forte similarità tra la morfologia del segnale PPG e la forma d'onda della pressione arteriosa. Infatti, è possibile identificare due picchi separati da un minimo locale (\Fig~\ref{fig:Descrizione_Segnale_PPG}) che corrispondono a dei punti caratteristici della pressione arteriosa: il picco sistolico e il picco diastolico. Essi sono separati da un minimo chiamato tacca dicrotica. La fase sistolica indica la fase di contrazione del muscolo cardiaco, che determina un aumento della pressione all'interno delle arterie, mentre la fase diastolica, compresa tra la tacca dicrotica e il minimo assoluto raggiunto dal segnale prima dell'onda successiva, è indica la fase di rilassamento del cuore\cite{Singh2017}. La tacca dicrotica è tipicamente associata alla chiusura della valvola aortica e determina il termine della fase di sistole\cite{Gamrah2020}.
+`E presente anche una forte similarità tra la morfologia del segnale PPG e la forma d'onda della pressione arteriosa. Infatti, è possibile identificare due picchi separati da un minimo locale (\Fig~\ref{fig:Descrizione_Segnale_PPG}) che corrispondono a dei punti caratteristici della pressione arteriosa: il picco sistolico e il picco diastolico. Essi sono separati da un minimo chiamato tacca dicrotica. La fase sistolica indica la fase di contrazione del muscolo cardiaco, che determina un aumento della pressione all'interno delle arterie, mentre la fase diastolica, compresa tra la tacca dicrotica e il minimo assoluto raggiunto dal segnale prima dell'onda successiva, è indica la fase di rilassamento del cuore\cite{Singh2017}. La tacca dicrotica è tipicamente associata alla chiusura della valvola aortica e determina il termine della fase di sistole\cite{Gamrah2020}.
 
 Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rimuovere i disturbi. Infatti, esso è molto suscettibile a zone di scarsa perfusione sanguigna, artefatti dovuti al movimento e all'illuminazione dell'ambiente circostante. In alcuni casi, si utilizzano anche altre tipologie di sensori (come ad esempio un accelerometro triassale) per compensare eventuali disturbi.
 
-\subsection{Misurazioni preliminari sui soggetti}
+\subsection{Misurazioni preliminari sui soggetti}\ref{cap:misure_preliminari}
 Le misure che vengono presentate in questa sezione sono state eseguite seguendo la stessa procedura, in modo da rendere confrontabili le varie acquisizioni, limitando le variazioni dovute a disturbi a causa di differenze nella procedura di acquisizione. Un aspetto importante che è stato notato già nelle prime misure è l'importanza della luce dell'ambiente in cui si effettua la misura; questo è dovuto al fatto che la luce ambientale introduce delle interferenze che alterano il valore della misura e, a meno di ricreare la stessa luce, queste interferenze variano da un ambiente all'altro in maniera casuale, rendendo non confrontabili le acquisizioni. Per evitare il problema citato, in questa prima fase del progetto, è stata presa la decisione di eseguire tutte le misure in assenza di qualsiasi luce, quindi al buio. In questo modo sono stati ottenuti dei campioni con una notevole diminuzione di disturbi. In caso non sia possibile un ambiente totalmente al buio si può fare uso di qualche oggetto, ad esempio un pezzo di stoffa nero, che copre la \textit{board} in modo che non penetri la luce ambientale.
 Oltre ai disturbi legati alla luce, è necessario anche prevenire gli artefatti dovuti al movimento. Per fare ciò la soluzione adottata è stata di fissare l'\textit{Adapter Board} sulla zona in cui si vuole fare l'acquisizione con un nastro adesivo in modo da evitare spostamenti durante la misura.
 Infine, è stata definita la sequenza temporale delle azioni: Una volta fissata la \textit{board}, e il soggetto analizzato sia in posizione stabile a riposo, si attendono 10 secondi, in modo che il segnale si stabilizzi, e poi si avvia la registrazione dell'acquisizione della durata di 40 secondi, che viene poi salvata in un file con l'indicazione del \textit{timestamp} per ogni campione. A questo punto è possibile utilizzare il file originato per valutare risultato ottenuto ed estrarre le informazioni di interesse.
@@ -45,10 +45,11 @@ Infine, è stata definita la sequenza temporale delle azioni: Una volta fissata 
 
 \paragraph{Configurazione dei moduli PPG}~
 
-\noindent I moduli PPG MAX86916 e MAXM86161, impiegati nelle board progettate, permettono di effettuare diverse configurazioni che dipendono dalla specifica applicazione e dalle stime di interesse dal momento che il segnale PPG, come evidenziato nella sezione precedente, contiene diverse informazioni che devono essere estratte con opportuni algoritmi. Di seguito vengono riportate le configurazioni utilizzate per effettuare delle misure preliminari, atte a verificare l'efficacia delle schede realizzate.
+
+\noindent I moduli MAX86916 e MAXM86161, impiegati nelle board progettate, permettono di effettuare diverse configurazioni che dipendono dalla specifica applicazione e dalle caratteristiche che si vogliono ottenere nel segnale acquisito. Di seguito vengono riportate le configurazioni utilizzate per effettuare le misure che verranno successivamente riportate, atte a verificare l'efficacia delle schede realizzate.
 
 \paragraph{Adapater Board: MAXM86161}
-Per l'\textit{Adapeter Board} che monta il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}:
+Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}:
 \begin{table}[h]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
@@ -61,12 +62,12 @@ Per l'\textit{Adapeter Board} che monta il sensore MAXM86161 è stata scelta la 
 		\textbf{Tempo di integrazione [$\mu$s]} & 117.3 \\ \hline
 		\textbf{Ritardo di accensione LED [$\mu$s]} & 12 \\ \hline
 	\end{tabular}
-	\caption{Confronto delle caratteristiche degli accelerometri.}
+	\caption{Parametri di configurazione del modulo MAXM86161.}
 	\label{tab:ConfigMAXM86161}
 \end{table}
 \todo{Da commentare i parametri scelti}
 \paragraph{Adapater Board: MAX86916}
-La seconda \textit{Adapeter Board}, quella che monta il sensore MAX86916, è stata configurata come riportato in tabella \ref{tab:ConfigMAX86916}:
+La seconda \textit{Adapeter Board}, con il sensore MAX86916, è stata configurata come riportato in tabella \ref{tab:ConfigMAX86916}:
 \begin{table}[h]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
@@ -79,11 +80,10 @@ La seconda \textit{Adapeter Board}, quella che monta il sensore MAX86916, è sta
 		\textbf{Larghezza impulso luce LED [$\mu$s]} & 420 \\ \hline
 		\textbf{Modalità operativa} & FLEX MODE \\ \hline
 	\end{tabular}
-	\caption{Confronto delle caratteristiche degli accelerometri.}
+	\caption{Parametri di configurazione del modulo MAX86916.}
 	\label{tab:ConfigMAX86916}
 \end{table}
-La scelta principale è quella relativa alla modalità operativa. Dal momento che si vuole verificare il corretto funzionamento della piattaforma, si è deciso di utilizzare la modalità FLEX MODE, dove vengono accesi tutti e quattro i LED del modulo PPG MAX86916. Il valore di corrente fornita è scelto in modo da essere sufficientemente elevato per garantire una buona qualità di segnale, tenendo conto anche della necessità di mantenere bassi valori di corrente per limitare i consumi. Per l'acquisizione invece è stato utilizzato per l'ADC (\textit{Analog to Digital Converter}) il fondo scala di 16384 nA, che permette di evitare saturazioni in sede di conversione. Non è stato utilizzato il valore 32768 nA (Il massimo a disposizione) perché sarebbe più elevato del necessario, portando quindi solo ad un maggior consumo di corrente. La frequenza di campionamento scelta invece è di 100Hz e rappresenta una valore intermedio che, in questa fase di studio, è sufficiente per valutare il segnale acquisito. Infine, per la durata dell'impulso della luce emessa dai LED è stato scelto il massimo valore a disposizione, che è di 420$\mu$s, in modo da avere sufficiente tempo per l'assestamento del segnale. \todo{sta cosa della la larghezza dell'impulso ha senso?}
+La scelta principale da effettuare è stata quella relativa alla modalità operativa. Dal momento che si vuole verificare il corretto funzionamento della piattaforma, si è deciso di utilizzare la modalità FLEX MODE, dove vengono accesi tutti e quattro i LED del modulo PPG MAX86916. Il valore di corrente fornita è scelto in modo da essere sufficientemente elevato per garantire una buona qualità di segnale, tenendo conto anche della necessità di mantenere bassi valori di corrente per limitare i consumi. L'ADC integrato è stato configurato con un fondo scala di \SI{16384}{\nano\ampere}, che permette di evitare saturazioni in sede di conversione. La frequenza di campionamento scelta invece è di 100Hz e rappresenta una valore intermedio che, in questa fase di studio, è sufficiente per valutare il segnale acquisito. Infine, per la durata dell'impulso della luce emessa dai LED è stato scelto il massimo valore a disposizione, che è di \SI{420}{\micro\second}, in modo da permettere l'assestamento del segnale.
 
 \import{./TextFiles/Progetto della piattaforma indossabile/}{Misure soggetto 1.tex}
 \import{./TextFiles/Progetto della piattaforma indossabile/}{Misure soggetto 2.tex}
-\todo{commenti}
