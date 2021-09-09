@@ -13,7 +13,7 @@ plot(maxavg1100Hz.Channel3, 'g')
 subplot(4,1,4)
 plot(maxavg1100Hz.Channel4, 'b')
 
-pos_iniziale = 1500;
+pos_iniziale = 2000;
 flag = maxavg1100Hz.timestamp >= maxavg1100Hz.timestamp(pos_iniziale) & maxavg1100Hz.timestamp < maxavg1100Hz.timestamp(pos_iniziale)+10000
 
 milli_zero = maxavg1100Hz.timestamp(pos_iniziale)
@@ -58,13 +58,5 @@ f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'blu.pdf','Resolution',600)
 
-samplepersecond = 10;
-coeff = ones(1, samplepersecond)/samplepersecond;
-
-smoothed = filter(coeff, 1, maxavg1100Hz.Channel3(flag));
-figure
-plot(smoothed(samplepersecond:end))
-
-close all
 
 
