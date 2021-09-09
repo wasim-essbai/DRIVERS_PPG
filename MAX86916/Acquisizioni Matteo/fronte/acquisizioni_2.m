@@ -58,6 +58,12 @@ f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'blu.pdf','Resolution',600)
 
+samplepersecond = 10;
+coeff = ones(1, samplepersecond)/samplepersecond;
+
+smoothed = filter(coeff, 1, maxavg1100Hz.Channel3(flag));
+figure
+plot(smoothed(samplepersecond:end))
 
 close all
 

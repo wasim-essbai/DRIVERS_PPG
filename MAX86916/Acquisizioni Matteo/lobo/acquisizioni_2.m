@@ -9,7 +9,7 @@ plot(maxmavg1100Hz.Channel1(1:1000), 'm')
 subplot(4,1,2)
 plot(maxavg1100Hz.Channel2, 'r')
 subplot(4,1,3)
-plot(maxavg1100Hz.Channel3, 'g')
+plot(maxavg1100Hz.Channel4, 'g')
 subplot(4,1,4)
 
 
