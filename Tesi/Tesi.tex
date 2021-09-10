@@ -64,20 +64,20 @@
 	
 	\chapter*{Introduzione}
 	\addcontentsline{toc}{chapter}{Introduzione}
-	Il presente lavoro di tesi, svolto presso il Laboratorio di Microelettronica dell’Università degli Studi di Bergamo, tratta la progettazione e lo sviluppo di un sistema optoelettronico indossabile per misure fotopletismografiche. In particolare l'attività si è focalizzata sul progetto di due \textit{Adapter Board} dalle dimensioni ridotte.
-	Nel \textit{primo capitolo} viene descritto l'apparato circolatorio e le dinamiche che ne regolano il funzionamento. Si tratta di un aspetto importante che permette di comprendere il principio di funzionamento della fotopletismografia che viene presentato nel capitolo, descrivendo i fattori che influenzano le acquisizioni fotopletismografiche e i principali siti di misura impiegati. Infine vengono riportati alcuni dispositivi per l'acquisizione di segnali PPG presenti come stato dell'arte.
+%	Il presente lavoro di tesi, svolto presso il Laboratorio di Microelettronica dell’Università degli Studi di Bergamo, tratta la progettazione e lo sviluppo di un sistema optoelettronico indossabile per misure fotopletismografiche. In particolare l'attività si è focalizzata sul progetto di due \textit{Adapter Board} dalle dimensioni ridotte.
+%	Nel \textit{primo capitolo} viene descritto l'apparato circolatorio e le dinamiche che ne regolano il funzionamento. Si tratta di un aspetto importante che permette di comprendere il principio di funzionamento della fotopletismografia che viene presentato nel capitolo, descrivendo i fattori che influenzano le acquisizioni fotopletismografiche e i principali siti di misura impiegati. Infine vengono riportati alcuni dispositivi per l'acquisizione di segnali PPG presenti come stato dell'arte.
 	
 	\chapter{Fotopletismografia}
-	%\import{./TextFiles/Fotopletismografia/}{Principio di funzionamento.tex}
-	%\import{./TextFiles/Fotopletismografia/}{Siti di misura e lunghezze d’onda impiegate.tex}
-	%\import{./TextFiles/Fotopletismografia/}{Stato dell’arte dei moduli PPG.tex}
+	\import{./TextFiles/Fotopletismografia/}{Principio di funzionamento.tex}
+	\import{./TextFiles/Fotopletismografia/}{Siti di misura e lunghezze d’onda impiegate.tex}
+	\import{./TextFiles/Fotopletismografia/}{Stato dell’arte dei moduli PPG.tex}
 	
 	\chapter{Progetto della piattaforma indossabile}
 	Lo studio presentato in questo capitolo è l'evoluzione di un progetto di tesi precedentemente svolto presso il laboratorio di elettronica dell’Università degli Studi di Bergamo \cite{Ingegneria2018}. Tuttavia, si è cercato di inserire nuovi elementi per migliorare la board precedentemente progettata, ponendo l'attenzione su due principali aspetti innovativi: lo studio della luce blu, che tipicamente non è utilizzata per misure fotopletismografiche e la riduzione delle dimensioni delle board. In particolare, il sensore MAX86916 permetterà di analizzare i segnali PPG generati da luce rossa, infrarossa, verde e blu, mentre le dimensioni ridotte del sensore MAXM86161 permetteranno di ridurre la grandezza dell'\textit{Adpter Board} progettata e potenzialmente migliorare le prestazioni ottenute con il sensore MAX30101, analizzato nel lavoro precedente\cite{Ingegneria2018}.
 	
-	%\import{./TextFiles/Progetto della piattaforma indossabile/}{Hardware dell’adapter board.tex}
-	%\import{./TextFiles/Progetto della piattaforma indossabile/}{Firmware.tex}
-	%\import{./TextFiles/Progetto della piattaforma indossabile/}{Macchina a stati finiti.tex}
+	\import{./TextFiles/Progetto della piattaforma indossabile/}{Hardware dell’adapter board.tex}
+	\import{./TextFiles/Progetto della piattaforma indossabile/}{Firmware.tex}
+	\import{./TextFiles/Progetto della piattaforma indossabile/}{Macchina a stati finiti.tex}
 	\import{./TextFiles/Progetto della piattaforma indossabile/}{Misure preliminari.tex}
 	
 	\chapter*{Conclusioni}
@@ -90,8 +90,7 @@
 	
 	I risultati rilevati in questo progetto non sono da considerarsi definitivi. Infatti, sarà necessario effettuare delle acquisizioni su un campione di soggetti maggiore, diversificati per età, sesso, condizioni ambientali in cui si svolgono le misurazioni, colore della carnagione, condizione del soggetto (a riposo, sotto sforzo, in movimento) e analizzare degli indici quantitativi (come l'indice di perfusione) per analizzare la qualità dei segnali. Un'ulteriore sviluppo futuro sarà l'introduzione dell'accelerometro, il cui utilizzo è stato progettato ma non montato sulle schede. Infine, dovrà essere anche valutato il rapporto tra prestazioni e consumo, in modo da configurare opportunamente i sensori PPG, utilizzando anche i filtri presenti \textit{on board} che dovrebbero migliorare la qualità delle misurazioni.
 	
-	
-	
+
 	\bibliographystyle{unsrt}
 	\bibliography{./OtherFiles/Bibliography_Fotopletismografia,./OtherFiles/Bibliography_DatasheetReferences,./OtherFiles/Bibliography_Hardware,./OtherFiles/Bibliography_Firmware,./OtherFiles/Bibliography_Misure_Preliminari}
 	
