@@ -26,20 +26,20 @@ Come descritto nel paragrafo \ref{cap:Hardware}, sono stati realizzati due diffe
 
 \subsection{Segnale PPG}
 Il segnale PPG grezzo non rappresenta una stima di un particolare parametro, ma solo grazie ad una successiva elaborazione, tramite opportuni algoritmi, è possibile ottenere informazioni interessanti su alcuni indicatori, come la frequenza cardiaca, la saturazione e la pressione arteriosa.
-Tuttavia, osservando la sua morfologia si può valutare la bontà delle acquisizioni. In figura \ref{fig:Descrizione_Segnale_PPG} è mostrato un esempio di segnale PPG ideale. Un segnale fotopletismografico reale è soggetto a del rumore (come sarà ben visibile nel paragrafo \ref{cap:misure_preliminari}, mantenendo le caratteristiche presentate nella figura. Inoltre, esso è un segnale periodico, il cui periodo è definito dal ciclo cardiaco.
+Tuttavia, osservando la sua morfologia si può valutare la bontà delle acquisizioni. In figura \ref{fig:Descrizione_Segnale_PPG} è mostrato un esempio di segnale PPG ideale. In verità, un segnale fotopletismografico reale è soggetto a rumore (come sarà ben visibile nel paragrafo \ref{cap:misure_preliminari}), mantenendo però le caratteristiche presentate nella figura. Inoltre, esso è un segnale periodico, il cui periodo è definito dal ciclo cardiaco.
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\linewidth]{ImageFiles/Misure Preliminari/descrizione_segnale_ppg}
 	\caption{Caratteristiche tipiche di un onda PPG (immagine tratta da Chen\cite{Ppgsignal}).}
 	\label{fig:Descrizione_Segnale_PPG}
 \end{figure}
-`E presente anche una forte similarità tra la morfologia del segnale PPG e la forma d'onda della pressione arteriosa\cite{Foroozan2018}. Infatti, è possibile identificare due picchi separati da un minimo locale (\Fig~\ref{fig:Descrizione_Segnale_PPG}) che corrispondono a dei punti caratteristici della pressione arteriosa: il picco sistolico e il picco diastolico. Essi sono separati da un minimo chiamato tacca dicrotica. La fase sistolica indica la fase di contrazione del muscolo cardiaco, che determina un aumento della pressione all'interno delle arterie, mentre la fase diastolica, compresa tra la tacca dicrotica e il minimo assoluto raggiunto dal segnale prima dell'onda successiva, è indica la fase di rilassamento del cuore\cite{Singh2017}. La tacca dicrotica è tipicamente associata alla chiusura della valvola aortica e determina il termine della fase di sistole\cite{Gamrah2020}.
+\`E presente anche una forte similarità tra la morfologia del segnale PPG e la forma d'onda della pressione arteriosa\cite{Foroozan2018}. Infatti, è possibile identificare due picchi separati da un minimo locale (\Fig~\ref{fig:Descrizione_Segnale_PPG}) che corrispondono a dei punti caratteristici della pressione arteriosa: il \textit{picco sistolico} e il \textit{picco diastolico}. Essi sono separati da un minimo chiamato \textit{tacca dicrotica}. La fase sistolica indica la fase di contrazione del muscolo cardiaco, che determina un aumento della pressione all'interno delle arterie, mentre la fase diastolica, compresa tra la tacca dicrotica e il minimo assoluto raggiunto dal segnale prima dell'onda successiva, è relativa la fase di rilassamento del cuore\cite{Singh2017}. La tacca dicrotica è tipicamente associata alla chiusura della valvola aortica e indica il termine della fase di sistole\cite{Gamrah2020}.
 
-Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rimuovere i disturbi. Infatti, esso è molto suscettibile a zone di scarsa perfusione sanguigna, artefatti dovuti al movimento e all'illuminazione dell'ambiente circostante. In alcuni casi, si utilizzano anche altre tipologie di sensori (come ad esempio un accelerometro triassale) per compensare eventuali disturbi.
+Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rimuovere i disturbi. Infatti, esso è molto suscettibile a zone di scarsa perfusione sanguigna, artefatti dovuti al movimento e all'illuminazione dell'ambiente circostante. In alcuni casi, insieme ai sensori PPG, si utilizzano anche altre tipologie di trasduttori (come ad esempio un accelerometro triassale) per compensare i disturbi.
 
 \subsection{Misurazioni preliminari sui soggetti}\label{cap:misure_preliminari}
 Nel seguente paragrafo vengono presentati i risultati ottenuti dalle misurazioni effettuate su due soggetti.
-Le misure sono state eseguite seguendo la stessa procedura, in modo da rendere confrontabili, limitando i disturbi causati da differenze nella procedura di acquisizione. Un aspetto importante che è stato osservato sin da subito è l'interazione della luce ambientale sulle misure. Come già ben noto nella letteratura, la luce ambientale introduce delle interferenze che alterano il valore della misura. I disturbi variano da un ambiente all'altro in maniera non prevedibile. Nella figura \ref{fig:ambiente_MAX86916} è rappresentato il segnale acquisito dal sensore PPG MAX86916 lasciandolo esposto alla luce artificiale di una lampadina a LED per uso domestico. Si può notare come il segnale campionato presenti una componente periodica che potrebbe alterare la traccia PPG se il sensore non viene opportunamente isolato.
+Le misure sono state eseguite seguendo la stessa procedura, in modo da renderli confrontabili. Un aspetto importante che è stato osservato sin da subito è l'interazione della luce ambientale sulle misure. Come già ben noto nella letteratura, la luce ambientale introduce delle interferenze che possono alterare il valore della misura. I disturbi variano da un ambiente all'altro in maniera non prevedibile. Nella figura \ref{fig:ambiente_MAX86916} è rappresentato il segnale acquisito dal sensore PPG MAX86916 lasciandolo esposto alla luce artificiale di una lampadina a LED per uso domestico. Si può notare come il segnale campionato presenti una componente periodica che potrebbe alterare la traccia PPG se il sensore non viene opportunamente isolato.
 
 \begin{figure}[t]
 	\centering
@@ -48,15 +48,15 @@ Le misure sono state eseguite seguendo la stessa procedura, in modo da rendere c
 	\label{fig:ambiente_MAX86916}
 \end{figure}
 
-Per evitare il problema presentato, in questa prima fase del progetto, si è deciso di eseguire tutte le misure in assenza di qualsiasi luce, quindi al buio. In caso non sia possibile un ambiente totalmente al buio è consigliato coprire sensore e il sito di misura con un panno nero, in modo da non permettere alla luce ambientale di penetrare.
-Oltre ai disturbi legati alla luce, è necessario anche prevenire gli artefatti dovuti al movimento. Per fare ciò, la soluzione adottata è stata di fissare saldamente l'\textit{Adapter Board} sulla zona idi acquisizione, in modo da evitare spostamenti durante la misura.
+Per evitare il problema presentato, in questa prima fase del progetto, si è deciso di eseguire tutte le misure in assenza di qualsiasi luce esterna, quindi al buio. In caso non sia possibile un ambiente totalmente al buio è consigliato coprire sensore e il sito di misura con un panno nero, in modo da non permettere alla luce ambientale di penetrare.
+Oltre ai disturbi legati alla luce, è necessario anche prevenire artefatti dovuti al movimento. Per fare ciò, la soluzione adottata è stata di fissare saldamente l'\textit{Adapter Board} sulla zona di acquisizione, in modo da evitare spostamenti durante la misura.
 Infine, è stato definita la procedura di acquisizione:
 \begin{enumerate}
 	\item fissare saldamente la board sul sito di misura, in modo che il soggetto sia in posizione stabile e di riposo;
 	\item accendere il modulo PPG e attendere 10 secondi, affinché il segnale si stabilizzi;
 	\item avviare la registrazione dei campioni per 40 secondi.
 \end{enumerate}
-Le acquisizioni sono so salvate in un file \textit{csv} tramite il software \textit{SerialPlot}, che interpreta i dati ricevuti dal microcontrollore. Per ogni campione, viene salvato data e ora, espressa in millisecondi, e il valore (espresso in numeri interi \textit{uint\_32}) associato ad ogni canale colore. I dati vengono poi importati nel software \textit{Matlab} per l'analisi.
+Le acquisizioni sono salvate in un file \textit{csv} tramite il software \textit{SerialPlot}, che interpreta i dati ricevuti dal microcontrollore. Per ogni campione, viene salvato data e ora, espressa in millisecondi, e il valore (espresso in numeri interi \textit{uint\_32}) associato ad ogni canale colore. I dati vengono poi importati nel software \textit{Matlab} per l'analisi.
 
 
 \paragraph{Configurazione dei moduli PPG}~
