@@ -61,10 +61,11 @@ Le acquisizioni sono salvate in un file \textit{csv} tramite il software \textit
 
 \paragraph{Configurazione dei moduli PPG}~
 
+\vspace{0.5cm}
 
-\noindent I moduli MAX86916 e MAXM86161, impiegati nelle board progettate, permettono di effettuare diverse configurazioni che dipendono dalla specifica applicazione e dalle caratteristiche che si vogliono ottenere nel segnale acquisito. Di seguito vengono riportate le configurazioni utilizzate per effettuare le misure che verranno successivamente riportate, atte a verificare l'efficacia delle schede realizzate.
+\noindent I moduli MAX86916 e MAXM86161, impiegati nelle board progettate, possono essere configurati in modo diverso a seconda della specifica applicazione e dalle caratteristiche che si vogliono ottenere nel segnale acquisito. Di seguito vengono riportate le configurazioni utilizzate per effettuare le misure che verranno successivamente riportate, atte a verificare l'efficacia delle schede realizzate.
 
-\paragraph{Adapater Board: MAXM86161}
+\subparagraph{Adapater Board: MAXM86161}
 Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}:
 \begin{table}[b]
 	\renewcommand{\arraystretch}{1.5}
@@ -82,7 +83,7 @@ Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata
 	\caption{Parametri di configurazione del modulo MAXM86161.}
 	\label{tab:ConfigMAXM86161}
 \end{table}
-La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseguita alcuna media \textit{on board} sui campioni acquisiti. In questa fase di test, si è scelto di fornire la medesima corrente a tutti i led. I registri dedicati a definire la sequenza di acquisizione dei led sono stati configurati in modo da accendere in sequenza il led verde, infrarosso e rosso. Ad ogni ciclo di acquisizione viene ripetuta la medesima successione. Il legame tra il tempo di integrazione dell'ADC (t\ped{INT}), il ritardo di accensione dei LED (t\ped{LED\_SETLENGHT}), che permette di attendere che la corrente nel led si stabilizzi e la lunghezza dell'impulso (t\ped{PW}) è mostrato nella figura \ref{fig:tempi_maxm}. In questa fase di test, non sono state attivate le opzioni di risparmio energetico, filtro ALC e \textit{picket fence} in modo da ottenere misure non elaborate.
+La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseguita alcuna media \textit{on board} sui campioni acquisiti. In questa fase di test, si è scelto di fornire la medesima corrente a tutti i led. I registri dedicati a definire la sequenza di acquisizione dei led sono stati configurati in modo da accendere in modo consecutivo il led verde, infrarosso e rosso. Ad ogni ciclo di acquisizione viene ripetuta la medesima successione. Il legame tra il tempo di integrazione dell'ADC (t\ped{INT}), il ritardo di accensione dei LED (t\ped{LED\_SETLENGHT}), che permette di attendere che la corrente nel led si stabilizzi e la lunghezza dell'impulso (t\ped{PW}) è mostrato nella figura \ref{fig:tempi_maxm}. In questa fase di test, non sono state attivate le opzioni di risparmio energetico, filtro ALC e \textit{picket fence} in modo da ottenere misure non elaborate. Il fondo scala dell'ADC è stato scelto di \SI{16384}{\nano\ampere}, che non provoca problemi di saturazione.
 
 \begin{figure}[t]
 	\centering
@@ -91,8 +92,8 @@ La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseg
 	\label{fig:tempi_maxm}
 \end{figure}
 
-\paragraph{Adapater Board: MAX86916}
-La seconda \textit{Adapeter Board}, con il sensore MAX86916, è stata configurata come riportato in tabella \ref{tab:ConfigMAX86916}:
+\subparagraph{Adapater Board: MAX86916}
+La seconda \textit{Adapeter Board}, con il sensore MAX86916, è stata configurata come riportato in tabella \ref{tab:ConfigMAX86916}.
 \begin{table}[b]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
@@ -108,7 +109,7 @@ La seconda \textit{Adapeter Board}, con il sensore MAX86916, è stata configurat
 	\caption{Parametri di configurazione del modulo MAX86916.}
 	\label{tab:ConfigMAX86916}
 \end{table}
-La scelta principale da effettuare è stata quella relativa alla modalità operativa. Dal momento che si vuole verificare il corretto funzionamento della piattaforma, si è deciso di utilizzare la modalità FLEX MODE, dove vengono accesi tutti e quattro i LED del modulo PPG MAX86916. Il valore di corrente fornita è scelto in modo da essere sufficientemente elevato per garantire una buona qualità di segnale, tenendo conto anche della necessità di mantenere bassi valori di corrente per limitare i consumi. L'ADC integrato è stato configurato con un fondo scala di \SI{16384}{\nano\ampere}, che permette di evitare saturazioni in sede di conversione. La frequenza di campionamento scelta invece è di 100Hz e rappresenta una valore intermedio che, in questa fase di studio, è sufficiente per valutare il segnale acquisito. Infine, per la durata dell'impulso della luce emessa dai LED è stato scelto il massimo valore a disposizione, che è di \SI{420}{\micro\second}, in modo da permettere l'assestamento del segnale.
+La scelta principale effettuata è stata quella relativa alla modalità operativa. Dal momento che si vuole verificare il corretto funzionamento della piattaforma, si è deciso di utilizzare la modalità \textit{FLEX}, dove vengono accesi tutti e quattro i LED integrati nel sensore. Il valore di corrente fornita ai LED è stato scelto in modo da essere sufficientemente elevato per garantire una buona qualità di segnale, tenendo conto anche della necessità di mantenere bassi valori di corrente per limitare i consumi. L'ADC integrato è stato configurato con un fondo scala di \SI{16384}{\nano\ampere}, che permette di evitare saturazioni in sede di conversione. La frequenza di campionamento scelta invece è di \SI{100}{\hertz} e rappresenta una valore intermedio che, in questa fase di studio, è sufficiente per valutare il segnale acquisito. Infine, per la durata dell'impulso della luce emessa dai LED, è stato scelto il massimo valore a disposizione, che è di \SI{420}{\micro\second}, in modo da permettere l'assestamento del segnale.
 
 \import{./TextFiles/Progetto della piattaforma indossabile/}{Misure soggetto 1.tex}
 \import{./TextFiles/Progetto della piattaforma indossabile/}{Misure soggetto 2.tex}
