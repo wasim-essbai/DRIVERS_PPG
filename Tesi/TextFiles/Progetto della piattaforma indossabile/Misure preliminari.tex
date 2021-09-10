@@ -27,7 +27,7 @@ Come descritto nel paragrafo 2.1.0(\ref{cap:Hardware}), sono state realizzate du
 \subsection{Segnale PPG}
 Il segnale PPG grezzo non rappresenta una stima di un particolare parametro, ma solo grazie ad una successiva elaborazione, tramite opportuni algoritmi, è possibile ottenere informazioni interessanti su alcuni indicatori, come la frequenza cardiaca, la saturazione e la pressione arteriosa.
 Tuttavia, osservando la sua morfologia è possibile ottenere alcuni informazioni\cite{Foroozan2018}. In figura \ref{fig:Descrizione_Segnale_PPG} è mostrato un esempio di segnale PPG ideale. Un segnale fotopletismografico reale è soggetto a del rumore (come sarà ben visibile nel paragrafo \ref{cap:misure_preliminari}, mantenendo le caratteristiche presentate nella figura. Inoltre, esso è un segnale periodico, il cui periodo è definito dal ciclo cardiaco.
-\begin{figure}[h]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.7\linewidth]{ImageFiles/Misure Preliminari/descrizione_segnale_ppg}
 	\caption{Caratteristiche tipiche di un onda PPG (immagine tratta da Chen\cite{Ppgsignal}).}
@@ -38,21 +38,26 @@ Tuttavia, osservando la sua morfologia è possibile ottenere alcuni informazioni
 Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rimuovere i disturbi. Infatti, esso è molto suscettibile a zone di scarsa perfusione sanguigna, artefatti dovuti al movimento e all'illuminazione dell'ambiente circostante. In alcuni casi, si utilizzano anche altre tipologie di sensori (come ad esempio un accelerometro triassale) per compensare eventuali disturbi.
 
 \subsection{Misurazioni preliminari sui soggetti}\label{cap:misure_preliminari}
-Le misure che vengono presentate in questa sezione sono state eseguite seguendo la stessa procedura, in modo da rendere confrontabili le varie acquisizioni, limitando le variazioni dovute a disturbi a causa di differenze nella procedura di acquisizione. Un aspetto importante che è stato notato già nelle prime misure è l'importanza della luce dell'ambiente in cui si effettua la misura; questo è dovuto al fatto che la luce ambientale introduce delle interferenze che alterano il valore della misura e, a meno di ricreare la stessa luce, queste interferenze variano da un ambiente all'altro in maniera casuale, rendendo non confrontabili le acquisizioni. Per evitare il problema citato, in questa prima fase del progetto, è stata presa la decisione di eseguire tutte le misure in assenza di qualsiasi luce, quindi al buio. In questo modo sono stati ottenuti dei campioni con una notevole diminuzione di disturbi. In caso non sia possibile un ambiente totalmente al buio si può fare uso di qualche oggetto, ad esempio un pezzo di stoffa nero, che copre la \textit{board} in modo che non penetri la luce ambientale.
-Oltre ai disturbi legati alla luce, è necessario anche prevenire gli artefatti dovuti al movimento. Per fare ciò la soluzione adottata è stata di fissare l'\textit{Adapter Board} sulla zona in cui si vuole fare l'acquisizione con un nastro adesivo in modo da evitare spostamenti durante la misura.
-Infine, è stata definita la sequenza temporale delle azioni: Una volta fissata la \textit{board}, e il soggetto analizzato sia in posizione stabile a riposo, si attendono 10 secondi, in modo che il segnale si stabilizzi, e poi si avvia la registrazione dell'acquisizione della durata di 40 secondi, che viene poi salvata in un file con l'indicazione del \textit{timestamp} per ogni campione. A questo punto è possibile utilizzare il file originato per valutare risultato ottenuto ed estrarre le informazioni di interesse.
-\todo{aggiungere come si chiama il serial plot}
-\todo{inserire esempio luce ambiente}
+Nel seguente paragrafo vengono presentati i risultati ottenuti dalle misurazioni effettuate su due soggetti.
+Le misure sono state eseguite seguendo la stessa procedura, in modo da rendere confrontabili, limitando i disturbi causati da differenze nella procedura di acquisizione. Un aspetto importante che è stato osservato sin da subito è l'interazione della luce ambientale sulle misure. Come già ben noto nella letteratura, la luce ambientale introduce delle interferenze che alterano il valore della misura. I disturbi variano da un ambiente all'altro in maniera non prevedibile. Nella figura \ref{fig:ambiente_MAX86916} è rappresentato il segnale acquisito dal sensore PPG MAX86916 lasciandolo esposto alla luce artificiale di una lampadina a LED per uso domestico. Si può notare come il segnale campionato presenti una componente periodica che potrebbe alterare la traccia PPG se il sensore non viene opportunamente isolato.
 
-\begin{figure}[h]
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=1\linewidth]{ImageFiles/Misure Preliminari/ambiente_ired}
-	\includegraphics[width=1\linewidth]{ImageFiles/Misure Preliminari/ambiente_red}
-	\includegraphics[width=1\linewidth]{ImageFiles/Misure Preliminari/ambiente_green}
-	\includegraphics[width=1\linewidth]{ImageFiles/Misure Preliminari/ambiente_blu}
+	\includegraphics[width=1\linewidth]{ImageFiles/Misure Preliminari/ambiente}
 	\caption{Segnale acquisito lasciando il sensore MAX86916 esposto alla luce artificiale.}
 	\label{fig:ambiente_MAX86916}
 \end{figure}
+
+Per evitare il problema presentato, in questa prima fase del progetto, si è deciso di eseguire tutte le misure in assenza di qualsiasi luce, quindi al buio. In caso non sia possibile un ambiente totalmente al buio è consigliato coprire sensore e il sito di misura con un panno nero, in modo da non permettere alla luce ambientale di penetrare.
+Oltre ai disturbi legati alla luce, è necessario anche prevenire gli artefatti dovuti al movimento. Per fare ciò, la soluzione adottata è stata di fissare saldamente l'\textit{Adapter Board} sulla zona idi acquisizione, in modo da evitare spostamenti durante la misura.
+Infine, è stato definita la procedura di acquisizione:
+\begin{enumerate}
+	\item fissare saldamente la board sul sito di misura, in modo che il soggetto sia in posizione stabile e di riposo;
+	\item accendere il modulo PPG e attendere 10 secondi, affinché il segnale si stabilizzi;
+	\item avviare la registrazione dei campioni per 40 secondi.
+\end{enumerate}
+Le acquisizioni sono so salvate in un file \textit{csv} tramite il software \textit{SerialPlot}, che interpreta i dati ricevuti dal microcontrollore. Per ogni campione, viene salvato data e ora, espressa in millisecondi, e il valore (espresso in numeri interi \textit{uint\_32}) associato ad ogni canale colore. I dati vengono poi importati nel software \textit{Matlab} per l'analisi.
+
 
 \paragraph{Configurazione dei moduli PPG}~
 
@@ -61,7 +66,7 @@ Infine, è stata definita la sequenza temporale delle azioni: Una volta fissata 
 
 \paragraph{Adapater Board: MAXM86161}
 Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}:
-\begin{table}[h]
+\begin{table}[b]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
 	\footnotesize
@@ -79,7 +84,7 @@ Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata
 \end{table}
 La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseguita alcuna media \textit{on board} sui campioni acquisiti. In questa fase di test, si è scelto di fornire la medesima corrente a tutti i led. I registri dedicati a definire la sequenza di acquisizione dei led sono stati configurati in modo da accendere in sequenza il led verde, infrarosso e rosso. Ad ogni ciclo di acquisizione viene ripetuta la medesima successione. Il legame tra il tempo di integrazione dell'ADC (t\ped{INT}), il ritardo di accensione dei LED (t\ped{LED\_SETLENGHT}), che permette di attendere che la corrente nel led si stabilizzi e la lunghezza dell'impulso (t\ped{PW}) è mostrato nella figura \ref{fig:tempi_maxm}. In questa fase di test, non sono state attivate le opzioni di risparmio energetico, filtro ALC e \textit{picket fence} in modo da ottenere misure non elaborate.
 
-\begin{figure}[h]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{ImageFiles/Misure Preliminari/tpower_maxm}
 	\caption{Sincronizzazione dei parametri di accensione del led e integrazione dell'ADC con un LED (immagine tratta da Maxim Integrated\cite{IntegratedMAXM86161}).}
@@ -88,7 +93,7 @@ La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseg
 
 \paragraph{Adapater Board: MAX86916}
 La seconda \textit{Adapeter Board}, con il sensore MAX86916, è stata configurata come riportato in tabella \ref{tab:ConfigMAX86916}:
-\begin{table}[h]
+\begin{table}[b]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
 	\footnotesize

@@ -20,13 +20,13 @@ time = luceambiente.timestamp-milli_zero
 time = time ./1000
 
 f = figure
-plot(time(flag),luceambiente.Channel1(flag), 'm')
+plot(time(flag),luceambiente.Channel1(flag), 'k')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED IR');
+legend('LUCE AMBIENTALE','Location','northwest');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
-exportgraphics(f,'ired.pdf','Resolution',600)
+exportgraphics(f,'ambiente.pdf','Resolution',600)
 
 f = figure
 plot(time(flag),luceambiente.Channel2(flag), 'r')
