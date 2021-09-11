@@ -2,7 +2,7 @@
 
 \section{Misure preliminari}
 
-Come descritto nel paragrafo \ref{cap:Hardware}, sono stati realizzati due differenti sistemi per l'acquisizione di segnali fotopletismografici. L'obiettivo di questo paragrafo è di dimostrarne il funzionamento e i risultati ottenuti. Infatti, occorre verificare che il segnale acquisito sia di buona qualità, affinché il processo successivo di elaborazione porti a stimare i parametri di interesse in modo accurato. Come mostrato nelle figure \ref{fig:foto_moduli_MAX86916} e \ref{fig:foto_moduli_MAXM86161}, sono stati montati, sulle PCB progettate, i sensori PPG, i condensatori e i cavi che permettono l'alimentazione e la comunicazione. Tuttavia, è stato omesso l'accelerometro. Infatti, il seguente lavoro si concentra solamente sulla progettazione e l'acquisizione di segnali in formato grezzo, senza approfondire l'elaborazione degli stessi e gli algoritmi di compensazione dei disturbi causati dai movimenti. Nei seguenti paragrafi, verranno mostrati alcuni risultati ottenuti dalle misurazioni effettuate su due soggetti.
+Come descritto nel paragrafo \ref{cap:Hardware}, sono stati realizzati due differenti sistemi per l'acquisizione di segnali fotopletismografici. L'obiettivo di questo paragrafo è di dimostrarne il funzionamento mediante i risultati ottenuti. Infatti, occorre verificare che il segnale acquisito sia di buona qualità, affinché il processo successivo di elaborazione porti a stimare i parametri di interesse in modo accurato. Come mostrato nelle figure \ref{fig:foto_moduli_MAX86916} e \ref{fig:foto_moduli_MAXM86161}, sono stati montati, sulle PCB progettate, i sensori PPG, i condensatori e i cavi che permettono l'alimentazione e la comunicazione. Tuttavia, è stato omesso l'accelerometro. Infatti, questa attività di tesi si concentra solamente sulla progettazione e l'acquisizione di segnali in formato grezzo, senza approfondire l'elaborazione degli stessi e gli algoritmi di compensazione dei disturbi causati dai movimenti. Nei seguenti paragrafi, verranno mostrati alcuni risultati ottenuti dalle misurazioni effettuate su due soggetti.
 
 \begin{figure}[bh]
 	\centering
@@ -25,7 +25,7 @@ Come descritto nel paragrafo \ref{cap:Hardware}, sono stati realizzati due diffe
 \end{figure}
 
 \subsection{Segnale PPG}
-Il segnale PPG grezzo non rappresenta una stima di un particolare parametro, ma solo grazie ad una successiva elaborazione, tramite opportuni algoritmi, è possibile ottenere informazioni interessanti su alcuni indicatori, come la frequenza cardiaca, la saturazione e la pressione arteriosa.
+Il segnale PPG grezzo non rappresenta una stima di un particolare parametro, ma solo grazie ad una successiva elaborazione, tramite opportuni algoritmi, è possibile ottenere informazioni interessanti su alcuni indicatori, come la frequenza cardiaca, la saturazione di ossigeno e la pressione arteriosa.
 Tuttavia, osservando la sua morfologia si può valutare la bontà delle acquisizioni. In figura \ref{fig:Descrizione_Segnale_PPG} è mostrato un esempio di segnale PPG ideale. In verità, un segnale fotopletismografico reale è soggetto a rumore (come sarà ben visibile nel paragrafo \ref{cap:misure_preliminari}), mantenendo però le caratteristiche presentate nella figura. Inoltre, esso è un segnale periodico, il cui periodo è definito dal ciclo cardiaco.
 \begin{figure}[t]
 	\centering
@@ -33,9 +33,9 @@ Tuttavia, osservando la sua morfologia si può valutare la bontà delle acquisiz
 	\caption{Caratteristiche tipiche di un onda PPG (immagine tratta da Chen\cite{Ppgsignal}).}
 	\label{fig:Descrizione_Segnale_PPG}
 \end{figure}
-\`E presente anche una forte similarità tra la morfologia del segnale PPG e la forma d'onda della pressione arteriosa\cite{Foroozan2018}. Infatti, è possibile identificare due picchi separati da un minimo locale (\Fig~\ref{fig:Descrizione_Segnale_PPG}) che corrispondono a dei punti caratteristici della pressione arteriosa: il \textit{picco sistolico} e il \textit{picco diastolico}. Essi sono separati da un minimo chiamato \textit{tacca dicrotica}. La fase sistolica indica la fase di contrazione del muscolo cardiaco, che determina un aumento della pressione all'interno delle arterie, mentre la fase diastolica, compresa tra la tacca dicrotica e il minimo assoluto raggiunto dal segnale prima dell'onda successiva, è relativa la fase di rilassamento del cuore\cite{Singh2017}. La tacca dicrotica è tipicamente associata alla chiusura della valvola aortica e indica il termine della fase di sistole\cite{Gamrah2020}.
+\`E presente anche una forte similarità tra la morfologia del segnale PPG e la forma d'onda della pressione arteriosa\cite{Foroozan2018}. Infatti, è possibile identificare due picchi separati da un minimo locale (\Fig~\ref{fig:Descrizione_Segnale_PPG}) che corrispondono a dei punti caratteristici della pressione arteriosa: il \textit{picco sistolico} e il \textit{picco diastolico}. Essi sono separati da un minimo chiamato \textit{tacca dicrotica}. La fase sistolica indica la fase di contrazione del muscolo cardiaco, che determina un aumento della pressione all'interno delle arterie, mentre la fase diastolica, compresa tra la tacca dicrotica e il minimo assoluto raggiunto dal segnale prima dell'onda successiva, è relativa alla fase di rilassamento del cuore\cite{Singh2017}. La tacca dicrotica è tipicamente associata alla chiusura della valvola aortica e indica il termine della fase di sistole\cite{Gamrah2020}.
 
-Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rimuovere i disturbi. Infatti, esso è molto suscettibile a zone di scarsa perfusione sanguigna, artefatti dovuti al movimento e all'illuminazione dell'ambiente circostante. In alcuni casi, insieme ai sensori PPG, si utilizzano anche altre tipologie di trasduttori (come ad esempio un accelerometro triassale) per compensare i disturbi.
+Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rimuovere i disturbi. Infatti, esso è molto suscettibile a zone di scarsa perfusione sanguigna, artefatti dovuti al movimento e all'illuminazione dell'ambiente circostante. In alcuni casi, insieme ai sensori PPG, si utilizzano anche altre tipologie di trasduttori (come ad esempio un accelerometro triassale) per compensare eventuali artefatti del movimento.
 
 \subsection{Misurazioni preliminari sui soggetti}\label{cap:misure_preliminari}
 Nel seguente paragrafo vengono presentati i risultati ottenuti dalle misurazioni effettuate su due soggetti.
@@ -48,9 +48,9 @@ Le misure sono state eseguite seguendo la stessa procedura, in modo da renderli 
 	\label{fig:ambiente_MAX86916}
 \end{figure}
 
-Per evitare il problema presentato, in questa prima fase del progetto, si è deciso di eseguire tutte le misure in assenza di qualsiasi luce esterna, quindi al buio. In caso non sia possibile un ambiente totalmente al buio è consigliato coprire sensore e il sito di misura con un panno nero, in modo da non permettere alla luce ambientale di penetrare.
-Oltre ai disturbi legati alla luce, è necessario anche prevenire artefatti dovuti al movimento. Per fare ciò, la soluzione adottata è stata di fissare saldamente l'\textit{Adapter Board} sulla zona di acquisizione, in modo da evitare spostamenti durante la misura.
-Infine, è stato definita la procedura di acquisizione:
+Per evitare il problema presentato, in questa prima fase del progetto, si è deciso di eseguire tutte le misure in assenza di qualsiasi luce esterna, quindi al buio. In caso non sia possibile un ambiente totalmente al buio è consigliato coprire il sensore e il sito di misura con un panno nero, in modo da non permettere alla luce ambientale di penetrare.
+Oltre ai disturbi legati alla luce, è necessario anche prevenire artefatti dovuti al movimento. Per fare ciò, la soluzione adottata è stata quella di fissare saldamente l'\textit{Adapter Board} sulla zona di acquisizione, in modo da evitare spostamenti durante la misura.
+Infine, è stata definita la procedura di acquisizione:
 \begin{enumerate}
 	\item fissare saldamente la board sul sito di misura, in modo che il soggetto sia in posizione stabile e di riposo;
 	\item accendere il modulo PPG e attendere 10 secondi, affinché il segnale si stabilizzi;
@@ -66,12 +66,13 @@ Le acquisizioni sono salvate in un file \textit{csv} tramite il software \textit
 \noindent I moduli MAX86916 e MAXM86161, impiegati nelle board progettate, possono essere configurati in modo diverso a seconda della specifica applicazione e dalle caratteristiche che si vogliono ottenere nel segnale acquisito. Di seguito vengono riportate le configurazioni utilizzate per effettuare le misure che verranno successivamente riportate, atte a verificare l'efficacia delle schede realizzate.
 
 \subparagraph{Adapater Board: MAXM86161}
-Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}:
+Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}.
 \begin{table}[b]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
 	\footnotesize
 	\begin{tabular}{cccc}
+		\hline
 		\textbf{Numero di campioni mediati} & 1 \\ \hline
 		\textbf{Frequenza di acquisizione [Hz]} & 100 \\ \hline
 		\textbf{Fondo scala ADC [nA]} & 16384 \\ \hline
@@ -83,12 +84,12 @@ Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata
 	\caption{Parametri di configurazione del modulo MAXM86161.}
 	\label{tab:ConfigMAXM86161}
 \end{table}
-La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseguita alcuna media \textit{on board} sui campioni acquisiti. In questa fase di test, si è scelto di fornire la medesima corrente a tutti i led. I registri dedicati a definire la sequenza di acquisizione dei led sono stati configurati in modo da accendere in modo consecutivo il led verde, infrarosso e rosso. Ad ogni ciclo di acquisizione viene ripetuta la medesima successione. Il legame tra il tempo di integrazione dell'ADC (t\ped{INT}), il ritardo di accensione dei LED (t\ped{LED\_SETLENGHT}), che permette di attendere che la corrente nel led si stabilizzi e la lunghezza dell'impulso (t\ped{PW}) è mostrato nella figura \ref{fig:tempi_maxm}. In questa fase di test, non sono state attivate le opzioni di risparmio energetico, filtro ALC e \textit{picket fence} in modo da ottenere misure non elaborate. Il fondo scala dell'ADC è stato scelto di \SI{16384}{\nano\ampere}, che non provoca problemi di saturazione.
+La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseguita alcuna media \textit{on board} sui campioni acquisiti. In questa fase di test, si è scelto di fornire la medesima corrente a tutti i led. I registri dedicati a definire la sequenza di acquisizione dei led sono stati configurati in modo da accendere in modo consecutivo il led verde, infrarosso e rosso. Ad ogni ciclo di acquisizione viene ripetuta la medesima successione. Il legame tra il tempo di integrazione dell'ADC (t\ped{INT}), il ritardo di accensione dei LED (t\ped{LED\_SETLNG}), che permette di attendere che la corrente nel led si stabilizzi e la lunghezza dell'impulso (t\ped{PW}) è mostrato nella figura \ref{fig:tempi_maxm}. In questa fase di test, non sono state attivate le opzioni di risparmio energetico, filtro ALC e \textit{picket fence} in modo da ottenere misure non elaborate. Il fondo scala dell'ADC è stato scelto di \SI{16384}{\nano\ampere}, che non provoca problemi di saturazione.
 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=1\linewidth]{ImageFiles/Misure Preliminari/tpower_maxm}
-	\caption{Sincronizzazione dei parametri di accensione del led e integrazione dell'ADC con un LED (immagine tratta da Maxim Integrated\cite{IntegratedMAXM86161}).}
+	\caption{Diagramma temporale della sincronizzazione dei parametri di accensione del led e integrazione dell'ADC con un LED (immagine tratta da Maxim Integrated\cite{IntegratedMAXM86161}).}
 	\label{fig:tempi_maxm}
 \end{figure}
 
@@ -99,6 +100,7 @@ La seconda \textit{Adapeter Board}, con il sensore MAX86916, è stata configurat
 	\centering
 	\footnotesize
 	\begin{tabular}{cccc}
+		\hline
 		\textbf{Numero di campioni mediati} & 1 \\ \hline
 		\textbf{Frequenza di acquisizione [Hz]} & 100 \\ \hline
 		\textbf{Fondo scala ADC [nA]} & 16384 \\ \hline
