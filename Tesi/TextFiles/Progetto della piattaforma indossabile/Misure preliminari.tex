@@ -2,7 +2,7 @@
 
 \section{Misure preliminari}
 
-Come descritto nel paragrafo \ref{cap:Hardware}, sono stati realizzati due differenti sistemi per l'acquisizione di segnali fotopletismografici. L'obiettivo di questo paragrafo è di dimostrarne il funzionamento mediante i risultati ottenuti. Infatti, occorre verificare che il segnale acquisito sia di buona qualità, affinché il processo successivo di elaborazione porti a stimare i parametri di interesse in modo accurato. Come mostrato nelle figure \ref{fig:foto_moduli_MAX86916} e \ref{fig:foto_moduli_MAXM86161}, sono stati montati, sulle PCB progettate, i sensori PPG, i condensatori e i cavi che permettono l'alimentazione e la comunicazione. Tuttavia, è stato omesso l'accelerometro. Infatti, questa attività di tesi si concentra solamente sulla progettazione e l'acquisizione di segnali in formato grezzo, senza approfondire l'elaborazione degli stessi e gli algoritmi di compensazione dei disturbi causati dai movimenti. Nei seguenti paragrafi, verranno mostrati alcuni risultati ottenuti dalle misurazioni effettuate su due soggetti.
+Come descritto nel paragrafo \ref{cap:Hardware}, sono stati realizzati due differenti sistemi per l'acquisizione di segnali fotopletismografici. L'obiettivo di questo paragrafo è di dimostrarne il funzionamento mediante i risultati ottenuti. Infatti, occorre verificare che il segnale acquisito sia di buona qualità, affinché il processo successivo di elaborazione porti a stimare i parametri di interesse in modo accurato. Come mostrato nelle figure \ref{fig:foto_moduli_MAX86916} e \ref{fig:foto_moduli_MAXM86161}, sono stati montati, sulle PCB progettate, i sensori PPG, i condensatori e i cavi che permettono l'alimentazione e la comunicazione. Tuttavia, è stato omesso l'accelerometro. Infatti, questa attività di tesi si concentra solamente sulla progettazione e l'acquisizione di segnali in formato grezzo, senza approfondire l'elaborazione degli stessi e gli algoritmi di compensazione dei disturbi causati dai movimenti. Nei seguenti paragrafi, verranno mostrati alcuni risultati ottenuti dalle misure effettuate su due soggetti.
 
 \begin{figure}[bh]
 	\centering
@@ -37,8 +37,8 @@ Tuttavia, osservando la sua morfologia si può valutare la bontà delle acquisiz
 
 Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rimuovere i disturbi. Infatti, esso è molto suscettibile a zone di scarsa perfusione sanguigna, artefatti dovuti al movimento e all'illuminazione dell'ambiente circostante. In alcuni casi, insieme ai sensori PPG, si utilizzano anche altre tipologie di trasduttori (come ad esempio un accelerometro triassale) per compensare eventuali artefatti del movimento.
 
-\subsection{Misurazioni preliminari sui soggetti}\label{cap:misure_preliminari}
-Nel seguente paragrafo vengono presentati i risultati ottenuti dalle misurazioni effettuate su due soggetti.
+\subsection{Misure preliminari sui soggetti}\label{cap:misure_preliminari}
+Nel seguente paragrafo vengono presentati i risultati ottenuti dalle misure effettuate su due soggetti.
 Le misure sono state eseguite seguendo la stessa procedura, in modo da renderli confrontabili. Un aspetto importante che è stato osservato sin da subito è l'interazione della luce ambientale sulle misure. Come già ben noto nella letteratura, la luce ambientale introduce delle interferenze che possono alterare il valore della misura. I disturbi variano da un ambiente all'altro in maniera non prevedibile. Nella figura \ref{fig:ambiente_MAX86916} è rappresentato il segnale acquisito dal sensore PPG MAX86916 lasciandolo esposto alla luce artificiale di una lampadina a LED per uso domestico. Si può notare come il segnale campionato presenti una componente periodica che potrebbe alterare la traccia PPG se il sensore non viene opportunamente isolato.
 
 \begin{figure}[t]
