@@ -39,7 +39,7 @@ Il segnale fotopletismografico, una volta acquisito, viene poi elaborato per rim
 
 \subsection{Misure preliminari sui soggetti}\label{cap:misure_preliminari}
 Nel seguente paragrafo vengono presentati i risultati ottenuti dalle misure effettuate su due soggetti.
-Le misure sono state eseguite seguendo la stessa procedura, in modo da renderli confrontabili. Un aspetto importante che è stato osservato sin da subito è l'interazione della luce ambientale sulle misure. Come già ben noto nella letteratura, la luce ambientale introduce delle interferenze che possono alterare il valore della misura. I disturbi variano da un ambiente all'altro in maniera non prevedibile. Nella figura \ref{fig:ambiente_MAX86916} è rappresentato il segnale acquisito dal sensore PPG MAX86916 lasciandolo esposto alla luce artificiale di una lampadina a LED per uso domestico. Si può notare come il segnale campionato presenti una componente periodica che potrebbe alterare la traccia PPG se il sensore non viene opportunamente isolato.
+Le misure sono state eseguite seguendo la stessa procedura, in modo da renderli confrontabili. Un aspetto importante che è stato osservato sin da subito è l'effetto della luce ambientale sulle misure. Come già ben noto nella letteratura, la luce ambientale introduce delle interferenze che possono alterare il valore della misura. I disturbi variano da un ambiente all'altro in maniera non prevedibile. Nella figura \ref{fig:ambiente_MAX86916} è rappresentato il segnale acquisito dal sensore PPG MAX86916 lasciandolo esposto alla luce artificiale di una lampadina a LED per uso domestico. Si può notare come il segnale campionato presenti una componente periodica che potrebbe alterare la traccia PPG se il sensore non viene opportunamente isolato.
 
 \begin{figure}[t]
 	\centering
@@ -66,7 +66,7 @@ Le acquisizioni sono salvate in un file \textit{csv} tramite il software \textit
 \noindent I moduli MAX86916 e MAXM86161, impiegati nelle board progettate, possono essere configurati in modo diverso a seconda della specifica applicazione e dalle caratteristiche che si vogliono ottenere nel segnale acquisito. Di seguito vengono riportate le configurazioni utilizzate per effettuare le misure che verranno successivamente riportate, atte a verificare l'efficacia delle schede realizzate.
 
 \subparagraph{Adapater Board: MAXM86161}
-Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}.
+Per l'\textit{Adapeter Board} sulla quale è montato il sensore MAXM86161 è stata scelta la configurazione riportata in tabella \ref{tab:ConfigMAXM86161}.
 \begin{table}[b]
 	\renewcommand{\arraystretch}{1.5}
 	\centering
@@ -84,7 +84,7 @@ Per l'\textit{Adapeter Board} sul quale è montato il sensore MAXM86161 è stata
 	\caption{Parametri di configurazione del modulo MAXM86161.}
 	\label{tab:ConfigMAXM86161}
 \end{table}
-La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseguita alcuna media \textit{on board} sui campioni acquisiti. In questa fase di test, si è scelto di fornire la medesima corrente a tutti i led. I registri dedicati a definire la sequenza di acquisizione dei led sono stati configurati in modo da accendere in modo consecutivo il led verde, infrarosso e rosso. Ad ogni ciclo di acquisizione viene ripetuta la medesima successione. Il legame tra il tempo di integrazione dell'ADC (t\ped{INT}), il ritardo di accensione dei LED (t\ped{LED\_SETLNG}), che permette di attendere che la corrente nel led si stabilizzi e la lunghezza dell'impulso (t\ped{PW}) è mostrato nella figura \ref{fig:tempi_maxm}. In questa fase di test, non sono state attivate le opzioni di risparmio energetico, filtro ALC e \textit{picket fence} in modo da ottenere misure non elaborate. Il fondo scala dell'ADC è stato scelto di \SI{16384}{\nano\ampere}, che non provoca problemi di saturazione.
+La frequenza di campionamento utilizzata è di \SI{100}{\hertz} e non viene eseguita alcuna media \textit{on board} sui campioni acquisiti. In questa fase di test, si è scelto di fornire la medesima corrente a tutti i led. I registri dedicati a definire la sequenza di acquisizione dei led sono stati configurati in modo da accendere in modo consecutivo il led verde, infrarosso e rosso. Ad ogni ciclo di acquisizione viene ripetuta la medesima successione. Il legame tra il tempo di integrazione dell'ADC (t\ped{INT}), il ritardo di accensione dei LED (t\ped{LED\_SETLNG}), che permette di attendere che la corrente nel led si stabilizzi, e la lunghezza dell'impulso (t\ped{PW}) è mostrato nella figura \ref{fig:tempi_maxm}. In questa fase di test, non sono state attivate le opzioni di risparmio energetico, filtro ALC e \textit{picket fence} in modo da ottenere misure non elaborate. Il fondo scala dell'ADC è stato scelto di \SI{16384}{\nano\ampere}, che non provoca problemi di saturazione.
 
 \begin{figure}[t]
 	\centering
