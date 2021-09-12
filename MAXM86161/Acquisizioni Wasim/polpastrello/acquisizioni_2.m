@@ -24,7 +24,7 @@ f = figure
 plot(time(flag),indicesxmaxmavg1100Hz.Channel1(flag), 'g')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED GREEN','Location','Northeast');
+legend('LED GREEN','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'green.pdf','Resolution',600)
@@ -33,7 +33,7 @@ f = figure
 plot(time(flag),indicesxmaxmavg1100Hz.Channel2(flag), 'm')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED IR','Location','Northeast');
+legend('LED IR','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'ired.pdf','Resolution',600)
@@ -42,7 +42,7 @@ f = figure
 plot(time(flag),indicesxmaxmavg1100Hz.Channel3(flag), 'r')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED RED','Location','Northeast');
+legend('LED RED','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'red.pdf','Resolution',600)
@@ -83,7 +83,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, indicesxmaxmavg1100Hz.Channel1(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'g')
-legend('LED GREEN')
+legend('LED GREEN','Location','South')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])
@@ -124,7 +124,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, indicesxmaxmavg1100Hz.Channel2(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'m')
-legend('LED IR')
+legend('LED IR','Location','South')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])
@@ -166,7 +166,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, indicesxmaxmavg1100Hz.Channel3(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'r')
-legend('LED RED')
+legend('LED RED','Location','South')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])

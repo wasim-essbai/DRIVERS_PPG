@@ -81,7 +81,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, polsoinferioresxmaxmavg1100Hz.Channel1(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'g')
-legend('LED GREEN','Location','Southeast')
+legend('LED GREEN','Location','Northwest')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])
@@ -123,7 +123,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, polsoinferioresxmaxmavg1100Hz.Channel2(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'m')
-legend('LED IR','Location','Southeast')
+legend('LED IR','Location','northwest')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])
@@ -165,7 +165,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, polsoinferioresxmaxmavg1100Hz.Channel3(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'r')
-legend('LED RED','Location','Southeast')
+legend('LED RED','Location','northwest')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])

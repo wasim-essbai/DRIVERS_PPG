@@ -25,7 +25,7 @@ f = figure
 plot(time(flag),maxavg1100Hz.Channel1(flag), 'm')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED IR');
+legend('LED IR','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'ired.pdf','Resolution',600)
@@ -34,7 +34,7 @@ f = figure
 plot(time(flag),maxavg1100Hz.Channel2(flag), 'r')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED RED');
+legend('LED RED','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'red.pdf','Resolution',600)
@@ -43,7 +43,7 @@ f = figure
 plot(time(flag),maxavg1100Hz.Channel3(flag), 'g')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED GREEN');
+legend('LED GREEN','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'green.pdf','Resolution',600)
@@ -53,25 +53,9 @@ f = figure
 plot(time(flag),maxavg1100Hz.Channel4(flag), 'b')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED BLU');
+legend('LED BLU','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'blu.pdf','Resolution',600)
-
-
-samplepersecond = 20;
-coeff = ones(1, samplepersecond)/samplepersecond;
-
-smoothed = filter(coeff, 1, maxavg1100Hz.Channel2(flag));
-f = figure
-plot(smoothed(samplepersecond:end),'r')
-legend('LED RED')
-f.Position(3:4) = [1511, 189]
-set(f,'PaperSize',[1511 189])
-exportgraphics(f,'red_moving_avg.pdf','Resolution',600)
-
-
-
-close all
 
 
