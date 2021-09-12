@@ -19,7 +19,7 @@ Grazie al \textit{Device Configuration Tool} intregrato nell'ambiente di STM32Cu
 \begin{figure}[tbh]
 	\centering
 	\includegraphics[width=0.9\linewidth]{ImageFiles/Firmware/Pinout}
-	\caption{Configurazione pinout della board STM32F4DISCOVERY tramite STM32CubeIDE.}
+	\caption[Configurazione pinout della board STM32F4DISCOVERY]{Configurazione pinout della board STM32F4DISCOVERY tramite STM32CubeIDE.}
 	\label{fig:Pinout}
 \end{figure}
 I pin possono essere evidenziati con tre colori:
@@ -35,7 +35,7 @@ Il tool permette anche la configurazione del clock della scheda, come mostrato n
  \begin{figure}[tbh]
  	\centering
  	\includegraphics[width=1.4\linewidth, angle =90]{ImageFiles/Firmware/Clock}
- 	\caption{Configurazione clock della board STM32F4DISCOVERY tramite STM32CubeIDE.}
+ 	\caption[Configurazione clock della board STM32F4DISCOVERY.]{Configurazione clock della board STM32F4DISCOVERY tramite STM32CubeIDE.}
  	\label{fig:Clock}
  \end{figure}
 Il clock interno al microcontrollore, abbreviato con la sigla \textit{HSI} (\textit{High Speed Internal}) è tipicamente realizzato con un circuito oscillatorio RC, non molto accurato e può essere influenzato da fattori esterni, come la temperatura. Per questa ragione, si utilizza il segnale proveniente da un cristallo esterno al microcontrollore montato sulla board che fornice una segnale di clock stabile (\textit{HSE}, \textit{High Speed External}). La comunicazione USB è possibile grazie a delle librerie distribuite da STMicroelectronics, che si occupano di inizializzare la comunicazione seriale USB. Inoltre, forniscono il metodo \textit{CDC\_Transmit\_FS}, che permette di inviare un array di tipo \textit{uint\_8} tramite la porta seriale. In questo modo, sarà possibile inviare i campioni acquisiti ad un computer collegato al microcontrollore (vedi par. \ref{cap:FSM}).
