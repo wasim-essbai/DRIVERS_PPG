@@ -83,7 +83,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, frontemaxmavg1100Hz.Channel1(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'g')
-legend('LED GREEN')
+legend('LED GREEN', 'Location','southeast')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])
@@ -125,7 +125,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, frontemaxmavg1100Hz.Channel2(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'m')
-legend('LED IR')
+legend('LED IR', 'Location','southeast')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])
@@ -167,7 +167,7 @@ time_avg = time_avg ./1000
 coeff = ones(1, samplepersecond)/samplepersecond;
 smoothed = filter(coeff, 1, frontemaxmavg1100Hz.Channel3(flag));
 plot(time_avg(test), smoothed(samplepersecond+1:end),'r')
-legend('LED RED')
+legend('LED RED', 'Location','southeast')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
 xlim([0 10])
