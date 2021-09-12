@@ -25,7 +25,7 @@ f = figure
 plot(time(flag),frontemaxavg1100Hz.Channel1(flag), 'm')
 xlabel('Tempo [s]');
 ylabel('Valore ADC');
-legend('LED IR');
+legend('LED IR','Location','south');
 f.Position(3:4) = [1511, 189]
 set(f,'PaperSize',[1511 189])
 exportgraphics(f,'ired.pdf','Resolution',600)
